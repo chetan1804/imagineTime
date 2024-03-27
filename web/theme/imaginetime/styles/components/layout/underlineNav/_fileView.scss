@@ -1,0 +1,72 @@
+
+.-options.-right {
+
+    .file-list-options {
+        .dropMenu > li {
+            display: none;
+
+            &:first-child {
+                display: list-item;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1200px) and (min-width: 480px) {
+        button.-folder-template-option {
+            display: none;
+        }
+
+        .file-list-options .dropMenu > li.-folder-template-option {
+            display: list-item !important;
+        }
+    }
+
+    @media screen and (max-width: 1090px) and (min-width: 480px) {
+        > button.-folder-option {
+            display: none;
+        }
+        .file-list-options .dropMenu > li.-folder-option {
+            display: list-item !important;
+        }
+    }
+    @media screen and (max-width: 980px) and (min-width: 480px) {
+        > button.-upload-file-option {
+            display: none;
+        }
+        .file-list-options .dropMenu > li.-upload-file-option {
+            display: list-item !important;
+        }
+    }
+    @media screen and (max-width: 845px) and (min-width: 480px) {
+        > button.-request-files-option {
+            display: none;
+        }
+        .file-list-options .dropMenu > li.-request-files-option {
+            display: list-item !important;
+        }
+    }
+    @media screen and (max-width: 715px) and (min-width: 480px) {
+        > button.-share-files-option {
+            display: none;
+        }
+        .file-list-options .dropMenu > li.-share-files-option {
+            display: list-item !important;
+        }
+    }
+    @media screen and (max-width: 600px) and (min-width: 480px) {
+        > button.-archive-option {
+            display: none;
+        }
+        .file-list-options .dropMenu > li.-archive-option {
+            display: list-item !important;
+        }
+    }
+    @media screen and (max-width: 520px) and (min-width: 480px) {
+        > button.-download-option {
+            display: none;
+        }
+        .file-list-options .dropMenu > li.-download-option {
+            display: list-item !important;
+        }
+    }
+}

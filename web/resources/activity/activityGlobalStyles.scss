@@ -1,0 +1,91 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Activity module that you ALSO want globally
+ * available should live here.
+ */
+
+.activity-card-wrapper {
+  @include flex(1);
+  @include display-flex;
+}
+
+.activity-card {
+  // border-top: 1px solid $divider-color;
+  border-bottom: 1px solid $divider-color;
+  // border: 1px solid $divider-color;
+  // border-radius: 4px;
+  position: relative;
+  .-date {
+    color: $lighter-text-color;
+    @include small-font;
+    font-style: italic; 
+  }
+}
+
+.activity-day-group {
+  margin-bottom: $gutter-width;
+}
+
+.activity-list {
+  margin-top: $gutter-width;
+
+  &.-scrollable {
+    max-height: 80vh;
+    overflow-y: scroll;
+    padding-right: 1em;
+  }
+  .-day {
+    position: relative;
+    border-bottom: 1px solid $divider-color;
+    padding-bottom: $gutter;
+    // margin-bottom: $gutter;
+    @include medium-font;
+    font-weight: 500;
+    // &:after {
+    //   content: "";
+    //   position: absolute;
+    //   display: block;
+    //   bottom: -24px;
+    //   left: 50px;
+    //   margin-left: -5px;
+    //   width: 2px;
+    //   height: 16px;
+    //   background: $divider-color;
+    //   border-radius: 5px;
+    // }
+  }
+  .activity-card {
+    // padding: $gutter * 0.5 0;
+    margin-bottom: 0;
+    // &:after {
+    //   content: "";
+    //   position: absolute;
+    //   display: block;
+    //   bottom: -40px;
+    //   left: 50px;
+    //   margin-left: -5px;
+    //   width: 2px;
+    //   height: 32px;
+    //   background: $divider-color;
+    //   border-radius: 5px;
+    // }
+  }
+  .activity-card-wrapper {
+    &:last-child {
+      .activity-card {
+        &:after {
+          display: none;
+          // background: red;
+        }
+      }
+    }
+  }
+}
+
+.-schedule {
+  &.-fixed {
+    position: fixed;
+  }
+}
+
+@import "./admin/activityAdminStyles";

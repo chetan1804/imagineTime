@@ -1,0 +1,215 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Client Post module that you ALSO want globally
+ * available should live here.
+ */
+
+.new-post {
+  border: 1px solid $divider-color;
+  // margin-left: 40px;
+  .-subject {
+    // @include display-flex;
+    @include flex-direction(row); 
+    @include align-items(center); 
+    // border-bottom: 1px solid $divider-color;
+    padding-left: 10px;
+    input { 
+      border: none;
+      background-color: #fff;
+      &:focus {
+        background-color: #fff;
+        border: none
+      }
+    }
+  }
+  .-content {
+    border-bottom: 1px solid $divider-color; 
+    padding: 5px;
+    textarea {
+      border: none;
+      background-color: #fff;
+      &:focus {
+        background-color: #fff;
+        border: none
+      }
+    }
+  }
+  .-footer {
+    @include MQ(XS) {
+      text-align: right;
+    }
+    padding: 10px;
+  }
+}
+
+
+.post-card {
+  border: 1px solid $divider-color;
+  margin-top: $gutter-width; 
+  // &:hover {
+  //   @include box-shadow(0 8px 24px $shadow-color);
+  // }
+  .-post-header {
+    // margin-bottom: $gutter;
+    margin-left: 10px;
+    @include small-font;
+  }
+  .-date {
+    @include smaller-font;
+    color: $it-teal;
+    @include MQ(XS) {
+      text-align: left;
+    }
+  }
+  .-featured-icon {
+    @include display-flex;
+    @include flex-direction(row);
+    @include align-items(center);
+    margin-bottom: 4px;
+    color: $lighter-text-color;
+    .-icon {
+      text-align: right;
+      width: 40px;
+      margin-right: 10px;
+      color: $link-color;
+    }
+  }
+  .-author {
+    @include display-flex;
+    @include flex-direction(row);
+    @include align-items(center);
+    .-profile-pic {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      background-image: url(/img/green_army_men.jpg);
+      background-position: center;
+      background-size: cover;
+      padding: 10px;
+    }
+    .-profile-info {
+      @include flex(1);
+      // font-weight: 700;
+      padding: 10px;
+    }
+    .-more {
+      width: 20px;
+      color: $lighter-text-color;
+      position: relative;
+      &:hover {
+        cursor: pointer;
+        color: $text-color;
+      }
+      .-menu {
+        color: $text-color;
+        li {
+          padding: 4px 8px;
+          &:hover {
+            background-color: $highlight-color;
+
+          }
+        }
+      }
+    }
+  }
+  .card-body {
+    padding: $card-padding * 0.5 $card-padding;
+    margin-bottom: $gutter; 
+    @include flex(1);
+    &.full {
+      margin: -$card-padding;
+    }
+    img {
+    }
+    @include Print() { padding-bottom: 0px; padding-top: 0px; };
+  }
+  .-comments {
+    background-color: #fbfbfb;
+  }
+  .-add-comment {
+    background-color: #f7f7f7;
+  }
+  .-post-footer {
+    @include display-flex;
+    @include justify-content(space-between);
+    // background-color: #f7f7f7;
+    padding: 10px;
+      .-length {
+        @include display-flex; 
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: 1px solid $divider-color;
+        position: absolute;
+        padding: 10px;
+        margin-left: 30px; 
+        background-color: #FFF;    
+      }
+  }
+  .-reply-footer {
+    @include display-flex;
+    @include justify-content(space-between);
+    background-color: #f7f7f7;
+    padding: 10px;
+  }
+}
+
+.reply-card {
+  border-top: 1px solid $divider-color;
+  padding: 10px;
+  width: 100%;
+  .-author {
+    @include display-flex;
+    @include flex-direction(row);
+    @include align-items(center);
+    .-profile-pic {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      background-image: url(/img/green_army_men.jpg);
+      background-position: center;
+      background-size: cover;
+      padding: 10px;
+    }
+    .-reply-button {
+      background-color: #fff;
+      border: none; 
+      .-text {
+        @include small-font;
+        color: $it-teal;
+        @include MQ(XS) {
+          text-align: left;
+        }
+      }
+      &:hover {
+        // background-color: lighten($button-color, 5);
+        // text-decoration: none;
+        // border-color: lighten($button-color, 5);
+        // @include box-shadow(0px 4px 12px $shadow-color);
+        // // top: -2px;
+      }
+    }
+  }
+  .-date {
+    @include smaller-font;
+    color: $it-gray;
+    @include MQ(XS) {
+      text-align: left;
+    }
+  }
+  .-card-body {
+    padding: 10px; 
+    width: 100%;
+    // margin-bottom: $gutter; 
+    @include flex(1);
+    &.full {
+      margin: -$card-padding;
+    }
+    img {
+    }
+    @include Print() { padding-bottom: 0px; padding-top: 0px; };
+  }
+}
+

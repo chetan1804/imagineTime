@@ -1,0 +1,247 @@
+import 'package:imagine_drive/file_sync/fileOperations/fileDelete.dart';
+import 'package:imagine_drive/file_sync/fileOperations/fileOperation.dart';
+import 'package:imagine_drive/file_sync/fileOperations/fileRename.dart';
+import 'package:imagine_drive/utils/callback.dart';
+import 'package:imagine_drive/utils/log.dart';
+import 'package:imagine_drive/utils/observable.dart';
+
+import 'fileData.dart';
+import 'fileOperations/fileDownload.dart';
+import 'fileOperations/fileUpload.dart';
+import 'syncController.dart';
+
+enum eSyncState {
+  Unknown,
+  Synced,
+  Redownload, // outdated needs to redownload
+  Reupload, // outdated needs to reupload
+  Downloading,
+  Uploading,
+  DeleteLocal,
+  DeleteRemote,
+  Rename,
+}
+
+/*
+  fileSync.dart
+  Class that controls file specific operations such as for deleting, uploading and downloading
+ */
+class FileSync {
+  Uri uri;
+  String relativePath;
+  FileData data;
+  Observable<eSyncState> status =
+      Observable<eSyncState>(initValue: eSyncState.Unknown);
+  Observable<String> error = Observable(initValue: '');
+  Observable<FileOperation> currentOperation = Observable(initValue: null);
+  // true if this instance will be closed after finished syncing
+  bool closeOnFinished = true;
+  String _strProgress = '';
+
+  // callbacks
+  Callback<FileSync> onClosed = Callback();
+  Callback<double> onProgress = Callback();
+
+  bool get running =>
+      currentOperation.value == null ? false : currentOperation.value.running;
+
+  FileSync({
+    eSyncState status = eSyncState.Unknown,
+    this.data,
+  }) {
+    this.status.value = status;
+    relativePath = data.relativePath;
+    uri = data.uri;
+  }
+
+  void resetStatus(eSyncState status, {FileData data}) {
+    if (this.data.updateAt.millisecondsSinceEpoch >=
+        data.updateAt.millisecondsSinceEpoch) {
+      Log.write(
+          'Status reset skipped. Same update date time. ' +
+              relativePath +
+              ' ' +
+              status.toString(),
+          tag: 'FileSync',
+          type: eLogType.VERBOSE);
+      return;
+    }
+    this.status.value = status;
+    this.data = data;
+    Log.write(relativePath + ' status reset ' + status.toString(),
+        tag: 'FileSync');
+    sync(resetOperation: true);
+  }
+
+  /// use to sync this file. dont call this directly. sync via SyncController
+  void sync({resetOperation: false}) async {
+    await Future.delayed(Duration(milliseconds: 50));
+
+    // resuse old operation
+    if (!resetOperation && currentOperation.value != null) {
+      if (currentOperation.value.retryLater) resumeOperation();
+      return;
+    }
+
+    // check first if theres a copy
+    switch (status.value) {
+      case eSyncState.Uploading:
+        _setCurrentOperation(new FileUpload(this));
+        break;
+      case eSyncState.Downloading:
+        _setCurrentOperation(new FileDownload(this));
+        break;
+      case eSyncState.Reupload:
+        _setCurrentOperation(new FileUpload(this, freshCopy: true));
+        break;
+      case eSyncState.Redownload:
+        _setCurrentOperation(new FileDownload(this, freshCopy: true));
+        break;
+      case eSyncState.DeleteLocal:
+      case eSyncState.DeleteRemote:
+        _setCurrentOperation(new FileDelete(this,
+            localDelete: status.value == eSyncState.DeleteLocal));
+        break;
+      case eSyncState.Rename:
+        _setCurrentOperation(new FileRename(this));
+        break;
+      default:
+    }
+  }
+
+  /// callback when theres a progress
+  void _onProgressUpdate(double percent) {
+    Log.writeFast(() {
+      var prog = percent.toString().substring(0, 3);
+      if (prog != _strProgress) {
+        _strProgress = prog;
+        return relativePath + ' ' + _strProgress + ' progress ';
+      } else
+        return '';
+    },
+        tag: 'FileSync::' + currentOperation.value.runtimeType.toString(),
+        type: eLogType.VERBOSE);
+    onProgress(percent);
+  }
+
+  /// callback when file operation was finished
+  void _onOperationFinished(FileOperation operation) {
+    if (!operation.cancelled) {
+      status.value = eSyncState.Synced;
+      Log.write(relativePath + ' file was synced.', tag: 'FileSync');
+
+      if (closeOnFinished) {
+        SyncController.syncFinish(this, isSuccess: true);
+      }
+    } else if (closeOnFinished)
+      SyncController.syncFinish(this, isSuccess: false);
+  }
+
+  /// callback when this file will be delete permanently
+  void _onDestroy() {
+    status.value = eSyncState.Synced;
+    Log.write(relativePath + ' file will be destroyed.', tag: 'FileSync');
+    //var file = data.loadFile();
+    //if (file.existsSync()) file.deleteSync();
+  }
+
+  void _onError(err) {
+    error.value = err.toString();
+    Log.write(' current operation failed. ' + error.value,
+        tag: 'FileSync', type: eLogType.ERROR);
+    error.value = ' current operation failed. ' + error.value;
+    // is this file was closed permanently and mark as destroyed?
+    bool destroy = !currentOperation.value.retryLater;
+    if (destroy) _onDestroy();
+    SyncController.onErrorFile(this, destroy: destroy);
+  }
+
+  // this is instance doesnt need any further operations. close now
+  void close() async {
+    _setCurrentOperation(null);
+    onClosed(this);
+  }
+
+  void _setCurrentOperation(FileOperation pOperation) {
+    if (currentOperation.value != null) {
+      // Stop current operation then replace
+      currentOperation.value
+          .close(
+              reason: 'Closing this operation because of new ' +
+                  pOperation.runtimeType.toString(),
+              waitUntilComplete: false)
+          .then((_response) {
+        currentOperation.value = null;
+        _setCurrentOperation(pOperation);
+      });
+    } else {
+      // replace current operation
+      if (pOperation != null) {
+        Log.write(
+            uri.toString() + ' starting new operation ' + pOperation.toString(),
+            tag: 'FileSync');
+
+        pOperation.progress.listen(_onProgressUpdate);
+        _startOperation(pOperation);
+      }
+      currentOperation.value = pOperation;
+    }
+  }
+
+  /// use to stop current operation
+  /// @waitUntilComplete: false if force close current operation. force close also means it will be retryLater
+  Future stopOperation(
+      {bool waitUntilComplete = false, bool retryLater = false}) {
+    return currentOperation.value
+        .close(waitUntilComplete: waitUntilComplete, retryLater: retryLater);
+  }
+
+  bool isCurrentOperationResumable() {
+    return currentOperation.value.retryLater;
+  }
+
+  void resumeOperation() {
+    if (!currentOperation.value.retryLater) {
+      Log.write('Couldnt resume uncancelled operation',
+          tag: 'FileSync', type: eLogType.ERROR);
+      return;
+    }
+
+    if (currentOperation.value.running) {
+      Log.write(
+          'Couldnt resume operation because it is running ' + relativePath,
+          tag: 'FileSync',
+          type: eLogType.ERROR);
+      return;
+    }
+
+    Log.write(
+        relativePath +
+            " resuming cancelled operation. " +
+            currentOperation.value.runtimeType.toString(),
+        tag: 'FileSync');
+    _startOperation(currentOperation.value);
+  }
+
+  void _startOperation(FileOperation operation) {
+    operation.start().then((_response) {
+      _onOperationFinished(operation);
+      // finished successfully?
+      if (!operation.cancelled) {
+        if (currentOperation.value == operation) currentOperation.value = null;
+      }
+    }).onError((error, stackTrace) {
+      print(stackTrace);
+      _onError(error);
+    });
+  }
+
+  // use to create a file sync if necessary
+  static FileSync resolve(FileData data,
+      {eSyncState pStatus = eSyncState.Unknown}) {
+    var status = pStatus;
+    if (status == eSyncState.Synced) return null;
+
+    return new FileSync(status: status, data: data);
+  }
+}

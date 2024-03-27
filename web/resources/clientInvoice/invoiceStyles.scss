@@ -1,0 +1,128 @@
+// Modal Form
+* {
+  box-sizing: border-box;
+}
+
+.ic-white {
+  color: #fff;
+}
+
+.t-text-center {
+  text-align: center;
+}
+
+.td-text-center {
+  text-align: center;
+}
+
+.left-container {
+  width: 50%;
+  float: left;
+}
+.right-container {
+  width: 50%;
+  float: left;
+}
+
+.input-group {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  margin-bottom: $gutter;
+  @include base-font;
+  &.date {
+    .SingleDatePicker,
+    .DateInput,
+    .SingleDatePickerInput {
+      width: 85% !important;
+      margin-left: 25px;
+    }
+  }
+}
+.btn {
+  margin: 5px !important;
+  height: 25px !important;
+  padding-top: revert;
+}
+
+.p-text-padding-left {
+  padding-left: 12px;
+}
+
+.invoice-btns {
+  padding: 2px 0;
+}
+.invoice-textarea .input-group {
+  margin-bottom: -14px;
+}
+
+.table-head .table-cell._4 {
+  width: 4%;
+  max-width: 100px;
+}
+.invoice-table {
+  margin-bottom: 0px !important;
+  height: 250px !important;
+  overflow: auto !important;
+}
+a.disabled {
+  opacity: 0.4;
+  cursor: default !important;
+  pointer-events: none;
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: default !important;
+  pointer-events: none;
+}
+
+.flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.nowrap {
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.wrap {
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.flex-item {
+  width: 100%;
+  margin: 3px 6px;
+}
+.custom-date {
+  width: 100% !important;
+  margin-left: 0px !important;
+}
+.cost-text {
+  position: relative;
+  top: 5px;
+}
+.service-line-item .input-group,
+.service-line-item .DateInput_input {
+  margin-bottom: 0 !important;
+  font-size: 13px !important;
+}
+
+.ic-font-13 {
+  font-size: 13px;
+}
+.top-add {
+  float: right;
+  padding-right: 1.5em;
+}

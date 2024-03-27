@@ -1,0 +1,99 @@
+
+
+.outlook-layout {
+  @include display-flex;
+  @include flex(1);
+}
+
+.outlook-hero-header {
+  max-width: 66%;
+  margin: auto;
+  padding: $gutter;
+}
+
+.-outlook-footer {
+  background: #fff;
+  padding: $gutter;
+  img {
+    max-width: 66%;
+    float: right;
+  }
+}
+
+.-outlook-account-list {
+  border-top: none;
+  .-account-select-link {
+    border-bottom: none;
+  }
+}
+
+.-outlook-action-btns {
+  .-btn {
+    @include display-flex;
+    @include align-items(center);
+    padding: $gutter; 
+    color: $text-color;
+    @include transition(all 250ms ease-in-out);
+    @include medium-font;
+    .-icon {
+      margin-right: $gutter;
+      @include largest-font;
+      width: 40px;
+    }
+    .-text {
+      @include flex(1);
+    }
+    &:hover {
+      background-color: $it-pink;
+      color: #fff;
+    }
+    &.-disabled {
+      opacity: 0.5;
+      &:hover {
+        background-color: #fff;
+        color: $text-color;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.-copyable-share-link.-outlook {
+  display: block;
+  width: 100%;
+  input {
+    border: none;
+    width: 100%;
+    @include smaller-font;
+  }
+}
+
+.-copy-action.-outlook {
+  margin: $gutter 0;
+}
+
+.error-container {
+  background-color: white;
+  padding: 1em;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  .-error-message {
+    color: $danger;
+    font-weight: 500;
+    width: 80%;
+  }
+}
+
+.outlook-layout.custom-template-plugin > .body > .yt-container,
+.outlook-layout.select-folder-plugin > .body > .yt-container {
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  .share-link-layout.-signature-request .file-preview-container.-option, .share-link-layout.-signature-request .-preview-content-jotblocks.-sidebar {
+    max-height: 95vh;
+  }
+}

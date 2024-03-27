@@ -1,0 +1,451 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Client module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/signatureAdminStyles";
+
+table.yt-table>tbody>tr:hover {
+  background-color: #F4F4F4;
+}
+
+tr.error {
+  background-color: #faccc3;
+}
+
+td.actions span.action {
+  cursor: pointer;
+  color: blueviolet;
+  text-decoration: none;
+}
+
+td.actions span.action:hover {
+  text-decoration: underline;
+}
+
+.-filter-btn.-filter-applied {
+  background-color: #4EBAC5;
+}
+
+.-filter-btn.-filter-applied:hover {
+  background-color: #0DA79D;
+}
+
+.-action-btn {
+  background-color: #4EBAC5;
+}
+
+.-action-btn:hover {
+  background-color: #0DA79D;
+}
+
+div.inputFormSection {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  margin-bottom: 16px;
+  padding: 10px;
+}
+
+div.card-header {
+  background-color: #0DA79D;
+  color: white;
+  padding: 8px 8px 8px 16px;
+  font-weight: bold;
+}
+
+.fa-times:before {
+  font-size: 150%;
+  color: white;
+}
+
+div.input-group.date-picker-wrapper {
+  margin-bottom: 0px;
+}
+
+.SingleDatePicker {
+  margin-left: 8px;
+}
+
+/*             Copied           */
+.-client-overview {
+  padding: $gutter 0;
+  label {
+    display: block;
+    font-weight: 500;
+  }
+  .-company, .-contact-card, .-website {
+    padding-bottom: 1em
+  }
+  .-other-addresses {
+    padding-bottom: 1em;
+    .-show-hide-address {
+      font-weight: normal;
+      @include transition(opacity 250ms ease-in-out);
+      padding-left: 1em;
+      opacity: 0;
+    }
+    &:hover {
+      .-show-hide-address {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.-client-options {
+  z-index: 2000;
+  position: absolute;
+  top: calc(100% - 2em);
+  right: 1em;
+  min-width: 160px;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  margin: 0;
+  padding: 0;
+  @include box-shadow(0 6px 12px rgba(0,0,0,0.175));
+  li {
+    margin-left: 0 !important;
+    &.-header {
+      border-bottom: 1px solid $divider-color;
+      padding: 8px 15px !important;
+    }
+    .-select {
+      padding: 8px 15px !important;
+      border: none !important;
+      color: $text-color;
+      width: 100%;
+      display: block;
+      &:hover { 
+        background-color: $divider-color;
+        cursor: pointer;
+      }
+      .-icon { 
+        margin-right: 4px; 
+      }
+    }
+    &.-drop-header {
+      padding: 15px;
+      @include display-flex;
+      @include align-items(center);
+      background-color: $dark-bg-color;
+      color: $text-light;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+    &.-divider {
+      height: 1px;
+      background-color: $divider-color;
+    }
+  }
+}
+
+.client-import-modal {
+  .card-body {
+    max-height: 80vh;
+    overflow: auto;
+  }
+}
+
+div.-bulk-invite {
+  display: inline-block !important;
+  bottom: -2px !important;
+  height: 12px !important;
+  margin-left: 4px !important;
+  width: 20% !important;
+
+  > div.-progress > .-complete {
+      top: -4px !important;
+      color: black !important;
+      font-size: 10px !important;
+      text-align: center !important;
+      float: left !important;
+      left: 9px !important;
+  }
+}
+
+.-workspace-content {
+  > div > .yt-row.center-vert.u-muted {
+    padding: 5px 0;
+  }
+}
+
+.-edit .yt-row.center-vert.u-muted, .-static .yt-row.center-vert.u-muted {
+  > .-on > i, > .-off > i {
+    width: 0 !important;
+    padding: 0 1.5em 0 0 !important;  
+    cursor: auto;
+  }
+  > .-on > i.fa-bell:before {
+    margin-left: 3px !important;
+  }
+  > label {
+    font-size: 15px;
+  }
+}
+
+.-edit {
+  .yt-row.center-vert.u-muted {
+    > .-on > i, > .-off > i {
+      cursor: pointer;
+    }
+    > label {
+      color: black;
+    }
+  }
+}
+
+.-static {
+  .yt-row.center-vert.u-muted {
+    > .-on > i:hover {
+      color: #0DA79D !important;
+    }
+    > .-off > i:hover {
+      color: rgba(0, 0, 0, 0.48) !important;
+    }
+  }  
+}
+
+.-not-allowed {
+  cursor: not-allowed;
+}
+
+td.-status-action {
+  text-align: center;
+
+  > div > span> .dropMenu {
+    min-width: 220px;
+  }
+
+  i.fa-ellipsis-v {
+    cursor: pointer;
+    width: 15px;
+  }
+
+  span.single-file-options {
+    position: absolute;
+  }
+
+  > div > span > ul > li a.-disabled-link {
+    color: rgba(0, 0, 0, 0.33) !important;
+  }
+  
+  i.fa-lock {
+    margin-right: 10px;
+  }
+
+  > div > span > ul > li a > .loading {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+  }
+
+  > div > span > ul > li a > .u-success, > div > span > ul > li a > .u-danger, > div > span > ul > li a > .loading, > div > span > ul > li a > .u-warning {
+    margin: -3px 10px -3px 0px;
+  }
+}
+
+// this scss is only for bulk invite
+.card-footer.-bulk-upload {
+  border-top: 1px solid #d9d9d9 !important;
+  padding-top: 16px !important;
+
+  > .yt-row.space-between {
+      text-align: right !important;
+      display: inline-block !important;
+
+      > .yt-btn {
+          font-size: 1rem !important;
+          padding: 10px 14px !important;
+          border-radius: 8px !important;
+      }
+
+      > .yt-btn.danger {
+          margin-left: 10px;
+      }
+  }
+}
+
+@media only screen and (min-width:  900px) {
+  .yt-col.full.s_75.m_50.l_33.xl_25.-bulk-upload {
+    min-width: 515px !important;
+  }
+}
+
+.yt-table.-workspace-table {
+  > .table-caption {
+    border-bottom: 1px solid #aaa;
+  }
+
+  .table-cell {
+    // padding-bottom: 0px !important;
+    .-options {
+      cursor: pointer;
+    }
+  }
+
+  .table-head .input-group {
+    width: 25px;
+    top: 10px;
+  }
+  .input-group > input {
+    cursor: pointer;
+  }
+}
+
+.yt-table td {
+  vertical-align: top;
+}
+
+.-yt-edit-table {
+  margin-top: 20px !important;
+}
+.-option-pointer {
+  > div.table-cell:nth-child(1), > div.table-cell:nth-child(2), > div.table-cell:nth-child(2) {
+    cursor: pointer;
+  }
+  > div.table-cell:nth-child(1) {
+    width: 25px;
+  }
+  > div.table-cell:nth-child(2) {
+    width: 20px;
+  }
+  .-yt-name {
+    max-width: 350px;
+    word-wrap: break-word;
+  }
+}
+
+@keyframes blink {
+  /**
+   * At the start of the animation the dot
+   * has an opacity of .2
+   */
+  0% {
+    opacity: .2;
+  }
+  /**
+   * At 20% the dot is fully visible and
+   * then fades out slowly
+   */
+  20% {
+    opacity: 1;
+  }
+  /**
+   * Until it reaches an opacity of .2 and
+   * the animation can start again
+   */
+  100% {
+    opacity: .2;
+  }
+}
+
+.-archive-saving {
+  padding: 4px 16px;
+  font-size: 0.8rem;
+  margin: 0px;
+}
+
+.-archive-saving span {
+  /**
+   * Use the blink animation, which is defined above
+   */
+  animation-name: blink;
+  /**
+   * The animation should take 1.4 seconds
+   */
+  animation-duration: 1.4s;
+  /**
+   * It will repeat itself forever
+   */
+  animation-iteration-count: infinite;
+  /**
+   * This makes sure that the starting style (opacity: .2)
+   * of the animation is applied before the animation starts.
+   * Otherwise we would see a short flash or would have
+   * to set the default styling of the dots to the same
+   * as the animation. Same applies for the ending styles.
+   */
+  animation-fill-mode: both;
+}
+
+.-archive-saving span:nth-child(2) {
+  /**
+   * Starts the animation of the third dot
+   * with a delay of .2s, otherwise all dots
+   * would animate at the same time
+   */
+  animation-delay: .2s;
+}
+
+.archive-saving span:nth-child(3) {
+  /**
+   * Starts the animation of the third dot
+   * with a delay of .4s, otherwise all dots
+   * would animate at the same time
+   */
+  animation-delay: .4s;
+}
+
+.-options.-yt-edit-option {
+  cursor: pointer;
+  width: 10px;
+  text-align: center;
+  margin-left: 0px;
+}
+
+.-yt-edit-form .-yt-edit-input {
+  height: 79px;
+  .help-text > em {
+    position: relative;
+    bottom: 15px;
+    color: #FF2900;
+  }
+}
+
+.-rename-upload-field-container {
+  display: flex;
+  .input-group {
+    min-width: 180px;
+
+    .input-add-on {
+      margin-bottom: 0;
+    }
+
+    .help-text {
+      color: red;
+    }
+  }
+
+  button {
+    height: 40px;
+  }
+}
+
+.yt-container.-bulk > .yt-row {
+  > h4 {
+    font-size: 1.1rem;
+  }
+  .yt-row.center-vert.u-muted {
+    margin-bottom: 0.5em;
+    .input-group {
+      margin: 0 10px !important;
+    }   
+  }
+}
+
+span.-archived > a {
+  color: #ff2900; 
+}
+
+table.yt-table.-multiple-data tbody tr td {
+  padding: 8px 0 0 !important;
+  display: table-cell;
+  vertical-align: top;
+}

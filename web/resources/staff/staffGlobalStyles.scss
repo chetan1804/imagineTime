@@ -1,0 +1,48 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Staff module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/staffAdminStyles";
+
+.-staff-info {
+  @include display-flex;
+  @include align-items(center);
+  .-text {
+    line-height: 1;
+  }
+}
+
+.-staff-activity-list {
+  padding: $gutter $gutter $gutter 0;
+  label {
+    display: block;
+    font-weight: 500;
+  }
+}
+
+.-staff-assignment-list {
+  padding: $gutter 0;
+  label {
+    display: block;
+    font-weight: 500;
+  }
+}
+
+.quick-view {
+  .-quick-view-field-wrapper {
+    margin-top: 1em;
+  }
+}
+
+.client-import-modal .card-body {
+  min-height: 300px !important;
+  overflow: auto !important;
+}
+
+.file-list-wrapper > .progress-container {
+  max-width: 100%;
+    width: 100%;
+    padding: 0 10px;
+}

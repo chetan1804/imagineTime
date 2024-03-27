@@ -1,0 +1,256 @@
+.loadingBiscuit {
+  display: flex;
+  min-width: 80px;
+  max-width: 80vw;
+  text-align: center;
+  border-radius: 0px;
+  padding: 10px;
+  position: fixed;
+  _position: fixed; /* IE6 */
+  z-index: 2;
+  background-color: #878787;
+  color: #FFFFFF;
+  font-size: 20px;
+}
+
+/*
+@media screen and (max-width: 1366px) and (min-width: 480px) {
+  .loadingBiscuit>tbody {
+    margin-bottom: 0px !important;
+    width: auto !important;
+  }  
+}
+*/
+
+.loadingBiscuit td.content {
+  padding: 0px 5px 0px 5px;
+  text-align: left;
+}
+.loadingBiscuit td.spinnerIconBox {
+  padding: 1px 5px
+}
+
+.topLeft,
+.topCenter,
+.topRight,
+.topLeft-appear,
+.topCenter-appear,
+.topRight-appear,
+.topLeft-enter,
+.topCenter-enter,
+.topRight-enter,
+.topLeft-exit-done,
+.topCenter-exit-done,
+.topRight-exit-done {
+  top: 1;
+  opacity: 0;
+}
+
+.topLeft-appear-active,
+.topCenter-appear-active,
+.topRight-appear-active,
+.topLeft-enter-active,
+.topCenter-enter-active,
+.topRight-enter-active {
+  top: 1px;
+  opacity: 0.8;
+  transition: opacity 200ms linear;
+}
+
+.topLeft-appear-done,
+.topCenter-appear-done,
+.topRight-appear-done,
+.topLeft-enter-done,
+.topCenter-enter-done,
+.topRight-enter-done,
+.topLeft-exit,
+.topCenter-exit,
+.topRight-exit {
+  top: 1px;
+  opacity: 0.8;
+}
+
+.topLeft-exit-active,
+.topCenter-exit-active,
+.topRight-exit-active {
+  top: 1px;
+  opacity: 0;
+  transition: opacity 200ms linear;
+}
+
+.bottomLeft,
+.bottomCenter,
+.bottomRight,
+.bottomLeft-appear,
+.bottomCenter-appear,
+.bottomRight-appear,
+.bottomLeft-enter,
+.bottomCenter-enter,
+.bottomRight-enter,
+.bottomLeft-exit-done,
+.bottomCenter-exit-done,
+.bottomRight-exit-done {
+  bottom: 1px;
+  opacity: 0;
+}
+
+.bottomLeft-appear-active,
+.bottomCenter-appear-active,
+.bottomRight-appear-active,
+.bottomLeft-enter-active,
+.bottomCenter-enter-active,
+.bottomRight-enter-active {
+  bottom: 1px;
+  opacity: 0.8;
+  transition: opacity 200ms linear;
+}
+
+.bottomLeft-appear-done,
+.bottomCenter-appear-done,
+.bottomRight-appear-done,
+.bottomLeft-enter-done,
+.bottomCenter-enter-done,
+.bottomRight-enter-done,
+.bottomLeft-exit,
+.bottomCenter-exit,
+.bottomRight-exit {
+  bottom: 1px;
+  opacity: 0.8;
+}
+
+.bottomLeft-exit-active,
+.bottomCenter-exit-active,
+.bottomRight-exit-active {
+  bottom: 1px;
+  opacity: 0;
+  transition: opacity 200ms linear;
+}
+
+.middleCenter,
+.middleCenter-appear,
+.middleCenter-enter,
+.middleCenter-exit-done {
+  top: 1;
+  opacity: 0;
+}
+
+.middleCenter-appear-active,
+.middleCenter-enter-active {
+  top: 1px;
+  opacity: 0.8;
+  transition: opacity 200ms linear;
+}
+
+.middleCenter-appear-done,
+.middleCenter-enter-done,
+.middleCenter-exit {
+  top: 1px;
+  opacity: 0.8;
+}
+
+.middleCenter-exit-active {
+  top: 1px;
+  opacity: 0;
+  transition: opacity 200ms linear;
+}
+
+.topLeft,
+.bottomLeft {
+  left: 1px;
+}
+
+.middleCenter,
+.topCenter,
+.bottomCenter {
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.topRight,
+.bottomRight {
+  right: 1px;
+}
+
+.middleCenter {
+  height: 45px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fa-spinner:before {
+  font-weight: normal;
+}
+
+.topLeft-appear,
+.topCenter-appear,
+.topRight-appear,
+.topLeft-enter,
+.topCenter-enter,
+.topRight-enter,
+.topLeft-appear-active,
+.topCenter-appear-active,
+.topRight-appear-active,
+.topLeft-enter-active,
+.topCenter-enter-active,
+.topRight-enter-active,
+.topLeft-appear-done,
+.topCenter-appear-done,
+.topRight-appear-done,
+.topLeft-enter-done,
+.topCenter-enter-done,
+.topRight-enter-done,
+.topLeft-exit,
+.topCenter-exit,
+.topRight-exit,
+.topLeft-exit-active,
+.topCenter-exit-active,
+.topRight-exit-active,
+.bottomLeft,
+.bottomCenter,
+.bottomRight,
+.bottomLeft-appear,
+.bottomCenter-appear,
+.bottomRight-appear,
+.bottomLeft-enter,
+.bottomCenter-enter,
+.bottomRight-enter,
+.bottomLeft-appear-active,
+.bottomCenter-appear-active,
+.bottomRight-appear-active,
+.bottomLeft-enter-active,
+.bottomCenter-enter-active,
+.bottomRight-enter-active,
+.bottomLeft-appear-done,
+.bottomCenter-appear-done,
+.bottomRight-appear-done,
+.bottomLeft-enter-done,
+.bottomCenter-enter-done,
+.bottomRight-enter-done,
+.bottomLeft-exit,
+.bottomCenter-exit,
+.bottomRight-exit,
+.bottomLeft-exit-active,
+.bottomCenter-exit-active,
+.bottomRight-exit-active,
+.middleCenter,
+.middleCenter-appear,
+.middleCenter-enter,
+.middleCenter-appear-active,
+.middleCenter-enter-active,
+.middleCenter-appear-done,
+.middleCenter-enter-done,
+.middleCenter-exit,
+.middleCenter-exit-active {
+  z-index: 1001;
+}
+
+.topLeft-exit-done,
+.topCenter-exit-done,
+.topRight-exit-done,
+.bottomLeft-exit-done,
+.bottomCenter-exit-done,
+.bottomRight-exit-done,
+.middleCenter-exit-done {
+  z-index: 2 !important;
+}

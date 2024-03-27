@@ -1,0 +1,42 @@
+.-text-field-with-error {
+
+    .input-group {
+        min-width: 180px;
+
+        .input-add-on {
+            margin-bottom: 0;
+        }
+
+        .help-text {
+            color: red;
+        }
+    }
+}
+
+.-custom-input .input-add-on {
+    margin-bottom: 0
+}
+
+.-custom-input label {
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.-checkbox-label label {
+    font-size: 0.8em !important;
+    margin: 0 !important;
+}
+
+.input-border-red input {
+    border-color: red;
+}
+
+.-dropdown-box > div.select-from-object {
+    width: 100% !important;
+}
+
+.Document-Editor .DraftEditor-editorContainer {
+    border: 1px solid #ddd;
+    min-height: 500px;
+    padding: 1em 1.5em;
+}

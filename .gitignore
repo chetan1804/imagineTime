@@ -1,0 +1,11 @@
+# ignore these files and directories
+
+# .DS_Store
+*.DS_Store
+# compiled output
+/web/webpack.config.js
+/web/package-lock.json
+/node_modules
+server/cloud_sql_proxy.exe
+Git CMD.lnk
+Run.bat

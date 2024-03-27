@@ -1,0 +1,46 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Phone Number module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/phoneNumberAdminStyles";
+
+.phone-number-list-item, .phone-card-wrapper {
+  margin-bottom: .5em;
+  .-edit-phone-link {
+    @include transition(opacity 250ms ease-in-out);
+    padding: .5em 1em; // expand click area slightly.
+    opacity: 0;
+  }
+  &:hover {
+    .-edit-phone-link {
+      opacity: 1;
+    }
+  }
+}
+
+.phone-number-editor {
+  &.-quick-view {
+    form {
+      padding: 0;
+    }
+    .form-container {
+      border: none;
+      box-shadow: none;
+      justify-content: left;
+    }
+    .yt-container {
+      padding: 0;
+      max-width: 100%;
+      margin: 0;
+    }
+    .-phone-input {
+      margin-left: 1em;
+    }
+  }
+} 
+
+.yt-col._20.-phone-input .input-add-on {
+  margin-bottom: 0;
+}

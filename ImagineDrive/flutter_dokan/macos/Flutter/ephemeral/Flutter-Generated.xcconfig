@@ -1,0 +1,11 @@
+// This is a generated file; do not edit or check into version control.
+FLUTTER_ROOT=C:\Users\Jhoemar\Documents\Apps\Utils\flutter
+FLUTTER_APPLICATION_PATH=C:\Users\Jhoemar\Documents\Projects\imaginetime\imaginetime-master\ImagineDrive\flutter_dokan
+FLUTTER_BUILD_DIR=build
+FLUTTER_BUILD_NAME=0.1.0
+FLUTTER_BUILD_NUMBER=0.1.0
+EXCLUDED_ARCHS=arm64
+DART_OBFUSCATION=false
+TRACK_WIDGET_CREATION=false
+TREE_SHAKE_ICONS=false
+PACKAGE_CONFIG=.packages

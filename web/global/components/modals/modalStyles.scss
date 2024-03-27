@@ -1,0 +1,23 @@
+.standard-modal {
+  .terms-services {
+    position: relative;
+    canvas {
+      margin: auto !important
+    }
+
+    .pdf-wrapper {
+      overflow-y: scroll;
+      height: 700px;
+
+      .pages {
+        max-width: 90%;
+        font-size: 14px;
+        margin: auto;
+
+        div{
+          margin: 10px 0;
+        }
+      }
+    }
+  }
+}

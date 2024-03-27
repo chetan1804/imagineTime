@@ -1,0 +1,125 @@
+div.-table-pagination {
+    opacity: 1;
+    background: #ffffff;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    font-weight: 600;
+    color: #bbb;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+    supported by Chrome, Edge, Opera and Firefox */
+    list-style: none;
+
+    &.-tp-top {
+        .-pc-content-column > div {
+            padding: 9px 9px 0px;
+        }
+        .-pc-content-column > .search {
+            padding: 0;
+            
+            input {
+                height: 22px;
+                padding-top: 5px;
+                color: black;
+            }
+
+            i.fa-search {
+                padding: 0.68em 0.5em 0.5em 0.75em;
+            }
+        }
+    }
+
+    &.-tp-bottom {
+        margin-bottom: 3.7em;
+
+        .-pc-content-column > div {
+            padding: 4px 9px 0px;
+        }
+    }
+
+    // .-search-bar {
+    //     float: right;
+    //     order: 2;
+    //     margin-left: auto;
+        
+    // }
+    
+    ul {
+        padding: 0;
+        margin: 10px 0 5px;
+        float: left;
+    }
+
+    li {
+        padding: 4px 4px 0;
+        border: 1px solid #d9d9d9;
+
+        a {
+            background: #ffffff !important;
+        }
+    }
+
+    li .current-page {
+        background-color: #ffffff;
+        color: black;
+    }
+
+    .-pc-content-column > div {
+        margin: 10px 0 0px;
+        // border: 1px solid #d9d9d9;
+
+        label {
+            padding: 0;
+            margin: 0;
+        }
+
+        select {
+            /* Reset Select */
+            outline: 0;
+            box-shadow: none;
+            background-image: none;
+            padding: 3px 2px 0px;
+        }
+    }
+
+    label, a, select {
+        font-size: 13px !important;
+    }
+
+    .-pagination-tabber {
+        float: right;
+        order: 2;
+        // margin-left: auto;
+    }
+
+    .-pc-content-column.-search-bar {
+        float: right;
+        order: 2;
+        margin-left: auto;
+    }
+
+    .yt-toolbar {
+        min-height: auto;
+        height: 30px;
+    
+        input {
+            height: 30px;
+            font-weight: 400;
+            font-size: 15px;
+            padding-top: 3px;
+        }
+    
+        .fa-search:before {
+            font-size: 19px;
+        }
+
+        .search-input {
+            float: right;
+        }
+    }
+}

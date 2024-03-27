@@ -1,0 +1,112 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Notification module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/notificationAdminStyles";
+
+.-notification-icon {
+  position: relative;
+  &.-has-notifs {
+    color: $text-color;
+  }
+  .-count {
+    color: #fff;
+    background-color: $danger;
+    position: absolute;
+    top: -6px;
+    right: -12px;
+    border-radius: 10px;
+    padding: 2px 6px;
+    @include micro-font;
+    line-height: 1;
+    font-weight: 700;
+  }
+  &.-toggle {
+    &:hover {
+      cursor: pointer;
+      i {
+        color: lighten($it-teal, 3) !important;
+      }
+    }
+    i {
+      @include transition(all 150ms ease-in-out);
+      color: $it-teal;
+      padding: 0 0.5em;
+      text-align: center;
+      width: 2.5em;
+    }
+    &.-off {
+      i {
+        color: $lighter-text-color;
+      }
+    }
+  }
+}
+
+.-notification-menu {
+  position: absolute;
+  z-index: 1000;
+  top: $gutter-width;
+  right: -$gutter; 
+  width: 320px;
+  background-color: #fff;
+  @include box-shadow(0px 4px 10px $shadow-color);
+  padding: $gutter;
+  border-radius: 4px;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  margin-top: $gutter * 0.5;
+  .-header {
+    border-bottom: 1px solid $divider-color;
+    padding-bottom: 8px;
+  }
+  .-body {
+    max-height: 320px;
+    @include mobile-scroll;
+  }
+  .-notification {
+    border-bottom: 1px solid $divider-color;
+    padding: $gutter * 0.5 0;
+    .-notif-text {
+      text-align: left;
+      white-space: normal; 
+      color: $text-color;
+      width: 100%;
+      display: block;
+    }
+    a {
+      text-align: left;
+      line-height: 1.5;
+      white-space: normal !important;
+    }
+    .--link {
+      @include small-font;
+      color: $link-color;
+      line-height: 1;
+    }
+    .action-link {
+      color: $link-color;
+    }
+  }
+  .-empty {
+    text-align: left;
+    padding: $gutter 0;
+  }
+}
+
+.-staff-client-notification {
+  .yt-row {
+    margin: 0.7em 0;
+  }
+
+  .fas.fa-bell.-disabled:before {
+    color: #878787 !important;
+    cursor: not-allowed !important;
+  }
+}
+
+.-staff-notification-setting > .-staff-client-notification {
+  padding: 0 !important;
+}

@@ -1,0 +1,55 @@
+.alert-message {
+  padding: $gutter * 0.5 $gutter;
+  background-color: $brand-primary;
+  color: #fff;
+  text-align: center;
+  // border: 1px solid darken($brand-primary, 20);
+  &.-left {
+    text-align: left;
+  }
+  &.-small {
+    padding: $gutter * 0.25 $gutter * 0.5;
+  }
+  a, .action-link {
+    color: rgba(255,255,255,0.8);
+    text-decoration: underline;
+    &:hover {color: #fff;}
+  }
+  &.success {
+    background: $success;
+    border-color: darken($success, 20);
+
+  }
+  &.danger {
+    background: $danger;
+    border-color: darken($danger, 20);
+  }
+  &.warning {
+    // background: $warning;
+    // background: lighten($warning, 20);
+    color: $text-color; 
+    // border-color: darken($warning, 20);
+    background: lighten($it-yellow, 20);
+    border: 1px solid $it-orange;
+    border-radius: 4px;
+    a, .action-link { color: $text-color }
+  }
+  &.info {
+    background: $info;
+    border-color: darken($info, 20);
+  }
+  &.primary {
+    background: $primary;
+    border-color: darken($primary, 20);
+  }
+  &.general {
+    // background: $warning;
+    // background: lighten($warning, 20);
+    color: $text-color; 
+    // border-color: darken($warning, 20);
+    background: $highlight-color;
+    border: 1px solid $divider-color;
+    border-radius: 4px;
+    a, .action-link { color: $lighter-text-color }
+  }
+}

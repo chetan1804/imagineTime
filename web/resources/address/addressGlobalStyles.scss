@@ -1,0 +1,83 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Address module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/addressAdminStyles";
+
+.address-card-wrapper {
+  // padding-bottom: .5em;
+  position: relative;
+  @include transition(background-color 250ms ease-in-out);
+  &.-editable {
+    .-address { 
+      &:after {
+        // content: " ";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: rgba(255,255,255,0.9);
+        // opacity: 0;
+        @include transition(opacity 250ms ease-in-out);
+      } 
+    } 
+  }
+  .-edit-btns {
+    @include transition(opacity 250ms ease-in-out);
+    @include display-flex; 
+    @include justify-content(space-between);
+    // padding-left: 1em;
+    opacity: 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding: $gutter * 0.5;
+  }
+  &:hover {
+    .-address { 
+      &:after {
+        opacity: 1;
+      } 
+    } 
+    .-edit-btns {
+      opacity: 1;
+    }
+  }
+}
+
+.address-editor {
+  &.-quick-view {
+    max-width: 500px;
+    form {
+      padding: 0;
+    }
+    .form-container {
+      border: none;
+      box-shadow: none;
+    }
+    .yt-container {
+      padding: 0;
+    }
+  }
+}
+
+.address-card-form {
+  input {
+    padding: 0;
+    border: none;
+    background-color: #fff;
+    border-bottom: 1px solid $divider-color;
+  }
+  select {
+    border: none;
+    padding: 0;
+    background-color: #fff;
+  }
+  .select-from-object .react-select__control {
+    border: none;
+    // padding: 0;
+    background-color: #fff;
+  }
+}

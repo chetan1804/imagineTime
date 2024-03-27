@@ -1,0 +1,29 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Subscription module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/subscriptionAdminStyles";
+
+
+.status-pill {
+  &.trialing {
+    background-color: $it-teal;
+    color: #fff;
+  }
+  &.active {
+    background-color: $success;
+  }
+  &.incomplete,
+  &.incomplete_expired {
+    background-color: $warning;
+    color: #fff;
+  }
+  &.canceled,
+  &.past_due,
+  &.unpaid {
+    background-color: $danger;
+    color:#fff;
+  }
+}

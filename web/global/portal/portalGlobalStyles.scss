@@ -1,0 +1,244 @@
+
+
+.portal-top-nav {
+  .titles {
+    padding-right: $gutter-width;
+    margin-right: $gutter-width;
+    border-right: 1px solid $divider-color;
+  }
+  .navigation.-tight {
+    li {
+      margin-left: $gutter;
+    }
+  }
+  .nav-logo {
+    display: none;
+    @include MQ(M) {
+      @include display-flex;
+    }
+  }
+  .-open-nav-icon {
+    @include display-flex;
+    @include MQ(M) {
+      display: none;
+    }
+  }
+}
+
+.-portal-body {
+  padding-top: $header-height + $gutter-width * 2;
+  p {
+    max-width: 640px;
+  }
+}
+
+.-portal-footer {
+  background-color: #fff;
+  color: $text-color;
+  .footer-logo {
+    margin-left: $gutter;
+    @include display-flex;
+    @include align-items(center);
+  }
+}
+
+.-portal-content {
+  padding-top: $gutter-width;
+  label {
+    .-edit-button {
+      @include transition(all 250ms ease-in-out);
+      padding-left: 1em;
+      opacity: 0;
+    }
+    &:hover {
+      .-edit-button {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+
+.portal-info-helper {
+  order: -1;
+  @include MQ(S) {
+    order: 1;
+  }
+  .-content-box {
+    border: 1px solid $divider-color;
+    border-radius: 4px;
+    padding: $gutter * 0.5;
+    text-align: center;
+    background: $it-light-green;
+    margin-top: $gutter-width;
+    p {
+      @include small-font;
+      font-style: italic;
+    }
+    .-icon {
+      @include larger-font;
+      margin: $gutter * 0.5 0;
+    }
+  }
+}
+
+.portal-search-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  padding: $gutter-width * 2 0; 
+  z-index: 11000;
+  .-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: $gutter-width;
+  }
+  .input-add-on {
+    // max-width: 640px;
+    // margin: $gutter-width auto;
+    @include medium-font;
+    .item {
+      border: 1px solid $divider-color;
+      border-left: none;
+      background-color: #fff;
+      color: $lighter-text-color;
+      &:hover {
+        background-color: #fff;
+        color: $text-color;
+      }
+    }
+  }
+  input {
+    @include flex(1);
+    height: $gutter-width * 2;
+    border: 1px solid $divider-color;
+    border-right: none;
+    padding: 0 $gutter;
+  }
+}
+
+.portal-search-input {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding-top: $gutter-width;
+  height: 300px;
+  background-color: #fff;
+  z-index: 100;
+  .-results-tab {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    .tab-bar-nav {
+      padding: 0 $gutter;
+      border: none;
+      .navigation {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.15)
+      }
+    }
+  }
+}
+
+.portal-search-results {
+  position: fixed;
+  padding-top: 300px;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  @include mobile-scroll;
+}
+
+.-results-wrapper {
+  padding: $gutter;
+}
+.-search-results {
+  margin-top: $gutter;
+  .-no-results {
+    background-color: $it-blue-gray;
+    color: #fff;
+    padding: $gutter;
+  }
+}
+
+a.portal-search-item {
+  @include display-flex;
+  // @include align-items(center);
+  padding: $gutter * 0.25;
+  margin-top: $gutter * 0.50;
+  @include transition(box-shadow 250ms ease-in-out);
+  color: $text-color;
+  .-task-type {
+    // width: $gutter-width * 2;
+    margin-right: $gutter;
+  }
+  .-file-icon {
+    width: $gutter-width * 2;
+
+  }
+  .-info {
+    @include flex(1);
+  }
+  .-title {
+    font-weight: 600;
+    // color: $link-color;
+    text-decoration: underline;
+    @include transition(color 250ms ease-in-out);
+  }
+  .-uploaded {
+    color: $lighter-text-color;
+    @include small-font;
+  }
+  .-items {
+    font-style: italic;
+    color: $lighter-text-color;
+  }
+  .-due-date {
+    @include small-font;
+    @include align-items(center);
+    margin: $gutter * 0.5 0;
+    .-icon {
+      border: 1px solid $text-color;
+      height: $gutter-width;
+      width: $gutter-width;
+      margin-right: $gutter * 0.5; 
+    }
+  }
+  .-arrow {
+    width: 40px;
+    color: $text-color;
+    @include display-flex;
+    @include align-items(center);
+    .-i {
+
+      margin-left: 0;
+      opacity: 0;
+      @include transition(all 250ms ease-in-out);
+    }
+  }
+  &:hover {
+    @include box-shadow(0px 4px 12px $shadow-color);
+    .-arrow .-i {
+      opacity: 1;
+      margin-left: $gutter;
+    }
+  }
+}
+
+.onboarding-reminder-wrapper {
+  background-color: #f9f9f9;
+  width: 80%;
+  max-width: 540px;
+  padding: 1em;
+  border-radius: 1em;
+  @include box-shadow(0px 4px 12px $shadow-color);
+  h3 {
+    margin-top: .5em;
+  }
+}

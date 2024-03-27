@@ -1,0 +1,20 @@
+.content-container {
+  padding: $gutter;
+  background-color: #fff;
+}
+
+.-deleted {
+  color: red !important;
+}
+
+.brand-app-ls {
+  .loading {
+    background-image: url('/img/lexshare-icon.png');
+  }
+}
+
+.brand-app-it {
+  .loading {
+    background-image: url('/img/icon.png');
+  }
+}

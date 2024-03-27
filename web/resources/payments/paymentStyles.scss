@@ -1,0 +1,157 @@
+.cards-img-modal {
+  width: 35% !important;
+  height: auto !important;
+  transition: all 250ms ease-in-out !important;
+}
+
+.main1-trans {
+  width: 50% !important;
+  float: left !important;
+  margin-left: -10px !important;
+}
+
+.main2-trans {
+  width: 50% !important;
+  float: left !important;
+  margin-left: 10px !important;
+}
+
+.flexbox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 5px;
+}
+
+.flexbox > div {
+  box-sizing: border-box;
+  margin: 10px 10px 0 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px #00000040;
+}
+
+.flexbox::after {
+  content: "";
+  flex: auto;
+}
+
+.parent-container {
+  display: flex;
+  height: 100%;
+}
+
+.child-container {
+  flex: 370px;
+}
+
+.child-container-left {
+  flex: 400px;
+}
+.child-container-right {
+  flex: 0 435px;
+  background-color: #fff;
+  padding: 12px 18px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px #00000040;
+  margin-right: 15px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.horizontal {
+  flex-direction: row;
+  width: 100%; /*this line was added*/
+}
+
+.horizontal .flex-item {
+  flex: 1;
+  margin-left: 20px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px #00000040;
+}
+
+.white-box {
+  background: #fff;
+  border-radius: 0 0 3px 3px;
+}
+
+.paymentslinks a {
+  text-decoration: underline !important;
+  margin-right: 7px !important;
+}
+
+.pull-right {
+  float: right;
+}
+.error-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+}
+
+.child {
+  box-sizing: border-box;
+  flex-grow: 1;
+  margin: 0 25px;
+  width: 15%;
+}
+
+.card-number {
+  height: 40px;
+  display: inline-block;
+  padding: 0 5px !important
+}
+
+.card-cvv {
+  height: 40px;
+  display: inline-block;
+  padding: 0 5px !important;
+}
+
+.width-50p {
+  width: 50% !important;
+}
+.p-mt-15 {
+  margin-top: 15px !important;
+}
+
+.d-block {
+  display: block !important;
+}
+.lay-center {
+  position: relative;
+  left: 33%;
+  width: 30%;
+}
+
+.payment-w-50 {
+  width: 50%;
+}
+
+.logo-w-15 {
+  width: 15% !important;
+}
+.opacity-4 {
+  opacity: 0.4;
+  width: 300px !important;
+  height: 300px !important;
+  margin-left: 49px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.header-color {
+  background-color: #F5684D;
+}

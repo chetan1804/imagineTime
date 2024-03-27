@@ -1,0 +1,32 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Note module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/noteAdminStyles";
+
+.note-editor {
+  margin-top: $gutter;
+  .-note-input {
+    .input-group {
+      margin-bottom: 0;
+      
+      textarea {
+        margin-bottom: 0;
+      }
+    } 
+  }
+}
+
+.note-item {
+  @include display-flex;
+  margin-top: $gutter;
+  .-profile-pic {
+    width: $gutter-width;
+  }
+  .-content {
+    margin-left: $gutter * 0.5;
+    @include flex(1);
+  }
+}

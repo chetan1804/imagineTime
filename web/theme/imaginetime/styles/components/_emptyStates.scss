@@ -1,0 +1,10 @@
+
+
+.empty-state-hero {
+  min-height: $gutter * 10;
+  width: 100%;
+  background-color: $highlight-color;
+  @include display-flex;
+  @include justify-content(center);
+  @include align-items(center);
+}

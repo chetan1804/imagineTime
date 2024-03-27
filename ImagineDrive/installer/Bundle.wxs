@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+	 xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<Product Name='Imagine Share' Manufacturer='ImagineTime Inc.'
+        Id='32603A71-9E8F-4969-B000-1F3B7E4326AC'
+        UpgradeCode='581AA328-F516-454D-99B2-F776354543EF'
+        Language='1033' Codepage='1252' Version='1.0.0'>
+		<Package Id='*' Keywords='Installer' Description="ImagineShare Installer"
+			Comments='ImagineShare is a registered trademark of ImagineTime Inc.' Manufacturer='ImagineTime Inc.'
+			InstallerVersion='200' Languages='1033' Compressed='yes' SummaryCodepage='1252' Platform='x64'/>
+		<Media Id='1' Cabinet='ImagineShare.cab' EmbedCab='yes'/>
+		<!--<Binary Id='DokanCtl' SourceFile='..\imagine_drive\build\windows\runner\$(var.Configuration)\dokanctl.exe'/>-->
+		<Binary Id='CustomAction.dll' SourceFile='..\InstallerCustomAction\bin\$(var.Configuration)\InstallerCustomAction.CA.dll'/>
+		<!-- Custom action for installing dokan driver and registries for shell-->
+		<!--<CustomAction Id='InstallDriverFile' BinaryKey='DokanCtl' ExeCommand='/i d' Return='asyncWait'/>-->
+		<!--<CustomAction Id='RemoveDriverFile' BinaryKey='DokanCtl' ExeCommand='/r d' Return='asyncWait'/>-->
+		<CustomAction Id='ShellInit' BinaryKey='CustomAction.dll' DllEntry='RunInit' Execute='deferred' Impersonate='no' Return='check'/>
+		<CustomAction Id='ShellUninit' BinaryKey='CustomAction.dll' DllEntry='RunUninit' Execute='deferred' Impersonate='no' Return='check'/>
+		<!-- Copy files-->
+		<Directory Id='TARGETDIR' Name='SourceDir'>
+			<Directory Id='ProgramFilesFolder' Name='PFiles'>
+				<Directory Id='INSTALLDIR' Name='Imagine Share'>
+					<Component Id='MainExecutable' Guid='795D7A1B-2757-4E60-BBAF-ED610DE8D231'>
+						<File Id='ImagineExe' Name='imagine_drive.exe' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\imagine_drive.exe' KeyPath='yes'>
+							<Shortcut Id='startmenuImagine' Directory='ProgramMenuDir' Name='Imagine Share' WorkingDirectory='INSTALLDIR' Icon='imagine_drive.exe' IconIndex='0' Advertise='yes'/>
+							<Shortcut Id='desktopImagine' Directory='DesktopFolder' Name='Imagine Share' WorkingDirectory='INSTALLDIR' Icon='imagine_drive.exe' IconIndex='0' Advertise='yes'/>							
+						</File>
+					</Component>
+					<!--Registry-->
+					<Component Id='Startup' Guid='795D7A1B-2757-4E60-BBAF-ED610DE8D2DE'>
+						<RegistryKey Root='HKLM' Key='Software\Microsoft\Windows\CurrentVersion\Run' ForceCreateOnInstall='yes'>
+							<RegistryValue Type='string' Name='ImagineShare' Value='&quot;[INSTALLDIR]imagine_drive.exe&quot; -background' KeyPath='yes'/>
+						</RegistryKey>
+					</Component>
+					<Component Id='FlutterDokan' Guid='65E7ADDB-6560-4D72-BDCF-5D908C5E70B0'>
+						<File Id='FlutterDokan' Name='flutter_dokan_plugin.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\flutter_dokan_plugin.dll' KeyPath='yes'/>
+					</Component>
+					<Component Id='FlutterWindows' Guid='45A47335-E604-45FF-9513-8656F9105F57'>
+						<File Id='FlutterWindows' Name='flutter_windows.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\flutter_windows.dll' KeyPath='yes'/>
+					</Component>
+					<Component Id='DokanDll' Guid='44B3D3A4-57C0-49C9-8E83-4716D8365A0E'>
+						<File Id='DokanDll' Name='dokan1.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\dokan1.dll' KeyPath='yes'/>
+					</Component>
+					<Component Id='ImagineShareDLL' Guid='44B3D3A4-57C0-49C9-8E83-4716D8365B0F'>
+						<File Id='ImagineShareDLL' Name='ImagineShare.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\ImagineShare.dll' KeyPath='yes'/>
+					</Component>
+					<Component Id='Newtonsoft' Guid='F3872617-D79C-41E9-BB0F-EE3A28042ED6'>
+						<File Id='Newtonsoft' Name='Newtonsoft.Json.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\Newtonsoft.json.dll' KeyPath='yes'/>
+					</Component>
+					<Component Id='Sharpshell' Guid='AD4A57C9-AD68-46C2-8F26-51FFB17845E8'>
+						<File Id='Sharpshell' Name='SharpShell.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\SharpShell.dll' KeyPath='yes'/>
+					</Component>
+					<Component Id='Sqlite' Guid='7A5386D2-FF3E-48FC-B325-4B385F698EF0'>
+						<File Id='Sqlite' Name='sqlite3.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\sqlite3.dll' KeyPath='yes'/>
+					</Component>
+					<Component Id='UrlLauncher' Guid='B7574E3E-B896-4FEC-B285-165BEA8B941A'>
+						<File Id='UrlLauncher' Name='url_launcher_windows_plugin.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\url_launcher_windows_plugin.dll' KeyPath='yes'/>
+					</Component>
+					<Component Id='InitBat' Guid='B7574B3E-B896-4FEC-B285-165BEA8B941A'>
+						<File Id='InitBat' Name='init.bat' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\init.bat' KeyPath='yes'/>
+					</Component>
+					<Component Id='UninitBat' Guid='B7574F3E-B896-4FEC-B285-165BEA8B941A'>
+						<File Id='UninitBat' Name='uninit.bat' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\uninit.bat' KeyPath='yes'/>
+					</Component>
+					<Component Id='dokanctl' Guid='C7574F3E-B896-4FEC-B285-165BEA8B941B'>
+						<File Id='dokanctl' Name='dokanctl.exe' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\dokanctl.exe' KeyPath='yes'/>
+					</Component>
+					<?if $(var.Configuration) = Debug ?>
+						<Component Id='DokanDllDbg' Guid='AD4A57C9-AD68-46C2-8F26-51FFB17845E9'>
+							<File Id='DokanDllDbg' Name='dokan1.pdb' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\dokan1.pdb' KeyPath='yes'/>
+						</Component>
+						<Component Id='ImagineShareDLLDbg' Guid='AD4A57C9-AD68-46C2-8F26-51FFB17845A9'>
+							<File Id='ImagineShareDLLDbg' Name='ImagineShare.pdb' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\ImagineShare.pdb' KeyPath='yes'/>
+						</Component>
+						<Component Id='Msvc140' Guid='94A02944-7C61-4CB9-B29A-B815ACFB1FEE'>
+							<File Id='Msvc140' Name='msvcp140d.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\msvcp140d.dll' KeyPath='yes'/>
+						</Component>
+						<Component Id='ucrtbase' Guid='380626FA-D15D-4EE7-BC06-9915E18EFDC5'>
+							<File Id='ucrtbase' Name='ucrtbased.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\ucrtbased.dll' KeyPath='yes'/>
+						</Component>
+						<Component Id='vcruntime140_1' Guid='D19F0E20-B1F0-4D13-A6A3-CB7DF7EFADE9'>
+							<File Id='vcruntime140_1' Name='vcruntime140_1d.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\vcruntime140_1d.dll' KeyPath='yes'/>
+						</Component>
+						<Component Id='vcruntime140' Guid='13AD1140-E994-4972-9FF8-799F6FD93047'>
+							<File Id='vcruntime140' Name='vcruntime140d.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\vcruntime140d.dll' KeyPath='yes'/>
+						</Component>
+					<?endif ?>
+					<?if $(var.Configuration) = Release ?>
+						<Component Id='Msvc140' Guid='94A02944-7C61-4CB9-B29A-B815ACFB1FEE'>
+							<File Id='Msvc140' Name='msvcp140.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\msvcp140.dll' KeyPath='yes'/>
+						</Component>
+						<Component Id='ucrtbase' Guid='380626FA-D15D-4EE7-BC06-9915E18EFDC5'>
+							<File Id='ucrtbase' Name='ucrtbase.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\ucrtbase.dll' KeyPath='yes'/>
+						</Component>
+						<Component Id='vcruntime140_1' Guid='D19F0E20-B1F0-4D13-A6A3-CB7DF7EFADE9'>
+							<File Id='vcruntime140_1' Name='vcruntime140_1.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\vcruntime140_1.dll' KeyPath='yes'/>
+						</Component>
+						<Component Id='vcruntime140' Guid='13AD1140-E994-4972-9FF8-799F6FD93047'>
+							<File Id='vcruntime140' Name='vcruntime140.dll' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\vcruntime140.dll' KeyPath='yes'/>
+						</Component>
+					<?endif ?>
+					<Directory Id='DataDir' Name='data'>
+						<Directory Id='FlutterAssetsDir' Name='flutter_assets'>
+							<Directory Id='AssetsDir' Name='assets'>
+								<Component Id='FlutterData1' Guid='4E6CF881-A57C-4378-B657-BC4BB5D97A03'>
+									<File Id='Logo' Name='logo.svg' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\data\flutter_assets\assets\logo.svg' KeyPath='yes'/>
+								</Component>
+							</Directory>
+							<Directory Id='FontsDir' Name='fonts'>
+								<Component Id='FlutterData2' Guid='4E6CF881-A57C-4378-B657-BC4BB5D97A04'>
+									<File Id='Font1' Name='MaterialIcons-Regular.otf' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\data\flutter_assets\fonts\MaterialIcons-Regular.otf' KeyPath='yes'/>
+								</Component>
+							</Directory>
+							<Directory Id='PackagesDir' Name='packages'>
+								<Directory Id='FileIconDir' Name='file_icon'>
+									<Directory Id='Fonts2Dir' Name='fonts'>
+										<Component Id='FlutterData3' Guid='4E6CF881-A57C-4378-B657-BC4BB5D97A05'>
+											<File Id='Font2' Name='seti.ttf' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\data\flutter_assets\packages\file_icon\fonts\seti.ttf' KeyPath='yes'/>
+										</Component>
+									</Directory>
+								</Directory>
+							</Directory>
+							<Component Id='FlutterData4' Guid='4E6CF881-A57C-4378-B657-BC4BB5D97A06'>
+								<File Id='AssetManifest' Name='AssetManifest.json' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\data\flutter_assets\AssetManifest.json' KeyPath='yes'/>
+							</Component>
+							<Component Id='FlutterData5' Guid='4E6CF881-A57C-4378-B657-BC4BB5D97A07'>
+								<File Id='FontManifest' Name='FontManifest.json' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\data\flutter_assets\FontManifest.json' KeyPath='yes'/>
+							</Component>
+							<?if $(var.Configuration) = Debug ?>
+								<Component Id='FlutterData6' Guid='4E6CF881-A57C-4378-B657-BC4BB5D97A08'>
+									<File Id='FlutterKernel' Name='kernel_blob.bin' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\data\flutter_assets\kernel_blob.bin' KeyPath='yes'/>
+								</Component>
+							<?endif ?>
+						</Directory> <!--End flutter assets dir-->
+						<?if $(var.Configuration) = Release ?>
+							<Component Id='FlutterData6' Guid='4E6CF881-A57C-4378-B657-BC4BB5D97A08'>
+								<File Id='FlutterKernel' Name='app.so' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\data\app.so' KeyPath='yes'/>
+							</Component>
+						<?endif ?>
+						<Component Id='FlutterData7' Guid='4E6CF881-A57C-4378-B657-BC4BB5D97A09'>
+							<File Id='IcuData' Name='icudtl.dat' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\data\icudtl.dat' KeyPath='yes'/>
+						</Component>
+					</Directory> <!--End data dir-->
+
+				</Directory>
+			</Directory>
+			<Directory Id="ProgramMenuDir" Name="Programs"/>
+			<Directory Id="DesktopFolder" Name="Desktop"/>
+			<Directory Id="System64Folder" Name="System32">
+				<Directory Id="Drivers" Name="drivers">
+					<Component Id='DokanDriver' Guid='6CF6A676-777D-4964-8F68-1D42B1744A9B' Win64='yes'>
+						<File Id='DokanDriver' Name='dokan1.sys' DiskId='1' Source='..\imagine_drive\build\windows\runner\$(var.Configuration)\dokan1.sys' KeyPath='yes'/>
+					</Component>
+				</Directory>
+			</Directory>
+		</Directory>
+		<Feature Id='Complete' Level='1'>
+			<ComponentRef Id='MainExecutable'/>
+			<ComponentRef Id='Startup'/>
+			<ComponentRef Id='FlutterDokan'/>
+			<ComponentRef Id='FlutterWindows'/>
+			<ComponentRef Id='ImagineShareDLL'/>
+			<ComponentRef Id='Newtonsoft'/>
+			<ComponentRef Id='Sharpshell'/>
+			<ComponentRef Id='DokanDriver'/>
+			<ComponentRef Id='DokanDll'/>
+			<ComponentRef Id='dokanctl'/>
+			<ComponentRef Id='InitBat'/>
+			<ComponentRef Id='UninitBat'/>
+			<ComponentRef Id='Msvc140'/>
+			<ComponentRef Id='ucrtbase'/>
+			<ComponentRef Id='vcruntime140_1'/>
+			<ComponentRef Id='vcruntime140'/>
+			<ComponentRef Id='UrlLauncher'/>
+			<ComponentRef Id='FlutterData1'/>
+			<ComponentRef Id='FlutterData2'/>
+			<ComponentRef Id='FlutterData3'/>
+			<ComponentRef Id='FlutterData4'/>
+			<ComponentRef Id='FlutterData5'/>
+			<ComponentRef Id='FlutterData6'/>
+			<ComponentRef Id='FlutterData7'/>
+			<ComponentRef Id='Sqlite'/>
+			<?if $(var.Configuration) = Debug ?>
+				<ComponentRef Id='DokanDllDbg'/>
+				<ComponentRef Id='ImagineShareDLLDbg'/>
+			<?endif ?>
+		</Feature>
+		<InstallExecuteSequence>
+			<Custom Action='ShellInit' After='InstallFiles'>NOT Installed</Custom>
+			<Custom Action='ShellUninit' Before='RemoveFiles'>Installed</Custom>
+		</InstallExecuteSequence>
+		<Icon Id='imagine_drive.exe' SourceFile='..\imagine_drive\build\windows\runner\$(var.Configuration)\imagine_drive.exe'/>
+		<Property Id="ARPPRODUCTICON" Value="imagine_drive.exe" />
+		<Property Id="MSIUSEREALADMINDETECTION" Value="1" />
+		<Property Id="REBOOT" Value="Force"></Property>
+	</Product>
+</Wix>
+

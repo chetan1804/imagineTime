@@ -1,0 +1,206 @@
+
+
+// OLD
+.modal-wrapper {
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  @include zIndex-7;
+  // background-color: rgba(0,0,0,0.75);
+  background-color: $bg-color;
+  // @include display-flex;
+  // @include justify-content(center);
+  // @include align-items(center);
+  padding: $gutter-width 0;
+  @include mobile-scroll;
+  transition: left 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+
+}
+
+.modal {
+  // z-index: 1000;
+
+  position: relative;
+  min-width: 400px;
+  padding: $gutter;
+  margin: 0 auto;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  // background-color: $bg-color;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  // border: 1px solid #ccc;
+  // border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  // @include box-shadow(0 6px 12px rgba(0,0,0,.175))
+}
+
+
+//NEW
+
+body {
+  &.modal-open {
+    overflow: hidden;
+    .header {
+      &.fixed {
+        /*
+         * NOTE: In some places we open modals from a stacking context that is lower than the top nav.
+         * This ensures that all modals will show up on top of the top nav, regardless of their original
+         * stacking context.
+         */
+        z-index: 600; // 600 is sufficiently low. Auto was causing unpredictable behavior.
+      }
+    }
+  }
+}
+
+.standard-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100000;
+  background-color: rgba(0,0,0,0.65);
+  // background-color: $bg-color;
+  @include display-flex;
+  @include justify-content(center);
+  // @include align-items(center);
+  padding: $gutter-width 0;
+  @include mobile-scroll;
+  transition: left 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  // @include align-items(center);
+  &.danger {
+    @include display-flex;
+    @include justify-content(center);
+    .card-header {
+      background-color: $danger;
+      color: #fff;
+    }
+  }
+  &.info {
+    @include display-flex;
+    @include justify-content(center);
+    .card-header {
+      background-color: $info;
+      color: #fff;
+    }
+  }
+  &.warning {
+    @include display-flex;
+    @include justify-content(center);
+    .card-header {
+      background-color: $warning;
+      color: #fff;
+    }
+  }
+  &.success {
+    @include display-flex;
+    @include justify-content(center);
+    .card-header {
+      background-color: $success;
+      color: #fff;
+    }
+  }
+  .form-container {
+    border: none;
+    &:hover {
+      box-shadow: none;
+    }
+  }
+  .card {
+    border-radius: $gutter * 0.25;
+  }
+}
+
+.fixed-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100000;
+  background-color: rgba(0,0,0,0.4);
+  .yt-col {
+    @include display-flex;
+    @include flex-direction(column);
+    position: absolute;
+    top: 72px;
+    left: 72px;
+    right: 72px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 960px;
+    height: calc(100% - 144px);
+    // border-radius: 3px;
+    // background: white;
+  }
+  .card {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: $gutter * 0.25;
+    @include box-shadow(0px 8px 16px $shadow-color);
+  }
+  .card-header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    // padding: $gutter;
+    height: $gutter-width * 2;
+  }
+  .card-body {
+    position: absolute;
+    top: $gutter-width * 2;
+    width: 100%;
+    bottom: $gutter-width * 2;
+    padding: 0px $gutter-width;
+    @include mobile-scroll;
+  }
+  .card-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: $gutter;
+    min-height: $gutter-width * 2;
+  }
+  .form-container {
+    border: none;
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}
+
+.alert-modal {
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100000;
+  background-color: rgba(0,0,0,0.65);
+  // background-color: $bg-color;
+  // @include display-flex;
+  // @include justify-content(center);
+  // @include align-items(center);
+  padding: $gutter-width 0;
+  @include mobile-scroll;
+  transition: left 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  @include display-flex;
+  @include align-items(center);
+  @include justify-content(center);
+  .alert-message {
+    @include display-flex;
+    @include align-items(center);
+    @include justify-content(space-between);
+  }
+}

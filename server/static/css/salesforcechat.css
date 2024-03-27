@@ -1,0 +1,39 @@
+img[embeddedService-chatHeader_chatHeader] {
+  margin-right: 8px !important;
+  max-height: 36px !important;
+  max-width: 36px !important;
+}
+h2[embeddedService-chatHeader_chatHeader] {
+  margin: 0;
+  align-self: center;
+  flex-grow: 1;
+  text-align: left;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: inherit !important;
+  font-weight: normal !important;
+  letter-spacing: 0.025em;
+  margin-bottom: 0 !important;
+}
+.embeddedServiceSidebarForm.formContent {
+  line-height: 0 !important;
+}
+button[embeddedService-chatHeader_chatHeader] {
+  padding: 2px 3px !important;
+  font-weight: bold !important;
+  font-size: .9em !important;
+  margin-top: 0 !important;
+  margin: 1px !important;
+}
+.embeddedServiceSidebarDialogState .dialogIcon svg {
+  top: 0 !important;
+  left: 0 !important;
+  overflow: auto !important;
+}
+.embeddedServiceSidebar.modalContainer {
+  width: initial !important;
+  height: initial !important;
+  animation: none !important;
+}

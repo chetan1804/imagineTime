@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{95650AC0-5AB2-43DF-A9FF-0152F0CB2897}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>imagine</RootNamespace>
+    <AssemblyName>ImagineShare</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ContentSQLiteInteropFiles>true</ContentSQLiteInteropFiles>
+    <CopySQLiteInteropFiles>false</CopySQLiteInteropFiles>
+    <CleanSQLiteInteropFiles>false</CleanSQLiteInteropFiles>
+    <CollectSQLiteInteropFiles>false</CollectSQLiteInteropFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\imagine_drive\windows\imagine_share\debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+    <RegisterForComInterop>false</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\imagine_drive\windows\imagine_share\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>imagine_share.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpShell, Version=2.7.2.0, Culture=neutral, PublicKeyToken=f14dc899472fe6fb, processorArchitecture=MSIL">
+      <HintPath>packages\SharpShell.2.7.2\lib\net40-client\SharpShell.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Checker\AppData.cs" />
+    <Compile Include="Checker\CheckerManager.cs" />
+    <Compile Include="Checker\FileBaseChecker.cs" />
+    <Compile Include="Checker\IChecker.cs" />
+    <Compile Include="SocketIOClient\ConnectInterval\DefaultConnectInterval.cs" />
+    <Compile Include="SocketIOClient\ConnectInterval\IConnectInterval.cs" />
+    <Compile Include="SocketIOClient\EioHandler\Eio3Handler.cs" />
+    <Compile Include="SocketIOClient\EioHandler\Eio4Handler.cs" />
+    <Compile Include="SocketIOClient\EioHandler\EioHandlerFactory.cs" />
+    <Compile Include="SocketIOClient\EioHandler\IEioHandler.cs" />
+    <Compile Include="SocketIOClient\EngineIOProtocol.cs" />
+    <Compile Include="SocketIOClient\EventArguments\ReceivedEventArgs.cs" />
+    <Compile Include="SocketIOClient\Exceptions\InvalidSocketStateException.cs" />
+    <Compile Include="SocketIOClient\Packgers\IPackable.cs" />
+    <Compile Include="SocketIOClient\Packgers\IPackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\IReceivedEvent.cs" />
+    <Compile Include="SocketIOClient\Packgers\IUnpackable.cs" />
+    <Compile Include="SocketIOClient\Packgers\MessageAckPackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\MessageBinaryAckPackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\MessageBinaryEventPackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\MessageConnectedPackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\MessageDisconnectedPackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\MessageErrorPackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\MessageEventPackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\MessagePackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\OpenedPackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\PackgeManager.cs" />
+    <Compile Include="SocketIOClient\Packgers\PingPackger.cs" />
+    <Compile Include="SocketIOClient\Packgers\PongPackger.cs" />
+    <Compile Include="SocketIOClient\Response\MessageType.cs" />
+    <Compile Include="SocketIOClient\Response\OpenResponse.cs" />
+    <Compile Include="SocketIOClient\SocketIO.cs" />
+    <Compile Include="SocketIOClient\SocketIOOptions.cs" />
+    <Compile Include="SocketIOClient\SocketIOProtocol.cs" />
+    <Compile Include="SocketIOClient\SocketIOResponse.cs" />
+    <Compile Include="SocketIOClient\UrlConverter.cs" />
+    <Compile Include="SocketIOClient\WebSocketClient\ClientWebSocket.cs" />
+    <Compile Include="SocketIOClient\WebSocketClient\IWebSocketClient.cs" />
+    <Compile Include="Checker\Util.cs" />
+    <Compile Include="ImagineShare.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SocketHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="CERTIFICATE.pfx" />
+    <None Include="imagine_share.snk" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.ico" />
+    <None Include="Resources\done.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\app.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

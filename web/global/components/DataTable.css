@@ -1,0 +1,16 @@
+.rowActions {
+    color: #0DA79D !important;
+}
+
+.rowActions>div {
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.rowActions>div:hover {
+    text-decoration: underline;
+}
+
+.rowActions>div:last-child {
+    margin-right: 0px;
+}

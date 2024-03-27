@@ -1,0 +1,96 @@
+
+
+
+@for $progress from 0 through 100 {
+  .progress-bar-#{$progress} {
+    width: 100%;
+    height: 10px;
+    // border: 0.125em solid darken(#EDEFF1, 3);
+    // background: darken(#EDEFF1, 5);
+    background: rgba(190,190,190,0.4);
+    border-radius: 20px;
+    position: relative;
+    .-progress {
+      height: 100%;
+      width: #{$progress + '%'};
+      // background-color: $brand-primary;
+      background-color: $it-blue;
+      border-radius: 20px;
+      position: relative;
+    }
+    .-complete {
+      position: absolute;
+      right: 0px;
+      top: -8px;
+      img {
+        width: 100%;
+        max-width: 32px;
+      }
+    }
+  }
+}
+
+#generateSignedFileProgressContainer {
+  .progress-container {
+    margin: 0;
+    max-width: 50%;
+  }
+}
+
+.progress-container {
+  max-width: 80%;
+  margin: auto;
+}
+
+.node-progress-wrapper {
+  display: inline-block;
+  width: 50%;
+  margin-right: $gutter;
+  position: relative;
+  // &:after {
+  //   content: '';
+  //   background: #fff;
+  //   opacity: 0.51;
+  //   height: 2px;
+  //   border-radius: 2px;
+  //   position: absolute;
+  //   top: 50%;
+  //   width: 8px;
+  //   left: 100%;
+  //   margin-left: 4px;
+  // }
+  .-progress {
+
+  }
+}
+
+/*
+ * Styling for the ProgressDots component.
+ */
+
+.progress-dots {
+  padding: 0 $gutter;
+  width: 100%
+}
+.progress-dots li {
+  border-radius: 50%;
+  list-style-type: none;
+  float: left;
+  font-size: 1em;
+  position: relative;
+  margin-right: .5em;
+  text-align: center;
+}
+.progress-dots li:before {
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+  content: '';
+  line-height: 30px;
+  display: block;
+  text-align: center;
+  background-color: grey;
+}
+.progress-dots li.active:before {
+  background-color: $it-blue;
+}

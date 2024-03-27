@@ -1,0 +1,188 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Share Link module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/shareLinkAdminStyles";
+
+.fa-times:before {
+  color: black !important;
+  opacity: 0.80;
+  font-size: 18px !important;
+}
+
+.linkconfig-main-layout {
+  #signInBlock {
+    display: none;
+  }
+}// css for link configurations
+
+.share-link-layout {
+  .-header {
+    // right: $file-sidebar-width;
+    width: auto;
+  }
+  .-header-content {
+    height: 100%;
+    @include display-flex;
+    @include align-items(center);
+  }
+  .form-container {
+    border: none;
+    &:hover {
+      box-shadow: none;
+    }
+  }
+  .-file-list {
+    margin-top: $gutter-width;
+    .-title {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .file-list-item {
+
+      .-buttons {
+        opacity: 0;
+        @include transition(opacity 250ms ease-in-out);
+      }
+      &:hover {
+        .-buttons {
+          opacity: 1;
+        }
+        .card {
+          @include box-shadow(0 8px 24px $shadow-color);
+        }
+      }
+    }
+  }
+  .-file-actions {
+    @include display-flex;
+    @include align-items(center);
+    .action-link {
+      @include display-flex;
+      @include align-items(center);
+      margin: 0 $gutter;
+    }
+  }
+}
+
+
+.-share-link-row {
+  .-icon {
+    margin-right: $gutter;
+  }
+  .-description {
+    position: relative;
+    @include flex(1);
+    @include small-font;
+    line-height: 1;
+  }
+  .-copyable-share-link {
+    // visibility: hidden;
+    position: absolute;
+    top: 50%;
+    margin-top: -$gutter;
+    width: 100%;
+    z-index: -1;
+    &.-visible {
+      z-index: 0;
+    }
+    input {
+      border: none;
+      width: 100%;
+      height: $gutter-width;
+      @include small-font;
+    }
+  }
+  .-prompt {
+    opacity: 1;
+    // @include transition(opacity 250ms ease-in-out);
+    z-index: 0;
+    &.-hidden {
+      opacity: 0;
+      z-index: -1;
+    }
+  }
+}
+
+.-share-link-configuration {
+  border: 1px solid $divider-color;
+  margin-bottom: $gutter;
+  .-header {
+    background-color: $highlight-color;
+    padding: $gutter;
+  }
+  .-body {
+    padding: $gutter;
+  }
+
+}
+
+.-view-share-and-request-recepient > .yt-col {
+  min-height: 68px;
+  .yt-btn.xx-small.u-pullRight {
+    height: 40px !important ;
+    width: 120px !important;
+  }
+  .yt-row {
+
+    .yt-col.input-group {
+      margin-bottom: 0;
+    }
+
+    min-width: 50% !important;
+   
+    .yt-btn.xx-small.link.u-pullRight {
+      background: #f0f0f0;
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 10px !important;
+      margin-left: 2px !important;
+      max-height: 100% !important;
+
+      i {
+        font-size: 13px !important;
+        padding-top: 8px !important;
+      }
+    }
+  }
+}
+
+.-share-and-request-recepient > .yt-col {
+  .yt-btn.xx-small.u-pullRight {
+    height: 40px !important ;
+    width: 120px !important;
+  }
+  .yt-row {
+    min-width: 50% !important;
+    width: 50% !important;
+
+    .yt-btn.xx-small.link.u-pullRight {
+      background: #d5d5d5;
+      width: 40px !important;
+      height: 37px !important;
+      border-radius: 5px !important;
+      margin-left: 2px !important;
+      max-height: 100% !important;
+
+      i {
+        font-size: 13px !important;
+        padding-top: 8px !important;
+      }
+    }
+  }
+}
+
+:root {
+  --pt-done-borderWidth: 3px;
+  --pt-done-height: 13px;
+  --pt-done-width: 8px;
+  --pt-done-borderColor: #fff;
+}
+
+.-request-file-input.-webapp-sharelink .files-dropzone-list .dropzone {
+  z-index: 0 !important;
+}

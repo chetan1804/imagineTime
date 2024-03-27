@@ -1,0 +1,26 @@
+
+.status-pill {
+  border-radius: 30px;
+  border: 2px solid $text-color;
+  padding: 5px 12px;
+  background-color: #efefef;
+  font-weight: 600;
+  display: inline-block;
+  &.-approved,
+  &.-published {
+    background-color: $it-teal;
+    color: #fff;
+  }
+  &.-pending {
+    background-color: $it-orange;
+  }
+  &.-rejected,
+  &.-archived {
+    background-color: $it-danger;
+    color: #fff;
+  }
+  &.-needs-edits {
+    background-color: $warning;
+    // color:#fff;
+  }
+}

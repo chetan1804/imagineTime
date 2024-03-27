@@ -1,0 +1,139 @@
+.-subfolder-template-tree {
+    min-height: 50px;
+
+
+    .-folder-line-connector {
+        float: left;
+        position: relative;
+        width: 18px;
+        border-bottom: 1px solid #9a9292;
+        top: 10px;
+        left: -22px;
+
+        > div {
+            border-bottom: 1px solid #9a9292;
+            height: 3px;
+            width: 4px;
+            background-color: #9a9292;
+            border-radius: 50%;
+            float: left;
+            position: absolute;
+            top: -1px;
+            left: -2px;
+        }
+    }
+
+    .fas {
+        font-size: 13px;
+        margin-right: 8px;
+        color: green;
+        cursor: pointer;
+        &.fa-minus {
+            color: red;
+        }
+    }
+
+    .-folder-name {
+        margin: 2px 0;
+        display: flex;
+
+        div, input, small {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        input, small {
+            // width: 100%;
+            padding: 0 5px;
+            min-width: 100px;
+            margin-right: 5px;
+        }
+
+        .-icon img {
+            width: 22px;
+            margin-right: 3px;
+            position: relative;
+            top: 6px;
+        }
+
+        span {
+            margin-right: 5px;
+        }
+
+        small.-folder-count {
+            padding: 0;
+            font-weight: 600;
+            margin: 0;
+        }
+    }
+
+    > .yt-row, .yt-row > .yt-row {
+            padding-left: 30px;
+            border-left: 1px solid #9a9292;
+    }
+
+    .folder {
+        height: 13px;
+        display: inline-block;
+        position: relative;
+        background-color: #f3be1c;
+        border-radius: 0 3px 3px 3px;
+        width: 20px;
+        position: relative;
+        top: 2px;
+
+        &::before {
+            content: '';
+            width: 50%;
+            height: 0.1em;
+            border-radius: 0 20px 0 0;
+            background-color: #ffa000;
+            position: absolute;
+            top: -0.1em;
+            left: 0px;
+        }
+    }
+
+    .-folder-deleted-name {
+        color: red;
+    }
+}
+
+.-folder-tempate-form {
+    .-inputs.yt-col > .input-group, .input-add-on {
+        margin-bottom: 0px;
+    }
+}
+
+.table-cell.-folder-title.-without-description {
+    min-width: 300px;
+    width: 30%;
+}
+
+small.yt-btn.small.link.info:hover {
+    background-color: none;
+    cursor: pointer;
+}
+
+.data-form-actions > button {
+    margin-right: 10px;
+}
+
+.-folder-row-list {
+    width: 100%;
+    height: fit-content;
+    padding-left: 5px !important;
+    cursor: pointer;
+    &.-selected-row {
+        color: #fff;
+        background: #686767;
+    }
+}
+
+.-unselected-div {
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}

@@ -1,0 +1,68 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Firm module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/firmAdminStyles";
+
+.-settings-firm-logo {
+  max-width: 400px;
+  .-no-logo-yet {
+    background-color: $highlight-color;
+    height: 180px;
+    width: 100%;
+    @include display-flex;
+    @include align-items(center);
+    @include justify-content(center);
+    @include column-size(100%);
+  }
+}
+
+.-advance-setting-form {
+  .input-add-on {
+    margin-bottom: 0.3em;
+  }
+
+  .-to-display {
+    .fa-angle-right {
+      margin-right: 5px;
+    }
+  }
+
+  &.-update-form {
+    .-to-display {
+      display: none;
+    }
+  }
+
+  &.-display-form {
+    .-to-update {
+      display: none;
+    }
+  }
+  
+  .box {
+    //border: 1px solid #E2E2E2;
+    //border-radius: 5px;
+    //box-shadow: #C0C0C0 0px 5px 15px;
+    //padding: 10px 15px;
+    margin: 10px 10px 20px 0px;
+    //width: 500px;
+
+    .heading {
+      font-size: 1.2em;
+      font-weight: bold;
+      border-bottom: 2px solid #0DA79D;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+
+    .space-between {
+      margin-top: 15px;
+      padding: 0px 20px;
+    }
+  
+  }
+
+}

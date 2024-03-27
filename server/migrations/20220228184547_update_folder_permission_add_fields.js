@@ -1,0 +1,55 @@
+
+exports.up = function(knex, Promise) {
+  return Promise.all([
+    knex.schema.table('folderpermission', table => {
+      table.boolean("adminRead").defaultTo(false)
+      table.boolean("adminCreate").defaultTo(false)
+      table.boolean("adminDelete").defaultTo(false)
+      table.boolean("adminUpload").defaultTo(false)
+      table.boolean("adminDownload").defaultTo(false)
+      table.boolean("ownerRead").defaultTo(false)
+      table.boolean("ownerCreate").defaultTo(false)
+      table.boolean("ownerDelete").defaultTo(false)
+      table.boolean("ownerUpload").defaultTo(false)
+      table.boolean("ownerDownload").defaultTo(false)
+      table.boolean("staffRead").defaultTo(false)
+      table.boolean("staffCreate").defaultTo(false)
+      table.boolean("staffDelete").defaultTo(false)
+      table.boolean("staffUpload").defaultTo(false)
+      table.boolean("staffDownload").defaultTo(false)
+      table.boolean("contactRead").defaultTo(false)
+      table.boolean("contactCreate").defaultTo(false)
+      table.boolean("contactDelete").defaultTo(false)
+      table.boolean("contactUpload").defaultTo(false)
+      table.boolean("contactDownload").defaultTo(false)
+      table.dropColumn('profile')
+    })
+  ])
+};
+
+exports.down = function(knex, Promise) {
+  return Promise.all([
+    knex.schema.table('folderpermission', table => {
+      table.dropColumn("adminRead")
+      table.dropColumn("adminCreate")
+      table.dropColumn("adminDelete")
+      table.dropColumn("adminUpload")
+      table.dropColumn("adminDownload")
+      table.dropColumn("ownerRead")
+      table.dropColumn("ownerCreate")
+      table.dropColumn("ownerDelete")
+      table.dropColumn("ownerUpload")
+      table.dropColumn("ownerDownload")
+      table.dropColumn("staffRead")
+      table.dropColumn("staffCreate")
+      table.dropColumn("staffDelete")
+      table.dropColumn("staffUpload")
+      table.dropColumn("staffDownload")
+      table.dropColumn("contactRead")
+      table.dropColumn("contactCreate")
+      table.dropColumn("contactDelete")
+      table.dropColumn("contactUpload")
+      table.dropColumn("contactDownload")
+    })
+  ])
+};

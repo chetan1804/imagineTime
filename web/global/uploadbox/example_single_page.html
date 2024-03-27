@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Client Web</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+
+            /* :default */
+            .-modal-imagineTime-container {
+                width: 0;
+                height: 0;
+                margin: 0;
+                padding: 0;
+            }
+            .-modal-imagineTime-container > .-modal-imagineTime-checkbox {
+                position: fixed;
+                z-index: 2;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                -o-appearance: none;
+                appearance: none;
+                background-color: #fff;
+                cursor: pointer;
+                left: 0;
+                margin: 0px;
+                padding: 0px;
+                border: none
+            }
+            .-modal-imagineTime-container > iframe {
+                max-width: 850px;
+                height: 500px;
+                border: none !important;
+                background-color: transparent !important;
+                position: fixed;
+                left: 50%;
+                top: 45%;
+                transform: translate(-50%, -50%);
+                border-radius: 10px;
+                z-index: 2;
+                margin: 0px;
+            }
+
+            .-modal-imagineTime-container > .-modal-imagineTime-background {
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                z-index: 1;
+                background: rgba(0, 0, 0, 0.5);
+                left: 0px;
+                top: 0px;
+            }
+
+            /* :checkbox not check hover */
+            .-modal-imagineTime-container > .-modal-imagineTime-checkbox:not(:checked):hover {
+                width: 150px;
+                background: url(https://app.imaginetime.com/img/logo-black.png) center;
+                background-size: 125px 25px;
+                background-repeat: no-repeat;  
+                background-color: #fff;
+                border: 1px solid #d9d9d9;
+                z-index: 5;
+            }
+
+            /* :checkbox not check */
+            .-modal-imagineTime-container > .-modal-imagineTime-checkbox:not(:checked)  {
+                width: 5px;
+                height: 40px;
+                bottom: 35%;
+                transition: width 0.2s;
+                border-right: 5px solid #0DA79D;
+            }
+
+            .-modal-imagineTime-container > .-modal-imagineTime-checkbox:not(:checked) + iframe {
+                display: none;
+            }
+
+            .-modal-imagineTime-container > .-modal-imagineTime-checkbox:not(:checked) + iframe + .-modal-imagineTime-background {
+                display: none;
+            }
+
+            /* :checkbox checked */
+            .-modal-imagineTime-container > .-modal-imagineTime-checkbox:checked  {
+                width: 100%;
+                height: 100%;
+                outline: none;
+                background-color: transparent;
+            } 
+
+            .-modal-imagineTime-container > .-modal-imagineTime-checkbox:checked + iframe {
+                display: block;
+            }
+            
+            .-modal-imagineTime-container > .-modal-imagineTime-checkbox:checked + iframe + .-modal-imagineTime-background {
+                display: block;
+            }
+
+            @media only screen and (max-width: 500px) {
+                .-modal-imagineTime-container > iframe {
+                    width: 80%;
+                }
+            }
+
+            @media only screen and (min-width: 501px) {
+                .-modal-imagineTime-container > iframe {
+                    width: 70%;
+                }
+            }
+        </style>
+    </head>
+    <body style="text-align:center">        
+        <!-- the client code goes here  -->
+        <h1>Hello world</h1>
+
+        <!-- ImagineTIme code goes here -->
+        <div class="-modal-imagineTime-container">
+            <input type="checkbox" class="-modal-imagineTime-checkbox" />
+
+            <!-- after: params clientName value = Petron Corporation -->
+            <!-- note: not case-sensitive -->
+            <iframe src="https://app.imaginetime.com/uploadbox?clientName=YourClientName" scrolling="no" title="Iframe Example"></iframe>
+
+            <div class="-modal-imagineTime-background"></div>
+        </div>
+    </body>
+</html>

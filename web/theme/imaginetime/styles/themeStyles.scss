@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+/**
+ * Dependencies
+ */
+@import "./dependencies/colorPalettes";
+@import "./dependencies/fonts";
+@import "./dependencies/mixins";
+@import "./dependencies/normalize";
+@import "./dependencies/reactTransitions";
+@import "./dependencies/zIndex";
+
+
+/**
+ * Foundation -
+ * depends on 'Dependencies '
+ */
+@import "./foundation/colors";
+@import "./foundation/grid";
+@import "./foundation/layout";
+@import "./foundation/typography";
+
+/**
+ * Base -
+ * depends on 'Dependencies' & 'Foundation'
+ */
+@import "./foundation/base";
+
+/**
+ * Helpers
+ */
+@import "./helpers/helpers";
+@import "./helpers/ieConditionals";
+@import "./helpers/utilities";
+
+@import "./components/layout/underlineNav/firmSettingView";
+@import "./components/layout/underlineNav/fileView";
+@import "./components/layout/underlineNav/clientWorkspaceView";
+
+/**
+ * Components
+ */
+@import "./components/alerts";
+@import "./components/buttons";
+@import "./components/cards";
+@import "./components/dropdown";
+@import "./components/emptyStates";
+@import "./components/filters";
+@import "./components/forms";
+@import "./components/hero";
+@import "./components/image";
+@import "./components/modals";
+@import "./components/pills";
+@import "./components/quickView";
+@import "./components/pagination";
+@import "./components/progressBar";
+@import "./components/tabBars";
+@import "./components/tables";
+
+
+@import "./components/tiles";
+@import "./components/toolbar";
+@import "./components/tooltip";
+@import "./components/listComparator";
+
+
+@import "./components/layout/mobile";
+@import "./components/layout/tablet";
+
+/**
+ * Regions
+ */
+@import "./regions/content";
+@import "./regions/footer";
+@import "./regions/navigation";
+@import "./regions/sections";

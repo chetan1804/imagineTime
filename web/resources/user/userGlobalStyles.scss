@@ -1,0 +1,215 @@
+/**
+ * Styles specific to the user module should live here
+ */
+
+ 
+.-user-initials {
+  height: $gutter * 3;
+  width: $gutter * 3;
+  @include display-flex;
+  @include justify-content(center);
+  @include align-items(center);
+  background: $it-blue-gray;
+  @include medium-font;
+  font-weight: 600;
+  border-radius: 50%;
+  margin-right: $gutter;
+  &.-nav {
+    height: $header-height * 0.5;
+    width: $header-height * 0.5;
+    @include base-font;
+    margin-right: $gutter * 0.5;
+  }
+  &.-small {
+    height: $gutter * 2;
+    width: $gutter * 2;
+    @include base-font;
+    margin-right: $gutter * 0.5;
+  }
+  &.-large {
+    height: $gutter * 4;
+    width: $gutter * 4;
+    @include large-font;
+    margin-right: $gutter;
+  }
+  &.-jumbo {
+    height: $gutter * 6;
+    width: $gutter * 6;
+    font-size: 3rem;
+    margin-right: $gutter-width;
+  }
+  &.-avatar {
+    height: 120px;
+    width: 120px;
+    font-size: 3rem;
+    margin-right: $gutter-width;
+  }
+
+}
+
+.-account-forward {
+  min-height: 100vh;
+  @include display-flex;
+  @include flex-direction(column);
+  .-firm-list {
+    @include flex(1);
+  }
+}
+
+.-select-account {
+  margin-top: $gutter-width;
+  color: $lighter-text-color;
+}
+
+.-account-list {
+  margin-top: $gutter;
+  border-top: 1px solid $divider-color;
+  list-style: none;
+  padding: 0;
+  .-account-select-link {
+    color: #241c15;
+    outline: 0;
+    height: 60px;
+    line-height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 $gutter;
+    border-bottom: 1px solid $divider-color;
+    @include medium-font;
+    @include display-flex;
+    @include justify-content(space-between);
+    @include align-items(center);
+    @include transition(all 150ms ease-in-out);
+    .-icon {
+      margin-right: $gutter * 0.5;
+      @include transition(margin 250ms ease-in-out);
+    }
+    &:hover {
+      background-color: $it-pink;
+      color: #fff;
+      .-icon {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+
+.-user-info {
+  @include display-flex;
+  @include align-items(center);
+  .-text {
+    line-height: 1;
+  }
+}
+
+.-user-personal-info {
+  padding: $gutter 0;
+  label {
+    display: block;
+    font-weight: 500;
+  }
+
+  >.-set-primary-contact {
+    display: flex;
+
+    > button {
+      border: 0;
+      background: transparent;
+      height: 1em;
+      margin: 1.35em 0em 0em 1em;
+      color: #0DA79D;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.-user-accounts {
+  padding: $gutter 0;
+}
+
+.-user-notes {
+  padding: $gutter 0;
+  button {
+    &.-note-button {
+      margin-top: $gutter;
+    }
+  }
+}
+
+.user-finish {
+  &.-left-side {
+    max-width: 500px;
+  }
+
+  padding: $gutter;
+  .form-container {
+    h2 {
+      text-align: left;
+      white-space: nowrap
+    }
+    border: none;
+    margin: auto;
+    &:hover {
+      box-shadow: none;
+    }
+    input {
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      background-color: $bg-color;
+      &:focus {
+        border-top: none;
+        border-right: none;
+        border-left: none;
+      }
+    }
+  }
+}
+.profile-card {
+  margin-bottom: $gutter;
+  border: 1px solid $divider-color;
+}
+
+.-profile-card-info {
+  @include display-flex;
+  @include align-items(center);
+  border-top: 1px solid $divider-color;
+  padding: 8px 0;
+  margin-bottom: 8px;
+  .-info {
+    @include flex(1);
+  }
+}
+
+.-user-personal-info > .-block {
+
+  > form {
+    padding: 0;
+
+    .input-group {
+      margin-bottom: 1em;
+    }
+
+    .input-add-on {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.-account-forward {
+  > section.section {
+    background: transparent;
+  }
+}
+
+.user-table-list {
+  th:first-child, td:first-child {
+    width: 25px; 
+    label {
+      display: none !important;
+    }
+  }
+}

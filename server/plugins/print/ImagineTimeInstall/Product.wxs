@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <Product Id="{35741f1d-6046-40a5-8b03-54d25bc12845}" Name="ImagineTime Secure Print" Language="1033" Version="1.1.0"
+           Manufacturer="ImagineTime" UpgradeCode="199bb9fe-8239-45bf-bfb0-31e46025c2e6">
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine"
+             Platform="x64"
+             InstallPrivileges="elevated"
+             Description="ImagineTime Virtual Printer"
+             Comments="ImagineTime Virtual Printer Installation Package"
+             Id="*" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+                  Schedule="afterInstallValidate"
+                  AllowDowngrades="no" AllowSameVersionUpgrades="no" />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="ImagineTimeIcon.ico" SourceFile="..\Common\ImagineTimeIcon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="ImagineTimeIcon.ico" />
+
+    <Feature Id="ProductFeature" Title="ImagineTime" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+
+    <!-- .Net 4.6.1 Prerequisite -->
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED" />
+    <Condition
+      Message="This application requires .NET Framework 4.6.1. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED]]>
+    </Condition>
+    <!-- OS version prerequisite -->
+    <Condition Message="64-bit Windows 7, Server 2008 SP2, or later are required.">
+      <![CDATA[Installed OR (VersionNT >= 601 AND VersionNT64)]]>
+    </Condition>
+
+    <!-- Check if the user has administrator privileges -->
+    <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
+
+    <!-- Custom Actions -->
+    <Binary Id="ImagineTimeInstallCustomAction.CA.dll"
+            SourceFile="$(var.ImagineTimeInstallCustomAction.TargetDir)$(var.ImagineTimeInstallCustomAction.TargetName).CA.dll" />
+    <CustomAction Id="SetCustomActionDataValues"
+                  Return="check"
+                  Property="InstallPrinter"
+                  Value="DriverSourceDirectory=[INSTALLFOLDER];OutputCommand=[INSTALLFOLDER]ImagineTimePrint.exe;OutputCommandArguments=" />
+    <CustomAction Id="InstallPrinter"
+                  Return="check"
+                  Execute="deferred"
+                  BinaryKey="ImagineTimeInstallCustomAction.CA.dll"
+                  DllEntry="InstallImagineTimePrinter" Impersonate="no" />
+    <CustomAction Id="UninstallPrinter"
+                  Return="ignore"
+                  Execute="deferred"
+                  BinaryKey="ImagineTimeInstallCustomAction.CA.dll"
+                  DllEntry="UninstallImagineTimePrinter" Impersonate="no" />
+
+    <InstallExecuteSequence>
+      <Custom Action="SetCustomActionDataValues" After="InstallFiles">NOT Installed</Custom>
+      <Custom Action="InstallPrinter" After="SetCustomActionDataValues">NOT Installed</Custom>
+      <Custom Action="UninstallPrinter" Before="RemoveFiles">(Installed) OR (UPGRADINGPRODUCTCODE) OR (REMOVE)</Custom>
+    </InstallExecuteSequence>
+
+    <!-- Use the UI that allows an install directory to be chosen-->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <WixVariable Id="WixUILicenseRtf" Value="..\Common\agpl-3.0.rtf" />
+    <UIRef Id="WixUI_InstallDir" />
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="ImagineTime Secure Print" >
+          <Directory Id="LOCALESFOLDER" Name="locales" />
+          <Directory Id="RESOURCESFOLDER" Name="resources" />
+          <Directory Id="SWIFTSHADERSFOLDER" Name="swiftshader" />
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+  
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+      <Component Id="ImagineTimeBase" Directory="INSTALLFOLDER" Guid="{7033c49c-8956-43d8-b0a8-8c44149f8e34}">
+        <File Id="ImagineTimeExe" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\ImagineTime.exe" KeyPath="yes">
+          <netfx:NativeImage Id="ImagineTime.exe" Platform="64bit" Priority="1" />
+        </File>
+      </Component>
+      <Component Id="ImagineTimePrintExe" Directory="INSTALLFOLDER" Guid="{e85e1ccb-8d64-4e2b-b780-0ebab4325d17}">
+        <File Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\ImagineTimePrint.exe" KeyPath="yes">
+          <netfx:NativeImage Id="ImagineTimePrint.exe" Platform="64bit" Priority="1" />
+        </File>
+      </Component>
+      <Component Id="ImagineTimePrintDll" Directory="INSTALLFOLDER" Guid="{e85e1ccb-8d64-4e2b-1234-0ebab4325d17}">
+        <File Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\ImagineTimePrint.dll" KeyPath="yes">
+          <netfx:NativeImage Id="ImagineTimePrint.dll" Platform="64bit" Priority="1" />
+        </File>
+      </Component>
+      <Component Id="ImagineTimePrintExeConfig" Directory="INSTALLFOLDER" Guid="{c4445465-6ee2-42aa-bbac-359560a21165}">
+        <File Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\ImagineTimePrint.runtimeconfig.json" KeyPath="yes" />
+      </Component>
+      <Component Id="ImagineTimeCoreDll" Directory="INSTALLFOLDER" Guid="{e85e1ccb-8d64-4e2b-b780-0ebab8388d17}">
+        <File Source="$(var.ImagineTimeCore.TargetPath)" KeyPath="yes">
+          <netfx:NativeImage Id="$(var.ImagineTimeCore.TargetFileName)" Platform="64bit" Priority="1" />
+        </File>
+      </Component>
+      <!-- Third party components -->
+      <Component Id="gsdll64dll" Directory="INSTALLFOLDER" Guid="{96C2E5A1-15AD-4B27-A184-7AC1C2F08409}">
+        <File Source="..\Lib\gsdll64.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="redmon64itdll" Directory="INSTALLFOLDER" Guid="{460b772b-62e4-4345-8054-3461fa97fb09}">
+        <File Source="..\Lib\redmon64it.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="PS5UIDLL" Directory="INSTALLFOLDER" Guid="{bc54c4fe-9304-4bf2-b406-84c50e7ee546}">
+        <File Source="..\Lib\PS5UI.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="PSCRIPTHLP" Directory="INSTALLFOLDER" Guid="{B96DF277-B483-46D8-8AC3-895D73E4A8CA}">
+        <File Source="..\Lib\PSCRIPT.HLP" KeyPath="yes" />
+      </Component>
+      <Component Id="PSCRIPTNTF" Directory="INSTALLFOLDER" Guid="{C33507D7-EF2C-4C40-8BC8-065640FDC4F5}">
+        <File Source="..\Lib\PSCRIPT.NTF" KeyPath="yes" />
+      </Component>
+      <Component Id="PSCRIPT5DLL" Directory="INSTALLFOLDER" Guid="{5513735E-3BDF-4CD4-92F7-7D9F8965CCF1}">
+        <File Source="..\Lib\PSCRIPT5.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="SCPDFPRNppd" Directory="INSTALLFOLDER" Guid="{71646658-B1EA-4347-AEEA-3E60999D14E4}">
+        <File Source="..\Lib\SCPDFPRN.ppd" KeyPath="yes" />
+      </Component>
+      <Component Id="NewtonsoftJsondll" Directory="INSTALLFOLDER" Guid="{8b90546d-b1d8-47bb-b464-f4d7d52d5dfe}">
+        <File Source="..\Lib\Newtonsoft.Json.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="RestSharpdll" Directory="INSTALLFOLDER" Guid="{e12708a5-ff80-443f-b116-bb44b71f3d40}">
+        <File Source="..\Lib\RestSharp.dll" KeyPath="yes" />
+      </Component>
+      <!-- Electron -->
+      <Component Id="cmp0376E510BE891298857606B9637151C4" Directory="INSTALLFOLDER" Guid="{F882AA00-1BFC-413F-8B06-DF50A065AB4A}">
+        <File Id="fil1CBE4FC504DAD07744BA8C4C7C66520C" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\chrome_100_percent.pak" />
+      </Component>
+      <Component Id="cmp246D024AFED40D80FFD74081B2E4A6D8" Directory="INSTALLFOLDER" Guid="{C4B023ED-C523-435E-A8F9-CB360F9120FF}">
+        <File Id="filC82217C2738C273E7FF92C68F4244295" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\chrome_200_percent.pak" />
+      </Component>
+      <Component Id="cmpAB01F2D3CE1E5A2A9DB187A8DE288D9F" Directory="INSTALLFOLDER" Guid="{D250B28D-4435-4A4C-BC63-AF9E88E2AA82}">
+        <File Id="filA21529608FFED137BDAF259E8E8FB539" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\d3dcompiler_47.dll" />
+      </Component>
+      <Component Id="cmp7797469006388A6DCEA217B96BF898AE" Directory="INSTALLFOLDER" Guid="{401C6239-5243-431C-A0DF-87DBFA5219D0}">
+        <File Id="filE50D890135253AA8342CE0A8923B1528" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\ffmpeg.dll" />
+      </Component>
+      <Component Id="cmpAA7620C7717DCE2D41FE3B2E89862511" Directory="INSTALLFOLDER" Guid="{8B4DC86E-48BE-497F-B929-55A1BF4AFC7B}">
+        <File Id="fil14728C21E94AC67A789CBF275F7E6C64" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\icudtl.dat" />
+      </Component>
+      <Component Id="cmpA8D9041871BA8F74B81E0E45C32A8BE4" Directory="INSTALLFOLDER" Guid="{E3C23214-B1E7-487E-A32A-A7BC6F8B529D}">
+        <File Id="fil3A25D33B4960C96469FE2189F829E7CD" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\libEGL.dll" />
+      </Component>
+      <Component Id="cmp154C64B4BFE54BB91B763DEB9B7D77A8" Directory="INSTALLFOLDER" Guid="{9E53550D-1B06-4256-B749-1E2D21C84BD3}">
+        <File Id="fil637D14E1B184DFFE823E0D1F43D89198" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\libGLESv2.dll" />
+      </Component>
+      <Component Id="cmp71F69BDF36372CC1B0C80E2AE4B9EDFF" Directory="INSTALLFOLDER" Guid="{4654C555-0DEA-4F56-9256-5B309BD17F88}">
+        <File Id="fil09F2721F0AF94A458A8F1184C78AA56F" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\LICENSE" />
+      </Component>
+      <Component Id="cmp9C0BB5E2401A0167C013CC9FCD9671CE" Directory="INSTALLFOLDER" Guid="{0BF89654-B6C3-42B0-9D1E-59251B410B31}">
+        <File Id="fil206DA7F60AA428A216E5E7C121C8EEB3" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\LICENSES.chromium.html" />
+      </Component>
+      <Component Id="cmpB319CF8F0CB6E110F86E5614CDC1A119" Directory="INSTALLFOLDER" Guid="{BE72E7D5-D16B-46CB-B20A-867D8D19736D}">
+        <File Id="fil83FF6C7823FAFD0FA49557F2CC711407" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\natives_blob.bin" />
+      </Component>
+      <Component Id="cmp61E4A176D9DE53348233C65EAC53F211" Directory="INSTALLFOLDER" Guid="{3CD82748-E787-4F19-ADB7-DFB9FA12EB99}">
+        <File Id="filB757E671F4D2A68DD87D99B7191FB054" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\resources.pak" />
+      </Component>
+      <Component Id="cmp679CE072D0BE2EA284997FD33665569F" Directory="INSTALLFOLDER" Guid="{E71247C8-41CF-4147-A8A6-4A59BFEB637B}">
+        <File Id="fil59559A0D82E2F9341CD285861D5D96EF" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\snapshot_blob.bin" />
+      </Component>
+      <Component Id="cmp0692A8407B5CC5C2EB4E785AB7E2D4ED" Directory="INSTALLFOLDER" Guid="{A84A1A5A-58D0-4B5F-8C91-73FB0FDAD7E5}">
+        <File Id="filFCB8B0A230E603569D127E9EA93C5C0D" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\v8_context_snapshot.bin" />
+      </Component>
+      <Component Id="cmpAD4E8C263D692138AC7DA3C7EAAF577E" Directory="INSTALLFOLDER" Guid="{9E69D8E5-29A6-4D8B-A7BF-38E4AF2EAF31}">
+        <File Id="fil22DBEF8D6D2BA660668B445500F4973A" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\version" />
+      </Component>
+      <Component Id="cmp75241B436E522022FE897CB46E8E1DDE" Directory="LOCALESFOLDER" Guid="{B48B45BF-7B7A-4ABF-88CE-EDEC26628339}">
+        <File Id="fil8969DE60CD3DC12F524603CCFB69C867" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\am.pak" />
+      </Component>
+      <Component Id="cmpE4F1CD36A4877007FF3035A6C5BCC152" Directory="LOCALESFOLDER" Guid="{552AE42F-A45C-47A2-ABDD-3D4699D68FD9}">
+        <File Id="filB9C293F8E9EE1B14EA123C46FFB268B7" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\ar.pak" />
+      </Component>
+      <Component Id="cmpF95E43938896F83AAAAB99D293FD00CB" Directory="LOCALESFOLDER" Guid="{28376B2A-3C7B-44BF-AE1A-730DF67852B8}">
+        <File Id="fil4619B494D44D984F7E38652BC989DE9A" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\bg.pak" />
+      </Component>
+      <Component Id="cmp22F933E8AF57D78FE9EDF5E6B42E069E" Directory="LOCALESFOLDER" Guid="{1F70E9A6-592A-4A91-9532-43B25A89BC96}">
+        <File Id="fil659713147809C71221EA31471C036C15" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\bn.pak" />
+      </Component>
+      <Component Id="cmp41EB0D1D7C627CDEBC2E14E140D7BCB7" Directory="LOCALESFOLDER" Guid="{F57C68F1-CA54-4E11-8D4A-0648776D8A90}">
+        <File Id="fil08CFB28F84221AF634DABA6E9290EC2D" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\ca.pak" />
+      </Component>
+      <Component Id="cmp1D86AFB78977E58BD46E446879E310E4" Directory="LOCALESFOLDER" Guid="{F1F0AC8A-C881-431D-996F-2ABC5D2EEC33}">
+        <File Id="fil224BAF1B1992E471204B249DB6C0E026" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\cs.pak" />
+      </Component>
+      <Component Id="cmp7ABD2D469E7C74325ABF3046F6FC9B67" Directory="LOCALESFOLDER" Guid="{F7A111D6-3E71-425D-A7A7-B4D7D7669A28}">
+        <File Id="fil6089A123D88FA18A73DA45241769E7A6" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\da.pak" />
+      </Component>
+      <Component Id="cmp9C9F024D4BEECEA9448994F90AEC3020" Directory="LOCALESFOLDER" Guid="{E5272AB3-CBA3-4DB3-9788-4DCE2AF733C3}">
+        <File Id="fil8A0C4B5EF8ED9FE5C3D98679CB0230A5" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\de.pak" />
+      </Component>
+      <Component Id="cmp935DCE66B6F053BA384022B37382330A" Directory="LOCALESFOLDER" Guid="{231CF7B1-3EA2-4EA7-9EF8-8011BDD536DD}">
+        <File Id="fil4DB18AFBA001E41F28C230C31754CAFB" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\el.pak" />
+      </Component>
+      <Component Id="cmp8B7C64DF4BA53127A170FDB059B0465C" Directory="LOCALESFOLDER" Guid="{D21035D4-E2B1-480D-92E8-1B430B547C24}">
+        <File Id="filDC9277DF7E18A9C989EEB260EFF3876C" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\en-GB.pak" />
+      </Component>
+      <Component Id="cmp1E00859AD6F2DD5649169B34B8ED60D6" Directory="LOCALESFOLDER" Guid="{F7A149E8-D8A4-46D6-9066-B5433F398427}">
+        <File Id="filFBEBDA93121BEBF88914964FE013C6D2" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\en-US.pak" />
+      </Component>
+      <Component Id="cmpC28AC5B4B6FC1913FA72754454E3AFE0" Directory="LOCALESFOLDER" Guid="{778C406C-21D8-4BFB-979D-BCFDCAB82710}">
+        <File Id="filC0D8664FBDE99139896665BB72E76959" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\es-419.pak" />
+      </Component>
+      <Component Id="cmp61D9228035C496E51797C55827DFA74B" Directory="LOCALESFOLDER" Guid="{55C59962-951A-400A-9A5D-B839A51FAB2C}">
+        <File Id="fil55833F6F4A0B9D4FECA25E5762F9443B" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\es.pak" />
+      </Component>
+      <Component Id="cmp0834412DBCA9CF16D7B9252160128418" Directory="LOCALESFOLDER" Guid="{5AF1D04D-89B4-44ED-98FB-5222AE9ED56B}">
+        <File Id="fil74B2DB8929DEF9EC846FF46CFAE3FC64" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\et.pak" />
+      </Component>
+      <Component Id="cmp8388A77EDB16518BAE6DC11F084700DE" Directory="LOCALESFOLDER" Guid="{AD73CC32-61B1-42C6-99CD-1A7DC1846304}">
+        <File Id="fil133BF6AF92ED6808E06432341C5C63C2" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\fa.pak" />
+      </Component>
+      <Component Id="cmpA5192D1B6C6A0F295E95D44F8E594778" Directory="LOCALESFOLDER" Guid="{D2275F90-56F7-48F6-B6EB-378733D3D708}">
+        <File Id="fil3E91EDE5D1BE878FAFE74D2F8267CE27" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\fi.pak" />
+      </Component>
+      <Component Id="cmp20BC69E87CB436879DEB69CC7D7F73B7" Directory="LOCALESFOLDER" Guid="{BE36E2FE-DC7A-4A9C-A51D-AE0BFDC41646}">
+        <File Id="fil037858B8A32D8FE795B410DB1BFD7F41" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\fil.pak" />
+      </Component>
+      <Component Id="cmp79320A0A7DB0A95950A1926B82688C79" Directory="LOCALESFOLDER" Guid="{5BDE65D3-E7E1-49B9-A75D-C057DAB4386F}">
+        <File Id="fil1D41483F9CBBAA8ABBB6AEEB2F36C785" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\fr.pak" />
+      </Component>
+      <Component Id="cmp6DDD5B03511C373B032DE25E7B98575C" Directory="LOCALESFOLDER" Guid="{F25DDD2D-7ABD-40BF-B504-F090B9D9A4CF}">
+        <File Id="filE0DDD4EEFE13E72378112B39AA6862C2" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\gu.pak" />
+      </Component>
+      <Component Id="cmpA05E75341D07D6F24EC81DA81C4663CF" Directory="LOCALESFOLDER" Guid="{2EEE5996-A5C2-4214-8D12-ABFDB6BBA3F5}">
+        <File Id="fil4705D43C45AD54A6CC5259960EC9AE94" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\he.pak" />
+      </Component>
+      <Component Id="cmp0EA68014B861D6CAC6F5FA82C32A976D" Directory="LOCALESFOLDER" Guid="{0F4868B2-C36E-46D7-80EC-622DF4D07713}">
+        <File Id="fil1840ADD97FAE00FE25AF7A24E800B200" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\hi.pak" />
+      </Component>
+      <Component Id="cmp1E5313921F0EF2D0298AEEC0DD2CDDEF" Directory="LOCALESFOLDER" Guid="{8C401C2E-3974-4925-BF30-596C9776758E}">
+        <File Id="filB01342688878EC9D5BFE192D367D66EB" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\hr.pak" />
+      </Component>
+      <Component Id="cmp40D0833BC78562B9A3CAC67EBE95C117" Directory="LOCALESFOLDER" Guid="{12D68DDB-62B3-46C5-A654-EB20BAACF6A9}">
+        <File Id="fil83F10FA2E08E5F23AE9883FFB9167CB4" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\hu.pak" />
+      </Component>
+      <Component Id="cmpC246AB360BEE2D227BFF33CE652D5A51" Directory="LOCALESFOLDER" Guid="{83E0979C-509F-4213-81DA-D925C0AC4F53}">
+        <File Id="filAB870BC8854EFFB3CB30427BD6BF9AA5" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\id.pak" />
+      </Component>
+      <Component Id="cmp94B192387F9DB549CC7821D5AD4F72BA" Directory="LOCALESFOLDER" Guid="{9B9958A3-D00A-4CE1-952B-A644973D6AA0}">
+        <File Id="filEF66129926EC4947F433CBE5E153DBCC" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\it.pak" />
+      </Component>
+      <Component Id="cmpCA292C6BA4787D2BAF3DFD9C22576A47" Directory="LOCALESFOLDER" Guid="{40A384A2-DF6E-43A8-A29F-7BD34FD2EDFC}">
+        <File Id="fil7255D203AF199B4C6EE80180E4A4F6C2" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\ja.pak" />
+      </Component>
+      <Component Id="cmpC8B3942153C7A25DC46C07BB6EE07A8D" Directory="LOCALESFOLDER" Guid="{063E6C11-7E8B-4CA9-8B23-C6EEB469B01E}">
+        <File Id="fil17F647B6806A15091D3F09AF530C24FA" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\kn.pak" />
+      </Component>
+      <Component Id="cmpABA4D5A4A7A6D61F8742AB9C9A934023" Directory="LOCALESFOLDER" Guid="{9414FC1C-9103-46AF-B454-5B441EC14A5B}">
+        <File Id="fil0C206A0773E57C7641F6E7CB00917172" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\ko.pak" />
+      </Component>
+      <Component Id="cmpC32246FA3E2380FF24E5DFF7E937D0DF" Directory="LOCALESFOLDER" Guid="{335F4869-6340-45F2-BFC9-01B2032619B8}">
+        <File Id="fil5CED363C2861BF6C324831529D4C89EC" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\lt.pak" />
+      </Component>
+      <Component Id="cmp54192F8BC69277660A81DAD9B4E10B92" Directory="LOCALESFOLDER" Guid="{6FCCBB89-85D7-4AEB-ADF6-38D0676FE75E}">
+        <File Id="filA35961E833F3DABADA7F307C42F9B872" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\lv.pak" />
+      </Component>
+      <Component Id="cmp9A3DBEB10E3524B7AC20B11EBA7306E6" Directory="LOCALESFOLDER" Guid="{4F2EE608-1776-492E-85C9-1D85A6261A7F}">
+        <File Id="fil4A2661EC829A26C56966E3654DBEDAD5" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\ml.pak" />
+      </Component>
+      <Component Id="cmp83145A35DEEA2C52E760E6D8A7FC6897" Directory="LOCALESFOLDER" Guid="{06BAE40E-C664-4E86-9EED-9E6E4E3D7C11}">
+        <File Id="fil839432D2F2B13E63C56368FBE0EC0017" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\mr.pak" />
+      </Component>
+      <Component Id="cmpB01A706595A56521E471A02C60711279" Directory="LOCALESFOLDER" Guid="{E7F7EE40-5C6D-4587-B774-E0C6E3C86030}">
+        <File Id="fil54A01D7105216BE8648845695BD54059" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\ms.pak" />
+      </Component>
+      <Component Id="cmp5F5F2831064297BB34BF9742C9EFA2FF" Directory="LOCALESFOLDER" Guid="{78E068DC-B4C5-47EC-A0B6-EA6AE7428131}">
+        <File Id="filA2B479F5F867F98ED1875C7AC5C60BED" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\nb.pak" />
+      </Component>
+      <Component Id="cmp4831E11F2C05853F29069EC0F4BA496E" Directory="LOCALESFOLDER" Guid="{47D6E4BA-95FB-49BC-945D-B7475E097EB4}">
+        <File Id="filDD6B09A03D7779FB23442A2B199FA629" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\nl.pak" />
+      </Component>
+      <Component Id="cmp1E68FAC11197CBF6090C54E609E3A73B" Directory="LOCALESFOLDER" Guid="{C1269B1D-4200-4D50-ADD7-41B1354EE914}">
+        <File Id="fil18BDB748F2449147A3E8FC7B63F1CB9B" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\pl.pak" />
+      </Component>
+      <Component Id="cmpFC69435B460E01605CC2432876498CB0" Directory="LOCALESFOLDER" Guid="{224EA3AA-4328-46C9-8976-4375A53F5228}">
+        <File Id="fil91207B32A59E429E35552926F5BE201B" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\pt-BR.pak" />
+      </Component>
+      <Component Id="cmp96DCE4746AA359B920062AFDD3F92EED" Directory="LOCALESFOLDER" Guid="{4122883F-7E9A-4D44-AC71-776D3AAEE34F}">
+        <File Id="fil14E001116529C62B92224829E2B7778E" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\pt-PT.pak" />
+      </Component>
+      <Component Id="cmp1291460EBC26A86D4095B919CE608B69" Directory="LOCALESFOLDER" Guid="{E91FE600-AE48-4392-9A35-512DF7F0E562}">
+        <File Id="filE664FA05523568A868C5B02B94E29334" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\ro.pak" />
+      </Component>
+      <Component Id="cmpF02891138EB98D33A86DFC5C86EE1ABE" Directory="LOCALESFOLDER" Guid="{688E414D-30C7-4AD4-9484-8179681D826E}">
+        <File Id="fil506E65B1B6CCFB8174330CA68984DA18" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\ru.pak" />
+      </Component>
+      <Component Id="cmpA41BE4DDDB5835AFEDE316ECB6FC3CD4" Directory="LOCALESFOLDER" Guid="{AE6E3207-D900-4AD0-B971-D8907E105061}">
+        <File Id="fil1611FD1F66DC4313F06CB96142930F8E" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\sk.pak" />
+      </Component>
+      <Component Id="cmp90CCA7D81D4B3520132971602062DE47" Directory="LOCALESFOLDER" Guid="{DAB21718-C807-4D8C-A830-BDEB0F948688}">
+        <File Id="fil864B899051C96B6DF02D84511EAE6938" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\sl.pak" />
+      </Component>
+      <Component Id="cmp1139B4C27026B6D082ED41B5CC4611E7" Directory="LOCALESFOLDER" Guid="{5F8CABC0-285A-4184-855D-5976F3028791}">
+        <File Id="filF81655190B5268256769FE071EE80C12" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\sr.pak" />
+      </Component>
+      <Component Id="cmp2D3C66D251C8BA532C52CCD827D2ED0D" Directory="LOCALESFOLDER" Guid="{4684CFAC-BB4B-485A-87AC-95E32450047A}">
+        <File Id="filC12731E847AAB3995D665C542E137D72" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\sv.pak" />
+      </Component>
+      <Component Id="cmpAB02C90FFA9EF3A63458D184866C6FA8" Directory="LOCALESFOLDER" Guid="{F7BBD7B0-FDF2-4665-967A-D960270DB32A}">
+        <File Id="filCF9AE9A0EC90CB488CE5DC982EADF202" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\sw.pak" />
+      </Component>
+      <Component Id="cmp4897A9C78D1AAEEBE99031E1A07C4DB6" Directory="LOCALESFOLDER" Guid="{ACBEDEE3-5163-4384-829F-F82286A6BE68}">
+        <File Id="fil77C33AD94CA1EFB31D961FD700517FF7" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\ta.pak" />
+      </Component>
+      <Component Id="cmpB3F2ABEA2526CADAED0B60E34D1C5172" Directory="LOCALESFOLDER" Guid="{BDF58D20-B06E-497D-B52E-5647C6CD67CA}">
+        <File Id="fil2D07EF127B2E7F6B44ED21330FE8755F" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\te.pak" />
+      </Component>
+      <Component Id="cmpAECED46D44393FD84CDE6545F7D4B8C2" Directory="LOCALESFOLDER" Guid="{345E5A22-0E56-4869-9ACE-A2275A6FE327}">
+        <File Id="fil7440D4C9490321D8A725EE6AA4888AD7" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\th.pak" />
+      </Component>
+      <Component Id="cmp0D7E592660BB689FB921D37561BA8BCD" Directory="LOCALESFOLDER" Guid="{E01209B5-7404-4BB6-B5B0-0FEAA9B5E673}">
+        <File Id="filCD9561DDFFFE913DF5074DE1D69DF4F8" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\tr.pak" />
+      </Component>
+      <Component Id="cmp1A2A9BE1349538362365E2E85579A963" Directory="LOCALESFOLDER" Guid="{C71F99C9-2BED-4CDF-8862-AF1F10CBF02E}">
+        <File Id="filB51829C01D58592B817E0D5969063759" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\uk.pak" />
+      </Component>
+      <Component Id="cmp7E869426FD8E36285AB061BEE7C1DC33" Directory="LOCALESFOLDER" Guid="{CC62B98D-87BA-49BD-B76E-A5F5238CA261}">
+        <File Id="fil17D572B3AB38E1D1A6FE625518BDD562" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\vi.pak" />
+      </Component>
+      <Component Id="cmpE5018C3C5CF8AC372BA430DFFC10D242" Directory="LOCALESFOLDER" Guid="{EA1E4028-5BEF-4D9B-9F57-2613E68B5A79}">
+        <File Id="fil791BB56DD9FF5E0F3209A6814B002AFA" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\zh-CN.pak" />
+      </Component>
+      <Component Id="cmpF4E6BF62A20BF5A1FB7CFA718DA26227" Directory="LOCALESFOLDER" Guid="{65CF5801-AD5D-4596-A7DA-2F49936245B7}">
+        <File Id="filBBA815B942291D759F97248A7B0AD4B7" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\locales\zh-TW.pak" />
+      </Component>
+      <Component Id="cmp24EDF8962958F7CD234B13741F7ABD25" Directory="RESOURCESFOLDER" Guid="{3EE15C73-7AE1-40C1-822B-AE42621E5957}">
+        <File Id="fil6FF652229FB1F3A271D87D7AA26E70CC" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\resources\app.asar" />
+      </Component>
+      <Component Id="cmpDEA0230E902C9397BFDD9FE7897B9E40" Directory="SWIFTSHADERSFOLDER" Guid="{E7BE1537-6AFA-4072-A2B5-E0D7CEFD7AF9}">
+        <File Id="filB6225C9DDBCDED5D85E88E7103FDDFC4" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\swiftshader\libEGL.dll" />
+      </Component>
+      <Component Id="cmp0577B52CBC971A19079AE2FD7C5EC264" Directory="SWIFTSHADERSFOLDER" Guid="{724A6141-AEE6-42FB-B29A-71629550E972}">
+        <File Id="fil07AF4FDC5B77AACFA14B814D88724275" KeyPath="yes" Source="..\ImagineTimeDesktop\release-builds\ImagineTime-win32-ia32\swiftshader\libGLESv2.dll" />
+      </Component>
+      <Component Id="cmp2634A6093EF9521D1F9AF2C82803E7BA" Directory="INSTALLFOLDER" Guid="{9586A7A4-5593-425E-A11F-DE1B9A832C36}">
+        <File Id="fil72D967D8F9B0AD06FD8BE12CCDEE76B7" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-console-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp1FA93A3470A0E6CB5D4E464AAEE75553" Directory="INSTALLFOLDER" Guid="{677838C3-9D0A-4750-8846-6B650B973588}">
+        <File Id="fil796EBAB5E01BDDE2FC840FBA97514FE5" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-datetime-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp06F29F36797D11B68340B87E5E40420C" Directory="INSTALLFOLDER" Guid="{24FF5A84-9FC0-460E-B39B-762B710881DC}">
+        <File Id="fil3189C007E2FE3EC56AFA60D5A725E773" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-debug-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp1B472664F9EE025B4C7868CF01B0E61D" Directory="INSTALLFOLDER" Guid="{78370A4D-A5E9-468C-88A1-F04EDB11C7D3}">
+        <File Id="filFABC4A11945EFD2B38BCCE6B070A01D3" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-errorhandling-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpD009240E4312403E011D9463CD369423" Directory="INSTALLFOLDER" Guid="{21E50B84-A3F1-4C6B-9754-5C5D6EE5C31B}">
+        <File Id="filA0919C97E0099D88624FE8C1B2C5C7EB" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-file-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp4DEF06506BD10B4609070962EB7A0312" Directory="INSTALLFOLDER" Guid="{55AB8DD9-EC64-48E8-8BD6-0782FB5FBCE5}">
+        <File Id="fil0938147F4710DA5A02E6194BFD50652F" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-file-l1-2-0.dll" />
+      </Component>
+      <Component Id="cmp04B0CF83242DD0D034388CF91DA29129" Directory="INSTALLFOLDER" Guid="{76CD2D94-A894-4B47-AB0C-ABDFD546BE31}">
+        <File Id="filC027B8FD02CB43C49B5D6F9521A5F031" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-file-l2-1-0.dll" />
+      </Component>
+      <Component Id="cmpE09F73D8A03F85D2D579D5219127A646" Directory="INSTALLFOLDER" Guid="{1219D4C1-059D-4EFD-9CCA-3C14971A1728}">
+        <File Id="filBA0FCEB131AD59C16950D14DF5FC1FE7" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-handle-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp10E19FEA705FADB135D7F7533F1053E2" Directory="INSTALLFOLDER" Guid="{47E9187E-77F9-4F75-B47E-8BA61B5079DA}">
+        <File Id="fil194AC745CDF8B101AA5D55D4DAF45D09" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-heap-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpEA487DDC87218B847E0D29E428C327C6" Directory="INSTALLFOLDER" Guid="{EFA2B3F7-5A54-460D-B36C-5DA936EA26AF}">
+        <File Id="fil1767EA84302A013EF419EA5534D89B8D" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-interlocked-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp8DB7D5AC21B03BF905CEC01364574F2C" Directory="INSTALLFOLDER" Guid="{D3100254-D936-4230-8574-23774252BE8D}">
+        <File Id="filCF7BC02EB60B3BE4077CAA8CDBAA4001" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-libraryloader-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp3CC2F4A5242D8B5D083E6A133CE877B9" Directory="INSTALLFOLDER" Guid="{83604EF2-C105-42A3-B41F-6DB6F15CA58E}">
+        <File Id="fil2B875D32CC4597D84BBF937C5B57DCC0" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-localization-l1-2-0.dll" />
+      </Component>
+      <Component Id="cmpFEAD2FB414EE8CB888F001DF6C4BCABE" Directory="INSTALLFOLDER" Guid="{371C7C5E-2BA8-463B-A946-2C7DCD56101D}">
+        <File Id="fil0A6739542A2DEEA0CFDAE31A53EB3A6F" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-memory-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp73F452679F662F636344D7371C7D4B74" Directory="INSTALLFOLDER" Guid="{DCC8969A-6AF5-4764-8D2C-C91E87E13C3B}">
+        <File Id="fil49CE673FDBE2545F3917AB0A11A1793F" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-namedpipe-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp028435CEF9A6817433CA2B661EE1E2FB" Directory="INSTALLFOLDER" Guid="{502946DC-C5DF-4524-BA35-36A9FDBDA0CF}">
+        <File Id="filE63BD859277B1E7D7823A1BE023F6229" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-processenvironment-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp1034B4246212C9F0CA8F4DA8806828B4" Directory="INSTALLFOLDER" Guid="{070F7861-2E98-49BE-B0F3-E0603C77DE27}">
+        <File Id="filD3736DD3BA1943F18EBC21259B6D7C15" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-processthreads-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp46D507912B90400E3E5EAD0E5B995094" Directory="INSTALLFOLDER" Guid="{F3F3481F-DCDF-4F73-B3AF-6A8FB9932965}">
+        <File Id="fil18E2B4DE6059F33BE7DB7F487E0C4726" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-processthreads-l1-1-1.dll" />
+      </Component>
+      <Component Id="cmpEE85EFD6F7D7790687A794F9E8BFED14" Directory="INSTALLFOLDER" Guid="{579F8AAF-ED30-4EB9-B5A6-333D03DC4ED3}">
+        <File Id="filC10C9E98484A9860712A1095D9668501" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-profile-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp116FBDDC62E1A6921E59E94F3B9E2BE4" Directory="INSTALLFOLDER" Guid="{8225746B-463C-419B-A79C-C8A23E1D980C}">
+        <File Id="fil54AE786B3AF9D5099102F0ECB88A720E" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-rtlsupport-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpE0C6DB16CF117C0E55BFCE3B2604C2A3" Directory="INSTALLFOLDER" Guid="{B075494D-E773-4EA4-91B6-5801613441FA}">
+        <File Id="filE6CA3C0CEDEF8D73AD14AF8AA01FDA77" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-string-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp2FB95B92F7A5C6D9BA697AC4A99B40A7" Directory="INSTALLFOLDER" Guid="{8F8BF8D1-44AC-447D-AE61-247E8A615A1F}">
+        <File Id="fil138422598CB7FA60F1D8838F6913A8AF" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-synch-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp04C0608DA4463DD3771C3274287F3263" Directory="INSTALLFOLDER" Guid="{B0959773-2703-4248-8241-EFB5AB28217D}">
+        <File Id="fil3E769F05DB3C8080F389949F75E707E7" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-synch-l1-2-0.dll" />
+      </Component>
+      <Component Id="cmpAA422E179CF43D147EA1A4B984A0D0BD" Directory="INSTALLFOLDER" Guid="{4D927F1F-577D-4B5D-B09F-7B1218C8481C}">
+        <File Id="filBC616AB9F51E30C6264647F2FF2ADC6A" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-sysinfo-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpA1791963509BA9CA17EB2FD09D4FB051" Directory="INSTALLFOLDER" Guid="{C4B3B6F4-749C-4E0F-831C-5EB8C7A6B657}">
+        <File Id="fil37A4DA5D1670B77155CE70C2EEA3DFE6" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-timezone-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpE67D7CE3E82452ACD7FB000EBD6B1BD8" Directory="INSTALLFOLDER" Guid="{A59AE093-8250-4EDF-A31D-E11A5DA9C433}">
+        <File Id="fil119E9C35A48854F708F5243F89C0186F" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-core-util-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp2A5D3DFEFF638AC39A4DAD7567D811BD" Directory="INSTALLFOLDER" Guid="{6DC3F950-71D3-4B9A-8BF0-CD029EB64B89}">
+        <File Id="fil66E15724900EE7B59989D1F3D5A44402" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-conio-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpA91ADB9CBAABDFB9A15473BCE9873970" Directory="INSTALLFOLDER" Guid="{5402B966-4675-4854-A609-F55D2420A758}">
+        <File Id="fil4703EF86C0CA75019C34D9B32990BC89" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-convert-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpB672178EB1DFCB35428F09D4A7012DED" Directory="INSTALLFOLDER" Guid="{54AC4D84-E3F4-4923-827E-E2A2986EA863}">
+        <File Id="fil579D9A4629C4A4444DB46E086C54995E" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-environment-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpA02921F3AB3DC851CC285BF610D721C9" Directory="INSTALLFOLDER" Guid="{B25268D4-2BB2-4378-85A0-6805B5E06311}">
+        <File Id="fil7EA97B63AB73240C5D1CAE9BC49CFED4" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-filesystem-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpC7ACEDF5B94FF1B72F59659A487BB7BA" Directory="INSTALLFOLDER" Guid="{935BA063-17E2-49AB-91A9-7D1D217C259E}">
+        <File Id="filBDC2A0CB70FA6F4995B6D796C45F60EC" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-heap-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp2FD7D72925F503FF65944B6629AFCABD" Directory="INSTALLFOLDER" Guid="{88ECE48D-B7E5-4DB2-9E9D-4AFCC0EA302A}">
+        <File Id="fil322D30F0FB68F3E31095F978250EE2F4" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-locale-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp123FFD1F68E8394BDBF00881F31C6E49" Directory="INSTALLFOLDER" Guid="{6ACB2FEA-E2B6-412B-B759-0D74EEB3D8A5}">
+        <File Id="filD9F3B14C5B8D45A6C3993EB25EF6EB5B" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-math-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpFA94BAAC91408E9815CC2103A85FF43E" Directory="INSTALLFOLDER" Guid="{7493180F-3D3C-42C2-A2A4-B99AF0AF25D5}">
+        <File Id="filA744AEAD368566DCFBE428C56E22EFEB" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-multibyte-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp8D8CFB5F708C347D81DBE336256A26AC" Directory="INSTALLFOLDER" Guid="{96A770BF-C530-4958-A4EA-11F762DC5AE3}">
+        <File Id="filA9D5B5DE233D443FBD104138AE42D1A7" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-private-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpF0AE62325151047B683A1B302C033AB7" Directory="INSTALLFOLDER" Guid="{7FED6B7F-39D9-4B43-9B54-37EADE784F8B}">
+        <File Id="filB54080C770F0DC434D8C12522CAD687E" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-process-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpB52A9FDA4728DF5A48F634C4D16822B3" Directory="INSTALLFOLDER" Guid="{BC8E5749-594E-44D1-9948-D5AE0B36EB08}">
+        <File Id="fil6B73692C3BD298447E6A73B1AFB3A5C1" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-runtime-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp722BA5E87AA5A9C79FC061541DD04593" Directory="INSTALLFOLDER" Guid="{19FF72EB-33CF-41CB-A1F6-4DB982818D47}">
+        <File Id="fil06E80E59CB9CB8495412B1B66B7BDADB" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-stdio-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpF70CA266008A303FB616779885539DD0" Directory="INSTALLFOLDER" Guid="{1C453DD6-B9FA-4A4E-B695-26B82E1C2832}">
+        <File Id="filBA55C9156FF9DD9689362663CA0E7005" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-string-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp49EF9B582C6DA9169CC8C60A53B21C5D" Directory="INSTALLFOLDER" Guid="{5B52818E-DCEE-414D-95B4-93A7BE9F8815}">
+        <File Id="filAE9C7D9EEDE224939E5CC8BBFDCCED68" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-time-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmp7C54A903091EC64738C4EFB644BEBF50" Directory="INSTALLFOLDER" Guid="{96EE7FDD-56F1-4A0F-B074-269E2E130197}">
+        <File Id="fil6FA74A177EDBA739A1BD948C743061D3" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\api-ms-win-crt-utility-l1-1-0.dll" />
+      </Component>
+      <Component Id="cmpF7DA44B38523ACCDBBD140EB1417D6E6" Directory="INSTALLFOLDER" Guid="{82BC6FFE-A194-460B-9863-35A3345E54A2}">
+        <File Id="fil2B54F7F55D6FF47ECDD76BA1F34E6514" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\clrcompression.dll" />
+      </Component>
+      <Component Id="cmp126E1359B8217E225C68546440ED494C" Directory="INSTALLFOLDER" Guid="{1912B573-B7C1-49D8-B1E8-6DEC46AB380E}">
+        <File Id="fil99FCB666594A425B050FACBF0ECE1F2C" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\clretwrc.dll" />
+      </Component>
+      <Component Id="cmp7B0D5351B63746928BD357EAA49C4E82" Directory="INSTALLFOLDER" Guid="{4D89F801-8C7B-4F8F-9ED8-113FE73F853F}">
+        <File Id="fil2438D49847B263FD7CBA7B4D2461BA35" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\clrjit.dll" />
+      </Component>
+      <Component Id="cmp3A85F7349B2EE13FF4328413CE709E05" Directory="INSTALLFOLDER" Guid="{E826910B-BBF6-49DE-9F62-4D278622B755}">
+        <File Id="fil627599AA499049114B159A81180355AE" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\coreclr.dll" />
+      </Component>
+      <Component Id="cmp278785822533C2B2A564F28122890445" Directory="INSTALLFOLDER" Guid="{E16EC5CC-3D14-4749-B46E-32045EE416D6}">
+        <File Id="filE73305295D721DFE2CF4084D0401C322" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\dbgshim.dll" />
+      </Component>
+      <Component Id="cmp9153A8A58247045CBB582DA001D702A6" Directory="INSTALLFOLDER" Guid="{BDAE16E0-914A-48D7-A706-6C3D1B5643C5}">
+        <File Id="filF9C9BD44FB6FFFF35B8B9E3AF610C032" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\hostfxr.dll" />
+      </Component>
+      <Component Id="cmpEFE6F08B6F1662DB54D1AFC13FE085F5" Directory="INSTALLFOLDER" Guid="{614E210E-B3ED-48AA-A0B3-56C4C8B86DB5}">
+        <File Id="fil20789024341F874B00079C561CDD96DC" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\hostpolicy.dll" />
+      </Component>
+      <Component Id="cmp293FCCA628D0C02018415E58C166D080" Directory="INSTALLFOLDER" Guid="{DA269655-C730-46EC-8171-1195E0CAB52C}">
+        <File Id="fil18710E8489EDFCEC09E3BEDA4F07D905" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\ImagineTimePrint.deps.json" />
+      </Component>
+      <Component Id="cmp3807B9C796E388B4F359F63E6A2782A0" Directory="INSTALLFOLDER" Guid="{A2A03D3D-3CF9-41D8-9CB5-18BF29632504}">
+        <File Id="filF07D90CAEC52CC84DEDFC43F7C4B7780" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\Microsoft.CSharp.dll" />
+      </Component>
+      <Component Id="cmpDFD392C2DFA74B6AADB6883DDC439904" Directory="INSTALLFOLDER" Guid="{034412E1-8B49-4BF8-BF7D-E59CD9D4C667}">
+        <File Id="filE452AC1198BD0C1B365BDA3C69037B5B" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\Microsoft.DiaSymReader.Native.amd64.dll" />
+      </Component>
+      <Component Id="cmp3B1A3852E56825377F0A253CDB45C066" Directory="INSTALLFOLDER" Guid="{1B4CE284-31FD-4EB1-BA36-DD161E945A3A}">
+        <File Id="fil39458D565CB29CBCCCCE48D838E1E0CF" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\Microsoft.VisualBasic.Core.dll" />
+      </Component>
+      <Component Id="cmp2DCC4955A20E377ED54DD15CDFBD94F6" Directory="INSTALLFOLDER" Guid="{E09D06BF-7670-43B3-9247-6FB8E269C35A}">
+        <File Id="filAC51E313C8E366BB8921FC570105A9D1" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\Microsoft.VisualBasic.dll" />
+      </Component>
+      <Component Id="cmp3423CC77D53F7877046350B062E7B783" Directory="INSTALLFOLDER" Guid="{6791CD00-3A9E-4DC4-856D-9B97EB5F0730}">
+        <File Id="filEE3711C9E37C7C566924AB90EE2D8364" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\Microsoft.Win32.Primitives.dll" />
+      </Component>
+      <Component Id="cmp80B88DA697CA5E5B2642AEB63A0B2FE8" Directory="INSTALLFOLDER" Guid="{218847A5-F540-4D2E-998A-56A28D7CE861}">
+        <File Id="fil79920D28CE47ACFB4CF07352AFF36CAE" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\Microsoft.Win32.Registry.dll" />
+      </Component>
+      <Component Id="cmpDD153F8E8A84C87B1ABF1A63767C6F2C" Directory="INSTALLFOLDER" Guid="{1EA90D9E-A05C-4584-952A-6CB48C7ABA20}">
+        <File Id="filC528FAFCA46766691232C40CAC7E27BE" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\mscordaccore.dll" />
+      </Component>
+	  <Component Id="cmpDD153F8E8A84C87B1ABF1A63767C6F9C" Directory="INSTALLFOLDER" Guid="{cfc2ca6d-a8d6-4517-a776-debf478c95a7}">
+		<File Id="filC528FAFCA46766691232C40CAC7E29BE" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\mscordaccore_amd64_amd64_4.700.20.6603.dll" />
+	  </Component>
+      <Component Id="cmpC6D1B8337BF3E559A7C6167EB6D15A4A" Directory="INSTALLFOLDER" Guid="{ADA08EBA-6CAF-478E-9D5C-51C9EB9311B7}">
+        <File Id="fil75C5873B5C43AA7BBEF7053C3743F31D" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\mscordbi.dll" />
+      </Component>
+      <Component Id="cmpC8AEB7AE797BEBFE9F46D7818EF2B5A5" Directory="INSTALLFOLDER" Guid="{0A7719B4-72E9-486F-82E1-69C3D7972D22}">
+        <File Id="filC8CB820DC1D902707AFE57E182A34107" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\mscorlib.dll" />
+      </Component>
+      <Component Id="cmpAFE743319D1B346D76AF1A016248DEB9" Directory="INSTALLFOLDER" Guid="{4BFB9BCB-3ACC-42AC-825E-13563B6CE00F}">
+        <File Id="fil889BEE1A964DEE1BFB4E5FEAD2394800" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\mscorrc.debug.dll" />
+      </Component>
+      <Component Id="cmpB3C5936D622B77DF69AFF7C5FE09E4BC" Directory="INSTALLFOLDER" Guid="{78E0A2B9-9F5F-4E9B-BBBB-B4C7444BF5F8}">
+        <File Id="filADC2B577A63178563C48F272B18BC828" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\mscorrc.dll" />
+      </Component>
+      <Component Id="cmp5663FAEC12C9FAF4428C9F83501EAFC1" Directory="INSTALLFOLDER" Guid="{2028B9B3-69AF-4988-904F-D256D972FF65}">
+        <File Id="fil49472FA7D70139233682B65FF775E163" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\netstandard.dll" />
+      </Component>
+      <Component Id="cmpA7924EE33E8B47B3427D63404C7555F6" Directory="INSTALLFOLDER" Guid="{B21FEB7C-8718-4A4C-B30F-41FF9DA29EE2}">
+        <File Id="fil5C6B4E978DA63C3BFB397506DAF74D32" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\SOS_README.md" />
+      </Component>
+      <Component Id="cmpD17009FFF95D335C7DA2AAA869E0227D" Directory="INSTALLFOLDER" Guid="{73C936DC-2A08-4AB4-9228-FE7E29693FF5}">
+        <File Id="fil17364BEC416EAD1B45F977F36485E4E7" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.AppContext.dll" />
+      </Component>
+      <Component Id="cmp548F6F879D26EFF4B3411290E96AD461" Directory="INSTALLFOLDER" Guid="{3AC54125-4F9B-4072-8336-46B5A8F1B68B}">
+        <File Id="fil9CEE287E8616F0B347A3828B9E7730A5" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Buffers.dll" />
+      </Component>
+      <Component Id="cmp55B4E211E8E7FA91FD6553818079E044" Directory="INSTALLFOLDER" Guid="{07E5C1D0-BEDA-43B7-A9C8-990A029DC089}">
+        <File Id="fil1E68F7783860A24ED20C2D0E92D7E5C1" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Collections.Concurrent.dll" />
+      </Component>
+      <Component Id="cmp7F4AB4255DC16C5E3D9F2A0963E37D11" Directory="INSTALLFOLDER" Guid="{3D5918CD-1CFE-40E6-BC23-D40EE64DA3EE}">
+        <File Id="fil0701F3CDF619696CEE50B360F851B6D6" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Collections.dll" />
+      </Component>
+      <Component Id="cmp30D528F65A4E661D19BDF75FC76179EE" Directory="INSTALLFOLDER" Guid="{A9F2B311-A67F-428C-A37B-C1FCBD7FCC27}">
+        <File Id="fil8F552D5B21F6C95C8C4711AB614BAAFE" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Collections.Immutable.dll" />
+      </Component>
+      <Component Id="cmp0A73176B8B06F5F0051879386DD8D656" Directory="INSTALLFOLDER" Guid="{8245AC62-61D3-460F-A7F7-A8A33A962ACF}">
+        <File Id="fil2085C8010D4975BCCDC835B7552B1D1C" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Collections.NonGeneric.dll" />
+      </Component>
+      <Component Id="cmp3EEC80C0E4EC2BDEC07111601C15ED1E" Directory="INSTALLFOLDER" Guid="{C7B92431-E883-4AC3-A504-BA44EE1E144F}">
+        <File Id="fil9503EFFE69790839BAB4E4A6EDCD5716" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Collections.Specialized.dll" />
+      </Component>
+      <Component Id="cmp8E26E5B870430274E284CD0B7ED291D5" Directory="INSTALLFOLDER" Guid="{90484B10-DA9E-4B20-A016-A02CC2EA2E52}">
+        <File Id="fil1B6397B26EF69B7C879559BB6E20564B" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.ComponentModel.Annotations.dll" />
+      </Component>
+      <Component Id="cmpFE869DD1A81716C579EE9D02D1104FEE" Directory="INSTALLFOLDER" Guid="{A29975A5-B34B-4CE3-B785-7BEA7E8E5E2D}">
+        <File Id="filDC0769BDDCCE28FD4ECD2A81E5D6A3AD" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.ComponentModel.DataAnnotations.dll" />
+      </Component>
+      <Component Id="cmp909AE19B3A51059244F5C36336837DBF" Directory="INSTALLFOLDER" Guid="{4828D7BF-822F-4E10-BB9E-9046C3A41963}">
+        <File Id="filB20CB6E681EFE683F19174D772336307" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.ComponentModel.dll" />
+      </Component>
+      <Component Id="cmpD9ABC0128A4E0FBBCFE2C04B4FCF5A2F" Directory="INSTALLFOLDER" Guid="{C40F81C4-5A43-4C67-A81A-5A6DFC9B1EBA}">
+        <File Id="fil2C6B8A57345A509CD744946032F60CCD" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.ComponentModel.EventBasedAsync.dll" />
+      </Component>
+      <Component Id="cmp427934B53C5D0108D4D179D5EE8E5E56" Directory="INSTALLFOLDER" Guid="{6C2E1A2A-7BBC-464B-9763-353793197277}">
+        <File Id="filED78A990661869F6F2E176B0A7FF5921" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.ComponentModel.Primitives.dll" />
+      </Component>
+      <Component Id="cmp74B5D536E29807552761952ACDDAEB75" Directory="INSTALLFOLDER" Guid="{2975CD8F-F5BA-4E1F-A021-28E84CD05DBE}">
+        <File Id="filDFDEA82505048C67949430A6EAC1B7DD" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.ComponentModel.TypeConverter.dll" />
+      </Component>
+      <Component Id="cmpCF2595B326D004755744A8E06DE3E6C2" Directory="INSTALLFOLDER" Guid="{8C6D1E7F-5F9A-4D25-9E29-3DB46B71FE81}">
+        <File Id="fil82DFB0FD6D0E3EC10BA58450AD779DFC" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Configuration.dll" />
+      </Component>
+      <Component Id="cmpC1CFE265F22668974F7E9EECDDD1C288" Directory="INSTALLFOLDER" Guid="{6B2041CA-4F07-43A6-8576-E835C83316FE}">
+        <File Id="fil7FD1F278734EB319BD6A79BD58A786CC" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Console.dll" />
+      </Component>
+      <Component Id="cmp2A2C467802813EDAF3516FCDD6F9B1FF" Directory="INSTALLFOLDER" Guid="{91D4F167-D3CC-4380-9D09-A8E47F6B8C44}">
+        <File Id="fil65BC364BF62175336B23231E96FF90E0" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Core.dll" />
+      </Component>
+      <Component Id="cmpF06518A6B2175948ED3C316ACD1EA6A9" Directory="INSTALLFOLDER" Guid="{FE81F8CD-E73F-47D5-A015-20C88DEA53DA}">
+        <File Id="fil42F43153610FFDE6F5B8F8FB688351EC" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Data.Common.dll" />
+      </Component>
+      <Component Id="cmp6F737155030EB8001EAAE4741860DD09" Directory="INSTALLFOLDER" Guid="{D20A44C4-D4F2-49B8-A713-9BBE959202CF}">
+        <File Id="fil4926CB1FE60E38C02359DC0BD180523D" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Data.DataSetExtensions.dll" />
+      </Component>
+      <Component Id="cmp6C0FF97DBEBAAE9DBA49F29161B0D6D0" Directory="INSTALLFOLDER" Guid="{51D1E48D-E533-44B8-AB06-8A6FE91DBE4A}">
+        <File Id="filE38D224ADAB733DCAEAFB0351DB7E004" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Data.dll" />
+      </Component>
+      <Component Id="cmp1C5CCCD7EBB0BC58CC1D48AE7BAFAD6C" Directory="INSTALLFOLDER" Guid="{7DE47293-E815-4ACF-A2DA-D53415C5283B}">
+        <File Id="fil0DE9A45EE4F1D0CCA3B637CEBCFD57B2" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Diagnostics.Contracts.dll" />
+      </Component>
+      <Component Id="cmp09C50D100E117D6095552AEB60BDE4AF" Directory="INSTALLFOLDER" Guid="{FA46E60D-0C61-449E-BE14-76BDD6E7058A}">
+        <File Id="fil6CE48AD69CA66825FA3B76164B664CC8" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Diagnostics.Debug.dll" />
+      </Component>
+      <Component Id="cmp51B4647866C0FD61B789A56C4D55F0C6" Directory="INSTALLFOLDER" Guid="{1B5E5EB4-CED5-4BFA-9797-5C815F6E05F4}">
+        <File Id="filF62460F5B82C06E9D776EC44521899C4" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Diagnostics.DiagnosticSource.dll" />
+      </Component>
+      <Component Id="cmp7B29B5C37BE40927352C86CAB7859003" Directory="INSTALLFOLDER" Guid="{350CD78A-9A66-45DB-8E71-35287A45D39F}">
+        <File Id="filD1490677C8734F46225698B4E61A3BD3" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Diagnostics.FileVersionInfo.dll" />
+      </Component>
+      <Component Id="cmp8B4866A3E74D646373BB2FD35264DFBE" Directory="INSTALLFOLDER" Guid="{B04E58E8-36E5-48CF-B649-E9FED31BA512}">
+        <File Id="fil74BC6032B2D88D54FF92952117BBFB4F" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Diagnostics.Process.dll" />
+      </Component>
+      <Component Id="cmpEB89F1F8421E5EE6E27745EF79071F06" Directory="INSTALLFOLDER" Guid="{12C8E409-BDA1-49E0-A3F2-F9434BA43158}">
+        <File Id="filE85B50B1FF1CCFE002801457BEFB378B" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Diagnostics.StackTrace.dll" />
+      </Component>
+      <Component Id="cmpE37150ABFF4212267D52BCD31DE39CA8" Directory="INSTALLFOLDER" Guid="{647880A3-88D3-4F5F-A0C3-5D01701F8D34}">
+        <File Id="fil3BA29F1FEC1EDD14DB1501899105E55C" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Diagnostics.TextWriterTraceListener.dll" />
+      </Component>
+      <Component Id="cmp0AF3AEE3763652CF8314DC7836E71899" Directory="INSTALLFOLDER" Guid="{663CAC18-CC40-4D64-BD3F-87F26F96EB44}">
+        <File Id="filB14BC0C093408CD09FB943C8A69022F8" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Diagnostics.Tools.dll" />
+      </Component>
+      <Component Id="cmp64223987C47A624EC564C64BF3283AC4" Directory="INSTALLFOLDER" Guid="{6EBDA97F-A209-4F15-B8AA-522C8E082E23}">
+        <File Id="fil870F95A3E0E7CCEA0F7DC3B32FF597DF" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Diagnostics.TraceSource.dll" />
+      </Component>
+      <Component Id="cmpA14CC0BB262DB18728C9B20A50F363D2" Directory="INSTALLFOLDER" Guid="{B03C0992-01F9-4AA4-9055-0A566C174D73}">
+        <File Id="fil7436BEEB4AD5EEC1B12A9ECEFF1096D5" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Diagnostics.Tracing.dll" />
+      </Component>
+      <Component Id="cmp7964ECB0A84C8B28E50151B454FECDAC" Directory="INSTALLFOLDER" Guid="{18F2A882-E1FC-495C-9641-FD2AB8D48F37}">
+        <File Id="fil3C55CB0CFB7CD436C4E9D42CBC6F853A" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.dll" />
+      </Component>
+      <Component Id="cmpBAE5DE5492BC7F6ED504EBBEB0C0C449" Directory="INSTALLFOLDER" Guid="{6EE04295-0B48-4A71-B6EC-97A8773003BE}">
+        <File Id="fil36FD5AF1BC120877DBAC32B77F052BB9" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Drawing.dll" />
+      </Component>
+      <Component Id="cmp7D63CC336E8755AA812B1C186A1049A0" Directory="INSTALLFOLDER" Guid="{2641D79A-0ACC-4204-92AD-0914CAE509CB}">
+        <File Id="filF274B8EC109CFE016A5FB82D80F8726B" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Drawing.Primitives.dll" />
+      </Component>
+      <Component Id="cmp5EFCF2E917588D238D851040DF66E3D8" Directory="INSTALLFOLDER" Guid="{2EF48BA1-0253-4249-ADF8-2C05F0404F14}">
+        <File Id="fil71FEAB1EF51542E5D014F008A9617254" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Dynamic.Runtime.dll" />
+      </Component>
+      <Component Id="cmp99B29134777E5CC1553816DB44E986AA" Directory="INSTALLFOLDER" Guid="{7D6850C7-CD81-46E3-AAE1-2EF68662673C}">
+        <File Id="filA70F5A53BADF62AAFFAD170F51F70CC1" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Globalization.Calendars.dll" />
+      </Component>
+      <Component Id="cmp74EE78B3DAC5F6FB7788B10C2C7FAB69" Directory="INSTALLFOLDER" Guid="{55CB72A1-E7CC-4648-BF90-FDAAABE5B2E6}">
+        <File Id="fil48D61546A256741E19F57CCA8AFCB1CA" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Globalization.dll" />
+      </Component>
+      <Component Id="cmp9CE688FCBE224104699E1AF8DD86DFC3" Directory="INSTALLFOLDER" Guid="{FD3E884A-92E8-469F-B959-8286ADB388F5}">
+        <File Id="fil40501C21BC3ACDE72011D2A5BD39D0C9" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Globalization.Extensions.dll" />
+      </Component>
+      <Component Id="cmp8E6F684E6CDEBB1E78D0695CB1D22CDA" Directory="INSTALLFOLDER" Guid="{92FC03A3-6C6D-4726-8A49-3AB088F4CF59}">
+        <File Id="fil053B30EB9959873494005BA94B551451" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.Compression.Brotli.dll" />
+      </Component>
+      <Component Id="cmp3E90E51C6F9F7216FE2EEF36036DE631" Directory="INSTALLFOLDER" Guid="{D895A9B5-8784-42BA-A1BE-1AA022E0C2BF}">
+        <File Id="filBDB6CDEC7D7393A029132AF2C4630A45" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.Compression.dll" />
+      </Component>
+      <Component Id="cmp6E8EF2D5717A1D8925F74DF65DCA1996" Directory="INSTALLFOLDER" Guid="{D487230C-F067-4815-A94D-E37B07EB5D17}">
+        <File Id="fil8F7C64E2BC77F6F32C04BCD6CA6471BE" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.Compression.FileSystem.dll" />
+      </Component>
+      <Component Id="cmp96AF0B7A47BD574E57D91B052FE7E6AA" Directory="INSTALLFOLDER" Guid="{94832CAD-3156-4ECB-9497-E3D9142FF509}">
+        <File Id="filC6476B3902FF089503D25B8DFD830C57" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.Compression.ZipFile.dll" />
+      </Component>
+      <Component Id="cmp5258A0E39367B1C221CDB571AD10A079" Directory="INSTALLFOLDER" Guid="{28976053-C89D-470B-8504-FD651A9AF84D}">
+        <File Id="filC62B0E21D00749622EF7BD3244E7F6F4" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.dll" />
+      </Component>
+      <Component Id="cmpE38C7E9D0154DA8252A3A1F2D892859D" Directory="INSTALLFOLDER" Guid="{BBCB7380-C0BF-4951-95C8-5889F1B81D88}">
+        <File Id="fil9D8054318AED71129FF6B038824F9D22" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.FileSystem.AccessControl.dll" />
+      </Component>
+      <Component Id="cmpF50EF007352A0E2CE94F2D9790AD1CE5" Directory="INSTALLFOLDER" Guid="{C92E503F-E637-4550-8FC3-9704E034F503}">
+        <File Id="filA6A8914A1C95EA47D702657EF2AED804" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.FileSystem.dll" />
+      </Component>
+      <Component Id="cmpE1E2ABCC0077263DEE1342E66F13CCAD" Directory="INSTALLFOLDER" Guid="{60A9908B-F6C3-4179-A3F3-7728073FA5B7}">
+        <File Id="fil13481CFC6A4C74EB02CC229ED4C18F26" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.FileSystem.DriveInfo.dll" />
+      </Component>
+      <Component Id="cmp01FD4F287DCB6C23D1FFA378428255C2" Directory="INSTALLFOLDER" Guid="{BC0FAC15-88B8-40A9-9AF6-1BCC886D2FBE}">
+        <File Id="filCF71D90B7F8CE8C3B76CFE639FA53AC9" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.FileSystem.Primitives.dll" />
+      </Component>
+      <Component Id="cmp0DC2FE7EE88BE368E5AD668D8831D757" Directory="INSTALLFOLDER" Guid="{FDEB8912-E669-47A6-913C-0830A4F75533}">
+        <File Id="fil36E006CB0C6BFD4E1B9F7FAB15E0E019" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.FileSystem.Watcher.dll" />
+      </Component>
+      <Component Id="cmpEA8DC82FFC32CA890F5CE651F600D4C8" Directory="INSTALLFOLDER" Guid="{5BE953A0-5AFD-4AD9-8F7A-E55330F06F76}">
+        <File Id="fil5B3F03F33D19888B4030863D8E0F74DA" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.IsolatedStorage.dll" />
+      </Component>
+      <Component Id="cmpABF210B7ED87F01053858B546B968CB1" Directory="INSTALLFOLDER" Guid="{1B3C7008-48B9-4B35-9FA4-C9431E656516}">
+        <File Id="fil9D4ABFCA7D59DA90594B130506C18731" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.MemoryMappedFiles.dll" />
+      </Component>
+      <Component Id="cmpF2EA275B2FC5F6A1BF12FD1FF53FB83D" Directory="INSTALLFOLDER" Guid="{93F906DE-DDEC-4E67-AC4E-E821AB8B414F}">
+        <File Id="fil056FA2AC2A67594A8C2C604BF9473B21" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.Pipes.AccessControl.dll" />
+      </Component>
+      <Component Id="cmp3801FE315DBCCCC19554D4F5A929585C" Directory="INSTALLFOLDER" Guid="{8E99C4BC-7DF4-41AF-AFDC-3355927E33C9}">
+        <File Id="fil1554C80E8E7E7E68F854A216FBEC3DB5" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.Pipes.dll" />
+      </Component>
+      <Component Id="cmpD01570C1BE9F05C4B33CD536C20CFAB4" Directory="INSTALLFOLDER" Guid="{1DDB11D1-26F5-45A1-A79A-096AD0988AEA}">
+        <File Id="fil09C4FB36FFF536E6C75DA0D84BD9624C" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.IO.UnmanagedMemoryStream.dll" />
+      </Component>
+      <Component Id="cmp53DD0C5F4818E68DE609C706E25448D7" Directory="INSTALLFOLDER" Guid="{E7CE41BF-A329-4AD1-BB97-7103805965D0}">
+        <File Id="filD29C09FE370BFC4522A3B3F6CCB21E92" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Linq.dll" />
+      </Component>
+      <Component Id="cmpC3AE93D18E8754B9B913F49DF2F2DEF5" Directory="INSTALLFOLDER" Guid="{78C603DD-5C8C-4A70-8CA2-02C3BFAA1A0C}">
+        <File Id="filB2949AA61090FE81EDCD37C794E424E2" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Linq.Expressions.dll" />
+      </Component>
+      <Component Id="cmpF9FC4C37147562A3CDA394EEE31BE93F" Directory="INSTALLFOLDER" Guid="{5301EFD2-2FED-454D-B993-910A30263C10}">
+        <File Id="fil505CB94D3BEFD04E2A57DA2E7BF8F7BF" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Linq.Parallel.dll" />
+      </Component>
+      <Component Id="cmp8E9E968BF92C920592490ED69BBECCD8" Directory="INSTALLFOLDER" Guid="{5FFC6F09-87E8-4660-854A-6B26F3E99519}">
+        <File Id="filDAD1901E607AB945FE1BD79E466D5611" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Linq.Queryable.dll" />
+      </Component>
+      <Component Id="cmpCE02EB9E50D512817FC9D310BE0272FC" Directory="INSTALLFOLDER" Guid="{01E1A89D-F866-428A-96F0-DD641CBFAE87}">
+        <File Id="fil50FBCF0735518A0A26AC7237457B7636" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Memory.dll" />
+      </Component>
+      <Component Id="cmpD51F543568A264DA7F9F725968738397" Directory="INSTALLFOLDER" Guid="{C679DCDC-1B36-4296-839B-734A5406BE6A}">
+        <File Id="fil344CEEFDFE27FBA63CA9CC6B15935608" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.dll" />
+      </Component>
+      <Component Id="cmp8F3135D48ABD0FC01F4069DD3343579E" Directory="INSTALLFOLDER" Guid="{7EE6B125-78FA-4F22-AB6F-A2018F8F0E59}">
+        <File Id="filD201F5A48900BE66B2C0CA29F534E943" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.Http.dll" />
+      </Component>
+      <Component Id="cmpF60965B048D48238FD8B6371D271A8C6" Directory="INSTALLFOLDER" Guid="{C8FBAECF-3093-424D-9787-E77BD31F69CA}">
+        <File Id="fil0C0FCBC58C8506025C8DF1460E7D4201" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.HttpListener.dll" />
+      </Component>
+      <Component Id="cmpA0BF6806D47C5E684FE47381546D23CF" Directory="INSTALLFOLDER" Guid="{D7F94E0F-A8CE-45BB-A1C9-6E54E2682F38}">
+        <File Id="fil9531D9685836B3FD964503983D82A9D8" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.Mail.dll" />
+      </Component>
+      <Component Id="cmpD5905569E6A46D74344FDB1C75CCD0C3" Directory="INSTALLFOLDER" Guid="{01DE0827-4A00-4CD2-9A69-B3487FBAC263}">
+        <File Id="fil59FE872B7A6126AF56458F7A438ADDE1" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.NameResolution.dll" />
+      </Component>
+      <Component Id="cmpA053ED38D7105928E8EADB6969D88C25" Directory="INSTALLFOLDER" Guid="{0E6F1496-4529-48C4-A777-549C0BFFE284}">
+        <File Id="fil4F19FAD22CAC39A2E371C86F2AE8620D" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.NetworkInformation.dll" />
+      </Component>
+      <Component Id="cmpB05171A545113AF35BEF4F14D1839FD6" Directory="INSTALLFOLDER" Guid="{6C6B3812-9105-4FB2-BA92-EF4652D226FA}">
+        <File Id="fil35DDA92CE842127D7C419B11D2EE0ECD" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.Ping.dll" />
+      </Component>
+      <Component Id="cmp918C94610C330F4BAD4411FD0E1F817C" Directory="INSTALLFOLDER" Guid="{F9D9A220-4F55-48B6-A815-1EA06C55C70D}">
+        <File Id="fil8DCD5918F897A1A68789380F347CB5C1" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.Primitives.dll" />
+      </Component>
+      <Component Id="cmpB37BC940AF58DB6170247CC229263768" Directory="INSTALLFOLDER" Guid="{6D745B5E-D7EE-4F5B-B707-D0DFA09DB8EC}">
+        <File Id="filFCD20D712C687BE6CD67B1CE63516C47" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.Requests.dll" />
+      </Component>
+      <Component Id="cmp095B6D1E34C2EBACB76317ADEC5C9E40" Directory="INSTALLFOLDER" Guid="{848B4BBD-C1A7-42A7-829A-DE124075420A}">
+        <File Id="fil536BBE9A9F057FE0AEA7BF403DDE63CE" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.Security.dll" />
+      </Component>
+      <Component Id="cmp115ECCCA3615B2EB18E92013586FD285" Directory="INSTALLFOLDER" Guid="{ED096B71-97A7-4B7E-961D-AA27604D1C9C}">
+        <File Id="fil88D8CB34CA0F76CB970D7569EBAF2F9B" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.ServicePoint.dll" />
+      </Component>
+      <Component Id="cmp4D9D08AE70E3AAF3476065F5DD5A19C8" Directory="INSTALLFOLDER" Guid="{2A7C17E1-4999-44E0-B742-CF67D8017CE7}">
+        <File Id="filE74882F47FB901583E4E701224B4E2F3" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.Sockets.dll" />
+      </Component>
+      <Component Id="cmpACE479B15B6698BD3DB75EDA75C3E729" Directory="INSTALLFOLDER" Guid="{34725C62-2BC2-430E-A840-F2CB42EC4645}">
+        <File Id="fil907B08AD697C9FC023C4909C3153EA79" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.WebClient.dll" />
+      </Component>
+      <Component Id="cmp298322897A1FBC5F104BC2896BA12599" Directory="INSTALLFOLDER" Guid="{62133945-413B-4942-977A-C28F8F338765}">
+        <File Id="fil3A488CCAE0589FE093AB1921CFF263AF" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.WebHeaderCollection.dll" />
+      </Component>
+      <Component Id="cmp184945BE8AD86676584A5CA6F9980504" Directory="INSTALLFOLDER" Guid="{31F6040E-A4B3-436C-95CB-F6207FD75D32}">
+        <File Id="fil22FC94717A583C06D6DC6F45E3EDE147" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.WebProxy.dll" />
+      </Component>
+      <Component Id="cmp15686C435DF03A0CB1C9FB1B666533E5" Directory="INSTALLFOLDER" Guid="{16AE92D1-AC56-4B0F-A3E1-467E4580A80B}">
+        <File Id="fil9A1CD883A2E8A124C8D2E8E34F24D94F" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.WebSockets.Client.dll" />
+      </Component>
+      <Component Id="cmpCB2B3768987A7536D443FFA7CFBE4637" Directory="INSTALLFOLDER" Guid="{5B4CAF9B-6A24-4555-9E97-C1B06FDB012C}">
+        <File Id="filA7BF1A6C09C9E9D74D6326A9DCC67704" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Net.WebSockets.dll" />
+      </Component>
+      <Component Id="cmp28CBA1087FFEB855303BFE2C5372CB8C" Directory="INSTALLFOLDER" Guid="{2E48043F-AF1E-4E99-9278-39547DA7DFB7}">
+        <File Id="fil30796C2A379862CAD94B16C0BB8EEC53" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Numerics.dll" />
+      </Component>
+      <Component Id="cmpE3E6F66C03CE92E59F3AC7CC75B25622" Directory="INSTALLFOLDER" Guid="{E05A0F82-1FB7-4099-A465-6CE338A31D84}">
+        <File Id="filD58D5C81D6766230591E68C9170B6C4D" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Numerics.Vectors.dll" />
+      </Component>
+      <Component Id="cmp653BC1132594D400CFEBED17B32A5E18" Directory="INSTALLFOLDER" Guid="{9525224E-7810-493E-B061-FE56E617D022}">
+        <File Id="fil4A55D571DEF92A754AC88E6FFE15DB97" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.ObjectModel.dll" />
+      </Component>
+      <Component Id="cmp77AD20DD0D98B8DDBD2CEDF2368E9353" Directory="INSTALLFOLDER" Guid="{2688A854-F30E-4573-BF8C-9E9B2D2ECC43}">
+        <File Id="filC6B44171258B4A70AE8ABDCF8816FBE0" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Private.CoreLib.dll" />
+      </Component>
+      <Component Id="cmp5BB9066274A0812ED58AFDB6E94D551D" Directory="INSTALLFOLDER" Guid="{DCC5B23A-CB0A-4E15-9A72-33FED6E416A9}">
+        <File Id="filB88C353DB05C361B48259248D1B65FAB" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Private.DataContractSerialization.dll" />
+      </Component>
+      <Component Id="cmpD77AA954ACD01D617EE349535804E54E" Directory="INSTALLFOLDER" Guid="{870F9F5C-ADE0-4759-A969-3507B66BD50F}">
+        <File Id="fil0E7C41BF0788A51D24BFCA4CD9072049" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Private.Uri.dll" />
+      </Component>
+      <Component Id="cmp320B585130DD95B7DD69AED7F77913AE" Directory="INSTALLFOLDER" Guid="{9E276374-A51D-48E0-A149-716897A469CD}">
+        <File Id="fil8EC99CFE7458735173A1E3C02781AF93" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Private.Xml.dll" />
+      </Component>
+      <Component Id="cmpCDF9C8F9DFA3E87C3C09C4BE59D8749C" Directory="INSTALLFOLDER" Guid="{86244998-3861-4F9D-982E-E12E1022C307}">
+        <File Id="fil7AB88A5E704D50AE077360A7D83D20E8" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Private.Xml.Linq.dll" />
+      </Component>
+      <Component Id="cmpF929CA78B43CD992BE97A274BFCD6288" Directory="INSTALLFOLDER" Guid="{A1CEE6CF-E89B-4D84-86C1-E1235B8DDD46}">
+        <File Id="fil8B33718C34FB6C6371825ED01C084B42" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Reflection.DispatchProxy.dll" />
+      </Component>
+      <Component Id="cmp7E38081D89FB7901034250A8C17D90C8" Directory="INSTALLFOLDER" Guid="{02567054-1FA3-46E9-98D0-8D38A3DD130A}">
+        <File Id="filAA08AF8EB27643E4582D7D6F596E9A9A" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Reflection.dll" />
+      </Component>
+      <Component Id="cmp5F8A4A91DCC94C56F126AFA830E44AD8" Directory="INSTALLFOLDER" Guid="{9D029FE4-A1E0-4663-9E0F-239531415FAC}">
+        <File Id="fil387F0EBF12DEF427CB2529964BB62959" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Reflection.Emit.dll" />
+      </Component>
+      <Component Id="cmpB967DA26376BCB99C6510EC645519F4A" Directory="INSTALLFOLDER" Guid="{70DCD7B4-833A-477D-BEFD-B3915253350A}">
+        <File Id="fil2912D11B656B01AD0B2A05D9F5BE7F11" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Reflection.Emit.ILGeneration.dll" />
+      </Component>
+      <Component Id="cmp5C7D79599A3E9206DAD54F9C3B1169CD" Directory="INSTALLFOLDER" Guid="{997F2D15-2DA0-4F50-81BF-826B3E183DF1}">
+        <File Id="filF1C0397031FAF2406D8865C34155A820" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Reflection.Emit.Lightweight.dll" />
+      </Component>
+      <Component Id="cmpC92375487E80CFD98C7DBD4628DC8E50" Directory="INSTALLFOLDER" Guid="{C61089E0-1C72-4DF3-A5C7-2AC2BFC0661D}">
+        <File Id="filEF5BB719C52FA334EB32E68EA54E625C" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Reflection.Extensions.dll" />
+      </Component>
+      <Component Id="cmp54016BB3FB65D9CD82225D91692D19AA" Directory="INSTALLFOLDER" Guid="{5339FEB6-8B87-4CA9-A5A3-1514947DCED8}">
+        <File Id="fil94A5F29F045039489D5A36ACD747EC59" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Reflection.Metadata.dll" />
+      </Component>
+      <Component Id="cmp2DFC69FEF1E41CE500D3AD4AB6163746" Directory="INSTALLFOLDER" Guid="{0A7D34B9-F3D2-4320-9210-1616AB3697E2}">
+        <File Id="fil3AAA39474C7AD10C4BC37EA80EC17E8D" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Reflection.Primitives.dll" />
+      </Component>
+      <Component Id="cmp1DC51AA416F26FF219CA1610905DFC8D" Directory="INSTALLFOLDER" Guid="{E89D8177-C838-45A6-9D46-BC8E60D4FA49}">
+        <File Id="filEC7EC1870611072A0873FD343F16A042" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Reflection.TypeExtensions.dll" />
+      </Component>
+      <Component Id="cmp2CD99ED0F3385B8953592DCB20A384FD" Directory="INSTALLFOLDER" Guid="{2DE45C37-0A01-407C-9351-2BC04B992DBE}">
+        <File Id="fil4B7AD51822DBAAD87DBDBAC79BFE6E64" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Resources.Reader.dll" />
+      </Component>
+      <Component Id="cmpB62A48745C636A6CB0A2A8A9E69119A9" Directory="INSTALLFOLDER" Guid="{F5707AC2-6754-4F37-9EE7-2EBC13C83603}">
+        <File Id="fil61D4A15D566E0A2450DE6437F00E1164" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Resources.ResourceManager.dll" />
+      </Component>
+      <Component Id="cmpD03755A88F8638BFDF29D7B39B03F39C" Directory="INSTALLFOLDER" Guid="{2E59E475-9694-4584-BB77-DC5EDDE16511}">
+        <File Id="fil663E05E7604D4BCECFF514D4C52E0BF0" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Resources.Writer.dll" />
+      </Component>
+      <Component Id="cmp94A77140FB1180238959A6303893B6F9" Directory="INSTALLFOLDER" Guid="{A68962E1-315D-4AE8-BA72-A5C61247FE20}">
+        <File Id="filE6A07193254B07E8C2E3AFD82D4BF5F0" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.CompilerServices.Unsafe.dll" />
+      </Component>
+      <Component Id="cmp055F615858BE2366EE0E848A3D373686" Directory="INSTALLFOLDER" Guid="{83550DE1-BEFA-4688-B395-35A5CE23C038}">
+        <File Id="fil387A806820639C5BDA83D094BAE83218" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.CompilerServices.VisualC.dll" />
+      </Component>
+      <Component Id="cmpB52F876C382B7B2A8455FFE63414A5D6" Directory="INSTALLFOLDER" Guid="{E6FA034F-75C9-4D1A-8E3B-81F372CEC465}">
+        <File Id="filA21895A9B50505DE091F30473CCBE1A0" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.dll" />
+      </Component>
+      <Component Id="cmp4F1F221109AF2BEE1ACF45478AFC083B" Directory="INSTALLFOLDER" Guid="{C77F7F5F-DFFB-40F7-8D25-B0B0AADC6F06}">
+        <File Id="filAF526DA32FC29BD9AE67BE4FA0C4AB1E" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.Extensions.dll" />
+      </Component>
+      <Component Id="cmp327848A6BA4A423C0A329CB9ADAF7269" Directory="INSTALLFOLDER" Guid="{6153A7E4-707D-4CA4-97AD-3BE295E7099D}">
+        <File Id="filB4994765A7C3D73E0CA37940DEA54EC9" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.Handles.dll" />
+      </Component>
+      <Component Id="cmp26976E9B2FB0693BB5048BD515CAA7A1" Directory="INSTALLFOLDER" Guid="{1649ED97-7E5B-41CE-AB60-A3AD5F1A9455}">
+        <File Id="filD13868ABDDC6E1A2B40F9F98676EE89A" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.InteropServices.dll" />
+      </Component>
+      <Component Id="cmp0422BD643B2D33945B0E2C96379F374B" Directory="INSTALLFOLDER" Guid="{1380C0BD-A64E-4C98-953B-8E96F306263E}">
+        <File Id="filB7F15BD85428F570F00CC4ACB7760D5A" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.InteropServices.RuntimeInformation.dll" />
+      </Component>
+      <Component Id="cmpFF5ECD8DA647A7E320AD40A1875E0137" Directory="INSTALLFOLDER" Guid="{ADE7E196-2AC6-4AF0-83C6-5E9686BEB612}">
+        <File Id="fil69922D4872394070E789CF4775D8B527" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.InteropServices.WindowsRuntime.dll" />
+      </Component>
+      <Component Id="cmp0CB2D5830BD3367831E04414214FFE27" Directory="INSTALLFOLDER" Guid="{5BB866B5-1E1E-4E0B-9DE0-515F430DB0C1}">
+        <File Id="fil7EFE4BD4A28EBA9753B8EF7ECE5E186F" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.Intrinsics.dll" />
+      </Component>
+      <Component Id="cmpFFA1E7214516E13F42CDFCC1BBFF2988" Directory="INSTALLFOLDER" Guid="{72CA80A1-7497-4B35-9D05-95E2F6938AD3}">
+        <File Id="filA6DCFD3238B318FA61514110DF4E0E5A" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.Loader.dll" />
+      </Component>
+      <Component Id="cmp03732EDB0A5F9A879F7E5127AA44AACF" Directory="INSTALLFOLDER" Guid="{4DEA0252-EA6B-4003-BD98-2C0B19D33D97}">
+        <File Id="fil99ED1303111DCCE03439D58D1D5527B7" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.Numerics.dll" />
+      </Component>
+      <Component Id="cmpA8C6B30076E9FC35582E1FD2B2257315" Directory="INSTALLFOLDER" Guid="{2803F007-79DF-44A5-86E9-810A1EAC5CE7}">
+        <File Id="fil717C6C95EB9405507513BD591984D9F6" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.Serialization.dll" />
+      </Component>
+      <Component Id="cmp64AEDA4C463D9BF6567C5436AEB1931F" Directory="INSTALLFOLDER" Guid="{0AB314D5-72E2-4ED2-94F4-A32023EC731D}">
+        <File Id="filAA2499EE216949A9F32C6B880EC9E6A7" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.Serialization.Formatters.dll" />
+      </Component>
+      <Component Id="cmpAA2FEA0CB75D170D813DFAD92DAB5CBF" Directory="INSTALLFOLDER" Guid="{D98F80D2-72DF-4F73-B2BF-968FE5F3C4E0}">
+        <File Id="fil4D22F694FD38ED7A6300F1780FEBFE15" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.Serialization.Json.dll" />
+      </Component>
+      <Component Id="cmp715DBE24958FC8A2A4F08552AA871F04" Directory="INSTALLFOLDER" Guid="{FF8F1729-291A-4CB6-8411-6716CDF90C0F}">
+        <File Id="fil7B2CEB771C56A5E283C9D3B32EA242CF" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.Serialization.Primitives.dll" />
+      </Component>
+      <Component Id="cmp6808D2DC0B12811F2B18CF90452BADAF" Directory="INSTALLFOLDER" Guid="{E375829D-5A13-4C50-88F5-1615EE5AC39B}">
+        <File Id="fil63F5C7AD9DAEE3B2A7C9F9AFFA6DD620" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.Serialization.Xml.dll" />
+      </Component>
+      <Component Id="cmpD03EB25373492B63C20FFBCBDD3F2F14" Directory="INSTALLFOLDER" Guid="{5B22CE9F-9D96-4046-90DA-4D894100F8E8}">
+        <File Id="filD160EE1A0D12A235DEFC17BE557AC47E" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.WindowsRuntime.dll" />
+      </Component>
+      <Component Id="cmpBAE96E279F4C6DC360770ED26FBD0202" Directory="INSTALLFOLDER" Guid="{8881C303-EBD9-425D-8FF0-92E32449B8C7}">
+        <File Id="fil297CB9DF17F736AF97881FB1F1F4FD50" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Runtime.WindowsRuntime.UI.Xaml.dll" />
+      </Component>
+      <Component Id="cmpE4365AD5DDF588BF682B2F5416FCB25D" Directory="INSTALLFOLDER" Guid="{D1A481F4-6F39-4411-932F-2AA6CCD3ACE9}">
+        <File Id="filE0318B45F415BAD72D7911522D99DC37" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.AccessControl.dll" />
+      </Component>
+      <Component Id="cmpA47233F6163380064B5A96372513AC86" Directory="INSTALLFOLDER" Guid="{EE54DF85-2ACC-4724-9401-774A841CC61F}">
+        <File Id="fil9402C0427CFEE9F7E34F796510FB9C28" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.Claims.dll" />
+      </Component>
+      <Component Id="cmp9236B53EDC288E60AD3F4C5C094EF143" Directory="INSTALLFOLDER" Guid="{C648ED84-7D3C-48C5-812D-BC44D14E4003}">
+        <File Id="fil70E4A9D56D762B7159FB683E50D90411" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.Cryptography.Algorithms.dll" />
+      </Component>
+      <Component Id="cmp7B94F1CAD4D9E835C3F3CE61FC87BB44" Directory="INSTALLFOLDER" Guid="{B8C40E48-8C36-460D-A27B-4B39067DF01A}">
+        <File Id="fil1642C87B21034F1ED0486284FC33668D" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.Cryptography.Cng.dll" />
+      </Component>
+      <Component Id="cmpFE69F56215F6384E4EE957FA293FB702" Directory="INSTALLFOLDER" Guid="{282EE227-2E96-48C8-9FC7-60BC15DFE8FB}">
+        <File Id="filC0AA5426BC92EAF935E5C211F72602D4" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.Cryptography.Csp.dll" />
+      </Component>
+      <Component Id="cmp96227B1AAD091BBF42376F07B8F56843" Directory="INSTALLFOLDER" Guid="{F7199310-9D0F-41E4-B3BD-BD3182157201}">
+        <File Id="fil2D944114CF7806E8778913B0C0FB5C60" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.Cryptography.Encoding.dll" />
+      </Component>
+      <Component Id="cmpF4D1437E147E95D9DE586E19A944A7D8" Directory="INSTALLFOLDER" Guid="{5D395B0E-DDF3-4059-B1B9-212CF4F8E57E}">
+        <File Id="fil8105202FC7E02E764925B7A0AEDAC31D" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.Cryptography.OpenSsl.dll" />
+      </Component>
+      <Component Id="cmpDA8AC9B901A0054031B17615F9A36A6A" Directory="INSTALLFOLDER" Guid="{38BFFC6F-E058-46B7-9CC2-60F3DC972BC8}">
+        <File Id="fil5B91CC78DBA247CAE8326EB1A9A1D91B" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.Cryptography.Primitives.dll" />
+      </Component>
+      <Component Id="cmp55C2E5B59FD268BA8B395AD5711B65BC" Directory="INSTALLFOLDER" Guid="{FBE0CAB1-2C3A-4BF5-9BE4-E047CC829262}">
+        <File Id="fil7B428DA146B7644F0F0868D9E09F4D7B" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.Cryptography.X509Certificates.dll" />
+      </Component>
+      <Component Id="cmpE5858E3110F898861B4F5A6C757FCE64" Directory="INSTALLFOLDER" Guid="{9E0948C0-7BE0-4DE9-943C-26AED793BC7E}">
+        <File Id="fil41DB2E6FD5B024E766FC710E4A0EB263" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.dll" />
+      </Component>
+      <Component Id="cmp43630121EC38C20A5C5FC265C8881A2B" Directory="INSTALLFOLDER" Guid="{6752DE0A-68E4-4E80-A8AB-DFBAE105A433}">
+        <File Id="fil737659FD41B8E12657E65AFD220ADA47" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.Principal.dll" />
+      </Component>
+      <Component Id="cmpBF49858C1CB032A94C67BA0DE7475A2F" Directory="INSTALLFOLDER" Guid="{6CEDCE46-5846-4EF1-8A3C-E6BA13A924EB}">
+        <File Id="fil4A6B1F17CFF22188E3A1EA72BD12C0B6" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.Principal.Windows.dll" />
+      </Component>
+      <Component Id="cmp3C40B86654C365E564741A6A2EE91F52" Directory="INSTALLFOLDER" Guid="{7165BEDC-C7B3-4F72-B2FA-9EA8D6425374}">
+        <File Id="filEFB78439A3458BC0478D49552FAA58CD" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Security.SecureString.dll" />
+      </Component>
+      <Component Id="cmp5C29386E5B8BD879BF45E6E5D9FD964A" Directory="INSTALLFOLDER" Guid="{63A4B968-8DBD-4053-8A88-07091A1F688F}">
+        <File Id="filBF604778FF00A50A029F52C85BBEB314" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.ServiceModel.Web.dll" />
+      </Component>
+      <Component Id="cmpC1873F7C711148EF58B42D456C1A6000" Directory="INSTALLFOLDER" Guid="{02AB3F65-EB9A-4D0D-96D6-F0E7ED3F33BC}">
+        <File Id="filCE1BD95F49FCA8986874FBDED0FABF17" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.ServiceProcess.dll" />
+      </Component>
+      <Component Id="cmp68CBB44BB65E9F8B887D08982B631927" Directory="INSTALLFOLDER" Guid="{C6C60ACE-5694-4256-9342-B28885260A30}">
+        <File Id="fil009AD3DD0EBC7FAE53E1A09090A60B2E" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Text.Encoding.CodePages.dll" />
+      </Component>
+      <Component Id="cmpC58854C080E79387289C9DCEBDDFEB0C" Directory="INSTALLFOLDER" Guid="{B74D36FB-39F5-4DF9-A9D5-1BED2F02B5B7}">
+        <File Id="filB739A1997BE4BF2091E30009AF3C7D47" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Text.Encoding.dll" />
+      </Component>
+      <Component Id="cmpF45A0873C427AD7CC4DC486D0E41C894" Directory="INSTALLFOLDER" Guid="{0D49E726-6784-413B-AFAA-60DA3CB91A7A}">
+        <File Id="filF130FA97E08B3291DE7B6A4C8E24877C" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Text.Encoding.Extensions.dll" />
+      </Component>
+      <Component Id="cmp45DDE6E16F1C56AD5B8717CC78288799" Directory="INSTALLFOLDER" Guid="{995DCFB7-FDC7-42BE-8917-1FE60F267167}">
+        <File Id="fil48940337F2976A6920F3B2B5CED178A9" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Text.Encodings.Web.dll" />
+      </Component>
+      <Component Id="cmpB713FDF32036272D8DEB9766FB54CD23" Directory="INSTALLFOLDER" Guid="{8B51B560-DB67-46F5-A732-97C1AAABC503}">
+        <File Id="filD83F7E8F2B6A10A6C795E9CAC0A555AE" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Text.Json.dll" />
+      </Component>
+      <Component Id="cmp51C2EC92925EB00EC67E0749FEF7B777" Directory="INSTALLFOLDER" Guid="{0BFB7500-1CCA-4388-9D57-FAA7FB57F592}">
+        <File Id="fil1AF84C9284B194C4F2F460D79CA935DD" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Text.RegularExpressions.dll" />
+      </Component>
+      <Component Id="cmp4D1476C6ED2220BE458F63DCA32F4363" Directory="INSTALLFOLDER" Guid="{CC1C01DC-6222-4D71-AB80-0D939433AE62}">
+        <File Id="filCF698D8035E76B99D6AC0724B39E0615" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Threading.Channels.dll" />
+      </Component>
+      <Component Id="cmp6B04DD9593C65F73B266A2F4C31753F0" Directory="INSTALLFOLDER" Guid="{E9245702-59A2-4107-99C3-9A9C8F1FD995}">
+        <File Id="filEC59D5CD48D9C8C5AC02E43EF85A1D52" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Threading.dll" />
+      </Component>
+      <Component Id="cmp0F53FC6E90365E1F570E6F8EE4A6F3C4" Directory="INSTALLFOLDER" Guid="{EEA23A52-DAC3-4A41-B5EB-10651846C529}">
+        <File Id="filCF520627760013D47D6EB5C292A04D74" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Threading.Overlapped.dll" />
+      </Component>
+      <Component Id="cmpC5496740E25812B9B340976130FBDB85" Directory="INSTALLFOLDER" Guid="{BDD87E65-C203-433B-9441-B0B6A527E610}">
+        <File Id="fil4CB391169057F84A1A104B2FCADB9A96" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Threading.Tasks.Dataflow.dll" />
+      </Component>
+      <Component Id="cmp9BCBD2A145AD4049F58127EEFE00F2D2" Directory="INSTALLFOLDER" Guid="{8A58FF18-B2A8-45A1-A932-D0E88D095174}">
+        <File Id="filB0C696AAEBD686C03E865EE621E15CCD" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Threading.Tasks.dll" />
+      </Component>
+      <Component Id="cmpAFA450767977309D7B656808715102B9" Directory="INSTALLFOLDER" Guid="{681A34AB-42F5-4C05-98CB-C7DA16743ADF}">
+        <File Id="fil6F4140B45D347C1A38AC781A0E75662C" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Threading.Tasks.Extensions.dll" />
+      </Component>
+      <Component Id="cmpDFE794933131E8764C2EFAA0D698A70C" Directory="INSTALLFOLDER" Guid="{69FF88C8-E093-4F21-B3BA-E5A9145807E9}">
+        <File Id="fil9D2908EB03FEA35385A84086569265B7" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Threading.Tasks.Parallel.dll" />
+      </Component>
+      <Component Id="cmp395AE9F01C8CA3D4BD1D3B7AF91D95A0" Directory="INSTALLFOLDER" Guid="{608878ED-5CC0-402C-9801-E1E9494AF925}">
+        <File Id="fil616BBB7E0795A0DB815075488B9448DE" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Threading.Thread.dll" />
+      </Component>
+      <Component Id="cmpF3C30C9CD099220AD4B280DB3A86B9B4" Directory="INSTALLFOLDER" Guid="{38CD28B2-9B80-4383-A79B-BE08292AC217}">
+        <File Id="fil6B030FB8A4ED4D11AA5E66EDA7C919B7" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Threading.ThreadPool.dll" />
+      </Component>
+      <Component Id="cmp0ECE0E63E5DD461F34C629E659A8DDC5" Directory="INSTALLFOLDER" Guid="{CD548151-7DE0-4C47-B903-89E28B2060E8}">
+        <File Id="fil93FE524E6C5F355EFF018CBEBB11456B" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Threading.Timer.dll" />
+      </Component>
+      <Component Id="cmpB6B708D15BD2EEDA203863F067B20499" Directory="INSTALLFOLDER" Guid="{B62F8FC8-1CA2-45E2-AB51-1A0401D98EF9}">
+        <File Id="fil1160A291E3BED38D592D845AF9EFC509" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Transactions.dll" />
+      </Component>
+      <Component Id="cmpE26DD46FC9DDE37BF165A82CE8565D75" Directory="INSTALLFOLDER" Guid="{565B7624-CF33-407E-8186-81BD65E871E0}">
+        <File Id="fil1DFC72B9183A2BC935A327F9B1068C69" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Transactions.Local.dll" />
+      </Component>
+      <Component Id="cmpAE380E5FB737D50B8637CAB7A988764D" Directory="INSTALLFOLDER" Guid="{58984FCD-8F2D-4E58-AAF3-BDD683D9C1F1}">
+        <File Id="fil7BE06EC04A5C89E1E52B8AA16C171DCA" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.ValueTuple.dll" />
+      </Component>
+      <Component Id="cmpA4F4594E55AE85BE1D6B98B2EDDABBA0" Directory="INSTALLFOLDER" Guid="{06730B7D-529A-4F76-94FF-D5A145E830A0}">
+        <File Id="fil9438F9AE81FD4C56E505814D6068A7F8" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Web.dll" />
+      </Component>
+      <Component Id="cmp73A63852D3F96511D1177953FF2BEECC" Directory="INSTALLFOLDER" Guid="{0442B2D3-366E-4EB4-A746-05C150E50297}">
+        <File Id="filBA964969A1FBD6D1B206D2A1CBE8E0D9" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Web.HttpUtility.dll" />
+      </Component>
+      <Component Id="cmp8CC8C1ED54C2E3A139142CF8EAA2E968" Directory="INSTALLFOLDER" Guid="{89D22E17-DC20-4021-BE48-FA02432B09FB}">
+        <File Id="fil810791A8E4933A5BE87FD86951F3DA20" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Windows.dll" />
+      </Component>
+      <Component Id="cmp99336F0A5E80AF7EBF720F7FF388A6F8" Directory="INSTALLFOLDER" Guid="{AB1C8A0A-8F9B-4552-9732-34908077E1DB}">
+        <File Id="filD2609F196A2297C29F563A16A3E67627" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Xml.dll" />
+      </Component>
+      <Component Id="cmp0A5EFCBE25CEA956DE5727951ACB3640" Directory="INSTALLFOLDER" Guid="{2564A003-A72F-40EF-A3A6-4A40BE41648B}">
+        <File Id="fil30C9C1C10D42625001E8A03065A15A54" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Xml.Linq.dll" />
+      </Component>
+      <Component Id="cmpCB0982CF09FE2E4CB9AF08CA94DC73D6" Directory="INSTALLFOLDER" Guid="{8B629F5F-F9E0-4136-BF91-26330B0D1DED}">
+        <File Id="fil53DFEC5D2D01C5B40C1C5C30E9E9F76B" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Xml.ReaderWriter.dll" />
+      </Component>
+      <Component Id="cmp94278AD68129A281470E1B14AEE699E9" Directory="INSTALLFOLDER" Guid="{DD9DE27D-9423-407A-B006-F6A8BE4A8E12}">
+        <File Id="fil06584535409FF2713AA643A441A88A44" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Xml.Serialization.dll" />
+      </Component>
+      <Component Id="cmpC25DD693099C6F4F60AA56A311B60B35" Directory="INSTALLFOLDER" Guid="{E01892BC-4AA1-4D59-8B49-1198A6627930}">
+        <File Id="fil844650556635EA79AE00BBA284F2EA1A" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Xml.XDocument.dll" />
+      </Component>
+      <Component Id="cmpC529D5C15CFDF3DEB5B1D86CDAD541A3" Directory="INSTALLFOLDER" Guid="{74504386-7768-452A-9F34-2C770214C8BA}">
+        <File Id="fil05EB03A9031C7220968DC89B4D757226" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Xml.XmlDocument.dll" />
+      </Component>
+      <Component Id="cmp285593E898F95B3FA771214A8720B759" Directory="INSTALLFOLDER" Guid="{04F1B67A-01A9-4176-AF3F-B1AEC6562781}">
+        <File Id="fil2E75D2B53A2ECF358C3C43CDDA152524" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Xml.XmlSerializer.dll" />
+      </Component>
+      <Component Id="cmpF6AC897CF2EBA8FC0A1EBDCED21DBFA8" Directory="INSTALLFOLDER" Guid="{AAC71B92-3127-41EE-8762-C96241567995}">
+        <File Id="fil2A023D7DEF54490D3C3654C13C02D427" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Xml.XPath.dll" />
+      </Component>
+      <Component Id="cmp0F25ACAE6D432B08A779523FF434E378" Directory="INSTALLFOLDER" Guid="{16F60E0A-D056-47A1-8BB9-5D4BBDB49F05}">
+        <File Id="filDA61E52B2990D9595A857FBC48A6C68F" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\System.Xml.XPath.XDocument.dll" />
+      </Component>
+      <Component Id="cmpB450998E53128F6771D793817F5909C7" Directory="INSTALLFOLDER" Guid="{CDC3B1E9-EA99-4B9A-A44E-B956861560CE}">
+        <File Id="fil44D2CB24AD8C36D32B88A2FB6ED3C99E" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\ucrtbase.dll" />
+      </Component>
+      <Component Id="cmp574DE4D2B9CB5C5DCB729922AD747430" Directory="INSTALLFOLDER" Guid="{9D551EF3-9B02-49FB-92BC-744AAA0C9BB4}">
+        <File Id="filA2210235667AC39821486A7683ECE6CC" KeyPath="yes" Source="..\ImagineTimePrint\bin\Release\netcoreapp3.0\win-x64\WindowsBase.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+ 
+</Wix>

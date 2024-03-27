@@ -1,0 +1,152 @@
+// fade in/out
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in-out;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 250ms ease-in-out;
+}
+
+// .modal-anim-appear {
+//   opacity: 0.00;
+//   @include transform(scale(0.1));
+//   // @include transform-origin(left top);
+//   &.modal-anim-appear-active {
+//     @include transition(all 3500ms ease-in-out);
+//     opacity: 1;
+//     @include transform-origin(center center);
+//     @include scale(1);
+//   }
+// }
+
+.modal-anim-enter {
+  opacity: 0.00;
+  .card {
+    @include transform(scale(0.1));
+    // @include transform-origin(center bottom);
+  }
+  &.modal-anim-enter-active {
+    opacity: 1;
+    @include transition(all 250ms ease-in-out);
+    .card {
+      @include transition(all 250ms ease-in-out);
+      @include transform-origin(center center);
+      @include transform(scale(1));
+    }
+    // @include scale(1);
+  }
+}
+
+.modal-anim-exit {
+  opacity: 1;
+  .card {
+    @include transform(scale(1));
+  }
+  &.modal-anim-exit-active {
+    @include transition(all 250ms ease-in-out);
+    opacity: 0.00;
+    .card {
+      @include transition(all 250ms ease-in-out);
+      @include transform-origin(center center);
+      // @include transform-origin(center bottom);
+      @include transform(scale(0.1));
+    }
+  }
+}
+
+.drawer-anim-enter {
+  opacity: 0.01;
+  &.drawer-anim-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+}
+
+.drawer-anim-exit {
+  opacity: 1;
+  &.drawer-anim-exit-active {
+    opacity: 0.01;
+    transition: opacity 350ms ease-in;
+  }
+}
+
+.dropdown-anim-enter {
+  opacity: 0.00;
+  @include transform(scale(1, 0.1));
+  // @include transform-origin(left top);
+  &.dropdown-anim-enter-active {
+    @include transform-origin(top center);
+    @include transition(all 140ms ease-in-out);
+    opacity: 1;
+    @include transform(scale(1,1));
+    // @include scale(1);
+  }
+}
+
+.dropdown-anim-exit {
+  opacity: 1;
+  // @include transform-origin(left bottom);
+  @include transform(scale(1, 1));
+  &.dropdown-anim-exit-active {
+    @include transform-origin(top center);
+    @include transition(all 140ms ease-in-out);
+    opacity: 0.00;
+    // @include transform(scale(0.1));
+    @include transform(scale(1, 0.1));
+
+  }
+}
+
+
+.mobile-menu-anim-enter {
+  // margin-top: -100vh;
+  bottom: 100vh;
+  margin-left: -100%;
+  // @include transform(scale(1, 0.1));
+  &.mobile-menu-anim-enter-active {
+    // @include transform-origin(top center);
+    // @include transform(scale(1,1));
+    // margin-top: 0;
+    margin-left: 0;
+    bottom: 0;
+    @include transition(all 250ms ease-in-out);
+  }
+}
+
+.mobile-menu-anim-exit {
+  margin-top: 0;
+  bottom: 0;
+  &.mobile-menu-anim-exit-active {
+    margin-top: -100vh;
+    bottom: 100vh;
+    @include transition(all 250ms ease-in-out);
+  }
+}
+
+.slide-from-right-enter {
+  transform: translate(100%);
+}
+
+.slide-from-right-enter.slide-from-right-enter-active {
+  transform: translate(0%);
+  transition: transform 300ms ease-in-out;
+}
+
+.slide-from-right-exit {
+  transform: translate(0%);
+}
+
+.slide-from-right-exit.slide-from-right-exit-active {
+  transform: translate(100%);
+  transition: transform 300ms ease-in-out;
+}

@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="BIN_DIR_REF">
+            <Directory Id="dirC3999006D4FDE2A5A95A50819088195D" Name="locales" />
+            <Directory Id="dirA418A4E0CF1BB1F6E32813DAAF58BD97" Name="resources" />
+            <Directory Id="dir87AF27ACD13CC30E2251FBA7060143AA" Name="swiftshader" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="MyId">
+            <Component Id="cmp0376E510BE891298857606B9637151C4" Directory="BIN_DIR_REF" Guid="{9916D30A-6EA3-4070-8DEB-E68280A3C3D7}">
+                <File Id="fil1CBE4FC504DAD07744BA8C4C7C66520C" KeyPath="yes" Source="SourceDir\chrome_100_percent.pak" />
+            </Component>
+            <Component Id="cmp246D024AFED40D80FFD74081B2E4A6D8" Directory="BIN_DIR_REF" Guid="{61647C1C-2DA3-4B8D-8225-49597AD69A08}">
+                <File Id="filC82217C2738C273E7FF92C68F4244295" KeyPath="yes" Source="SourceDir\chrome_200_percent.pak" />
+            </Component>
+            <Component Id="cmpAB01F2D3CE1E5A2A9DB187A8DE288D9F" Directory="BIN_DIR_REF" Guid="{B7B77867-5111-47B6-951F-508DC9FCAC09}">
+                <File Id="filA21529608FFED137BDAF259E8E8FB539" KeyPath="yes" Source="SourceDir\d3dcompiler_47.dll" />
+            </Component>
+            <Component Id="cmp7797469006388A6DCEA217B96BF898AE" Directory="BIN_DIR_REF" Guid="{FBAE26C5-37C0-4240-892E-6D3BEDAD54CB}">
+                <File Id="filE50D890135253AA8342CE0A8923B1528" KeyPath="yes" Source="SourceDir\ffmpeg.dll" />
+            </Component>
+            <Component Id="cmpAA7620C7717DCE2D41FE3B2E89862511" Directory="BIN_DIR_REF" Guid="{025BAFA3-F026-48F1-9CE8-EA93ABCBAABB}">
+                <File Id="fil14728C21E94AC67A789CBF275F7E6C64" KeyPath="yes" Source="SourceDir\icudtl.dat" />
+            </Component>
+            <Component Id="cmpE7E9AAA1E1592EC879350B0A2675988C" Directory="BIN_DIR_REF" Guid="{1F686EAC-E3D5-499C-8B81-06F49C401240}">
+                <File Id="fil7887E1FF0A6E3A244C973FC84607C940" KeyPath="yes" Source="SourceDir\ImagineTime.exe" />
+            </Component>
+            <Component Id="cmpA8D9041871BA8F74B81E0E45C32A8BE4" Directory="BIN_DIR_REF" Guid="{61FB4CA6-1313-4D5F-8547-F32C80685FE5}">
+                <File Id="fil3A25D33B4960C96469FE2189F829E7CD" KeyPath="yes" Source="SourceDir\libEGL.dll" />
+            </Component>
+            <Component Id="cmp154C64B4BFE54BB91B763DEB9B7D77A8" Directory="BIN_DIR_REF" Guid="{0681B16A-972B-4B8A-B0D6-A6A2B3DA4DB0}">
+                <File Id="fil637D14E1B184DFFE823E0D1F43D89198" KeyPath="yes" Source="SourceDir\libGLESv2.dll" />
+            </Component>
+            <Component Id="cmp71F69BDF36372CC1B0C80E2AE4B9EDFF" Directory="BIN_DIR_REF" Guid="{36FDF288-B316-42D4-821F-0AEB7C682673}">
+                <File Id="fil09F2721F0AF94A458A8F1184C78AA56F" KeyPath="yes" Source="SourceDir\LICENSE" />
+            </Component>
+            <Component Id="cmp9C0BB5E2401A0167C013CC9FCD9671CE" Directory="BIN_DIR_REF" Guid="{9C18DDC9-0540-46E0-A18A-6031AF7CF8CA}">
+                <File Id="fil206DA7F60AA428A216E5E7C121C8EEB3" KeyPath="yes" Source="SourceDir\LICENSES.chromium.html" />
+            </Component>
+            <Component Id="cmpB319CF8F0CB6E110F86E5614CDC1A119" Directory="BIN_DIR_REF" Guid="{577DB9D0-862B-4800-9212-91F199D397E6}">
+                <File Id="fil83FF6C7823FAFD0FA49557F2CC711407" KeyPath="yes" Source="SourceDir\natives_blob.bin" />
+            </Component>
+            <Component Id="cmp61E4A176D9DE53348233C65EAC53F211" Directory="BIN_DIR_REF" Guid="{A0D16474-AE49-4342-AEB7-5F463A31DBAF}">
+                <File Id="filB757E671F4D2A68DD87D99B7191FB054" KeyPath="yes" Source="SourceDir\resources.pak" />
+            </Component>
+            <Component Id="cmp679CE072D0BE2EA284997FD33665569F" Directory="BIN_DIR_REF" Guid="{1E68B2F0-2C3F-4FFF-A64C-DE4FF395F517}">
+                <File Id="fil59559A0D82E2F9341CD285861D5D96EF" KeyPath="yes" Source="SourceDir\snapshot_blob.bin" />
+            </Component>
+            <Component Id="cmp0692A8407B5CC5C2EB4E785AB7E2D4ED" Directory="BIN_DIR_REF" Guid="{34C02F63-0434-49F1-9E79-EA94C2ED7699}">
+                <File Id="filFCB8B0A230E603569D127E9EA93C5C0D" KeyPath="yes" Source="SourceDir\v8_context_snapshot.bin" />
+            </Component>
+            <Component Id="cmpAD4E8C263D692138AC7DA3C7EAAF577E" Directory="BIN_DIR_REF" Guid="{319C299D-374F-4784-9824-9366389071B4}">
+                <File Id="fil22DBEF8D6D2BA660668B445500F4973A" KeyPath="yes" Source="SourceDir\version" />
+            </Component>
+            <Component Id="cmp75241B436E522022FE897CB46E8E1DDE" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{7165284D-3E2A-4FF1-8F8E-BB4CBC8B1D48}">
+                <File Id="fil8969DE60CD3DC12F524603CCFB69C867" KeyPath="yes" Source="SourceDir\locales\am.pak" />
+            </Component>
+            <Component Id="cmpE4F1CD36A4877007FF3035A6C5BCC152" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{A80A9E76-565E-4A11-A14F-B9CF2CC98060}">
+                <File Id="filB9C293F8E9EE1B14EA123C46FFB268B7" KeyPath="yes" Source="SourceDir\locales\ar.pak" />
+            </Component>
+            <Component Id="cmpF95E43938896F83AAAAB99D293FD00CB" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{5B5D3AE8-8C90-4878-8C47-C433590A4432}">
+                <File Id="fil4619B494D44D984F7E38652BC989DE9A" KeyPath="yes" Source="SourceDir\locales\bg.pak" />
+            </Component>
+            <Component Id="cmp22F933E8AF57D78FE9EDF5E6B42E069E" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{32943038-2A66-49CD-B71D-AFC92142D329}">
+                <File Id="fil659713147809C71221EA31471C036C15" KeyPath="yes" Source="SourceDir\locales\bn.pak" />
+            </Component>
+            <Component Id="cmp41EB0D1D7C627CDEBC2E14E140D7BCB7" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{75640AF2-F9DE-42B5-99F8-7A7D1071E37C}">
+                <File Id="fil08CFB28F84221AF634DABA6E9290EC2D" KeyPath="yes" Source="SourceDir\locales\ca.pak" />
+            </Component>
+            <Component Id="cmp1D86AFB78977E58BD46E446879E310E4" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{AD9504F5-D66A-4829-956F-5C6B891975B2}">
+                <File Id="fil224BAF1B1992E471204B249DB6C0E026" KeyPath="yes" Source="SourceDir\locales\cs.pak" />
+            </Component>
+            <Component Id="cmp7ABD2D469E7C74325ABF3046F6FC9B67" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{5AAA2374-1D79-46B9-801D-CFD17080473D}">
+                <File Id="fil6089A123D88FA18A73DA45241769E7A6" KeyPath="yes" Source="SourceDir\locales\da.pak" />
+            </Component>
+            <Component Id="cmp9C9F024D4BEECEA9448994F90AEC3020" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{2C246197-414B-414D-B81E-EE508BEF22CB}">
+                <File Id="fil8A0C4B5EF8ED9FE5C3D98679CB0230A5" KeyPath="yes" Source="SourceDir\locales\de.pak" />
+            </Component>
+            <Component Id="cmp935DCE66B6F053BA384022B37382330A" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{39BAFE71-D654-43D8-8522-C653C54F45DC}">
+                <File Id="fil4DB18AFBA001E41F28C230C31754CAFB" KeyPath="yes" Source="SourceDir\locales\el.pak" />
+            </Component>
+            <Component Id="cmp8B7C64DF4BA53127A170FDB059B0465C" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{D019360F-39F1-489A-ABAC-F29973C5D329}">
+                <File Id="filDC9277DF7E18A9C989EEB260EFF3876C" KeyPath="yes" Source="SourceDir\locales\en-GB.pak" />
+            </Component>
+            <Component Id="cmp1E00859AD6F2DD5649169B34B8ED60D6" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{36CA0FDA-C079-40BB-B32C-BBF882CA7189}">
+                <File Id="filFBEBDA93121BEBF88914964FE013C6D2" KeyPath="yes" Source="SourceDir\locales\en-US.pak" />
+            </Component>
+            <Component Id="cmpC28AC5B4B6FC1913FA72754454E3AFE0" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{25DF4105-DECA-45A1-A96C-4C5886F583E8}">
+                <File Id="filC0D8664FBDE99139896665BB72E76959" KeyPath="yes" Source="SourceDir\locales\es-419.pak" />
+            </Component>
+            <Component Id="cmp61D9228035C496E51797C55827DFA74B" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{17A4BD5E-3419-47B6-A273-FB84FE5E427B}">
+                <File Id="fil55833F6F4A0B9D4FECA25E5762F9443B" KeyPath="yes" Source="SourceDir\locales\es.pak" />
+            </Component>
+            <Component Id="cmp0834412DBCA9CF16D7B9252160128418" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{0FB964DA-95C0-4AE3-8AE7-43DABECA90E5}">
+                <File Id="fil74B2DB8929DEF9EC846FF46CFAE3FC64" KeyPath="yes" Source="SourceDir\locales\et.pak" />
+            </Component>
+            <Component Id="cmp8388A77EDB16518BAE6DC11F084700DE" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{5BEEC91C-9C82-4462-BD3E-24E6EEB497DF}">
+                <File Id="fil133BF6AF92ED6808E06432341C5C63C2" KeyPath="yes" Source="SourceDir\locales\fa.pak" />
+            </Component>
+            <Component Id="cmpA5192D1B6C6A0F295E95D44F8E594778" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{D8907938-BE5C-4DB7-A72C-844A89EE66B2}">
+                <File Id="fil3E91EDE5D1BE878FAFE74D2F8267CE27" KeyPath="yes" Source="SourceDir\locales\fi.pak" />
+            </Component>
+            <Component Id="cmp20BC69E87CB436879DEB69CC7D7F73B7" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{3A770AFC-B080-48EF-A580-81F1322D6FEC}">
+                <File Id="fil037858B8A32D8FE795B410DB1BFD7F41" KeyPath="yes" Source="SourceDir\locales\fil.pak" />
+            </Component>
+            <Component Id="cmp79320A0A7DB0A95950A1926B82688C79" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{790B1DC8-1DC5-40A7-92E8-7194E1B20DFC}">
+                <File Id="fil1D41483F9CBBAA8ABBB6AEEB2F36C785" KeyPath="yes" Source="SourceDir\locales\fr.pak" />
+            </Component>
+            <Component Id="cmp6DDD5B03511C373B032DE25E7B98575C" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{FC335F6C-1120-4347-B9E7-FE54C57D52F3}">
+                <File Id="filE0DDD4EEFE13E72378112B39AA6862C2" KeyPath="yes" Source="SourceDir\locales\gu.pak" />
+            </Component>
+            <Component Id="cmpA05E75341D07D6F24EC81DA81C4663CF" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{766FD7EC-AB94-49D0-9F76-F63D609A63C1}">
+                <File Id="fil4705D43C45AD54A6CC5259960EC9AE94" KeyPath="yes" Source="SourceDir\locales\he.pak" />
+            </Component>
+            <Component Id="cmp0EA68014B861D6CAC6F5FA82C32A976D" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{DD1CE7A3-C6DE-4B9F-A258-AFC40A9D665D}">
+                <File Id="fil1840ADD97FAE00FE25AF7A24E800B200" KeyPath="yes" Source="SourceDir\locales\hi.pak" />
+            </Component>
+            <Component Id="cmp1E5313921F0EF2D0298AEEC0DD2CDDEF" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{347D7569-FF2D-4094-B9E4-EF0CABD22E88}">
+                <File Id="filB01342688878EC9D5BFE192D367D66EB" KeyPath="yes" Source="SourceDir\locales\hr.pak" />
+            </Component>
+            <Component Id="cmp40D0833BC78562B9A3CAC67EBE95C117" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{04142A88-D4B9-4080-A502-F8E1200BEA64}">
+                <File Id="fil83F10FA2E08E5F23AE9883FFB9167CB4" KeyPath="yes" Source="SourceDir\locales\hu.pak" />
+            </Component>
+            <Component Id="cmpC246AB360BEE2D227BFF33CE652D5A51" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{FE885734-491F-4FC7-9847-39802D53F839}">
+                <File Id="filAB870BC8854EFFB3CB30427BD6BF9AA5" KeyPath="yes" Source="SourceDir\locales\id.pak" />
+            </Component>
+            <Component Id="cmp94B192387F9DB549CC7821D5AD4F72BA" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{21B06631-E63B-4287-AD59-07FFD78E3209}">
+                <File Id="filEF66129926EC4947F433CBE5E153DBCC" KeyPath="yes" Source="SourceDir\locales\it.pak" />
+            </Component>
+            <Component Id="cmpCA292C6BA4787D2BAF3DFD9C22576A47" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{EF9B2E1C-9B8A-4565-9BBB-DC6CE8E45C6E}">
+                <File Id="fil7255D203AF199B4C6EE80180E4A4F6C2" KeyPath="yes" Source="SourceDir\locales\ja.pak" />
+            </Component>
+            <Component Id="cmpC8B3942153C7A25DC46C07BB6EE07A8D" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{6BB4E944-D0B0-4268-AF86-25CF6E963B50}">
+                <File Id="fil17F647B6806A15091D3F09AF530C24FA" KeyPath="yes" Source="SourceDir\locales\kn.pak" />
+            </Component>
+            <Component Id="cmpABA4D5A4A7A6D61F8742AB9C9A934023" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{91BED132-E9B3-45F3-B1EB-5A28D4F65A1A}">
+                <File Id="fil0C206A0773E57C7641F6E7CB00917172" KeyPath="yes" Source="SourceDir\locales\ko.pak" />
+            </Component>
+            <Component Id="cmpC32246FA3E2380FF24E5DFF7E937D0DF" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{9AC0437B-932A-4514-8315-F1545545FEE9}">
+                <File Id="fil5CED363C2861BF6C324831529D4C89EC" KeyPath="yes" Source="SourceDir\locales\lt.pak" />
+            </Component>
+            <Component Id="cmp54192F8BC69277660A81DAD9B4E10B92" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{73F3CB67-6AA6-4568-A1A7-27BE5EE9C200}">
+                <File Id="filA35961E833F3DABADA7F307C42F9B872" KeyPath="yes" Source="SourceDir\locales\lv.pak" />
+            </Component>
+            <Component Id="cmp9A3DBEB10E3524B7AC20B11EBA7306E6" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{53D29FB2-8990-4328-9EDF-3257E1954A80}">
+                <File Id="fil4A2661EC829A26C56966E3654DBEDAD5" KeyPath="yes" Source="SourceDir\locales\ml.pak" />
+            </Component>
+            <Component Id="cmp83145A35DEEA2C52E760E6D8A7FC6897" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{039E1A6B-95A7-40A9-918D-F264EE1E3554}">
+                <File Id="fil839432D2F2B13E63C56368FBE0EC0017" KeyPath="yes" Source="SourceDir\locales\mr.pak" />
+            </Component>
+            <Component Id="cmpB01A706595A56521E471A02C60711279" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{AAD6CA79-1503-488F-802D-98EC36D9A231}">
+                <File Id="fil54A01D7105216BE8648845695BD54059" KeyPath="yes" Source="SourceDir\locales\ms.pak" />
+            </Component>
+            <Component Id="cmp5F5F2831064297BB34BF9742C9EFA2FF" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{CE7525DB-AA02-4E09-8D4F-F85F867D4497}">
+                <File Id="filA2B479F5F867F98ED1875C7AC5C60BED" KeyPath="yes" Source="SourceDir\locales\nb.pak" />
+            </Component>
+            <Component Id="cmp4831E11F2C05853F29069EC0F4BA496E" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{94EC6D7F-9D38-4279-B86B-C7453EFC3F4D}">
+                <File Id="filDD6B09A03D7779FB23442A2B199FA629" KeyPath="yes" Source="SourceDir\locales\nl.pak" />
+            </Component>
+            <Component Id="cmp1E68FAC11197CBF6090C54E609E3A73B" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{1A061BC4-6654-45D5-93C1-F20A28649B7B}">
+                <File Id="fil18BDB748F2449147A3E8FC7B63F1CB9B" KeyPath="yes" Source="SourceDir\locales\pl.pak" />
+            </Component>
+            <Component Id="cmpFC69435B460E01605CC2432876498CB0" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{5BB44ADC-4FD9-4934-91F8-7329A2DB3646}">
+                <File Id="fil91207B32A59E429E35552926F5BE201B" KeyPath="yes" Source="SourceDir\locales\pt-BR.pak" />
+            </Component>
+            <Component Id="cmp96DCE4746AA359B920062AFDD3F92EED" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{6E7F670D-2CE8-4938-B81A-CFD7C60F3D7F}">
+                <File Id="fil14E001116529C62B92224829E2B7778E" KeyPath="yes" Source="SourceDir\locales\pt-PT.pak" />
+            </Component>
+            <Component Id="cmp1291460EBC26A86D4095B919CE608B69" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{40F51B76-ACAD-43CD-8C86-11EC59716E08}">
+                <File Id="filE664FA05523568A868C5B02B94E29334" KeyPath="yes" Source="SourceDir\locales\ro.pak" />
+            </Component>
+            <Component Id="cmpF02891138EB98D33A86DFC5C86EE1ABE" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{975A767E-AC58-4B3A-9A20-5BE0E32F917E}">
+                <File Id="fil506E65B1B6CCFB8174330CA68984DA18" KeyPath="yes" Source="SourceDir\locales\ru.pak" />
+            </Component>
+            <Component Id="cmpA41BE4DDDB5835AFEDE316ECB6FC3CD4" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{1F8771EB-0F3E-4213-BC4C-F23A38075194}">
+                <File Id="fil1611FD1F66DC4313F06CB96142930F8E" KeyPath="yes" Source="SourceDir\locales\sk.pak" />
+            </Component>
+            <Component Id="cmp90CCA7D81D4B3520132971602062DE47" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{EB347565-1B57-4E34-A323-F19AB5FE9630}">
+                <File Id="fil864B899051C96B6DF02D84511EAE6938" KeyPath="yes" Source="SourceDir\locales\sl.pak" />
+            </Component>
+            <Component Id="cmp1139B4C27026B6D082ED41B5CC4611E7" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{152E90AF-E009-4EB9-90B7-67C87CE83D87}">
+                <File Id="filF81655190B5268256769FE071EE80C12" KeyPath="yes" Source="SourceDir\locales\sr.pak" />
+            </Component>
+            <Component Id="cmp2D3C66D251C8BA532C52CCD827D2ED0D" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{BE837A4A-AF92-4DE1-AAAB-88C58D187D16}">
+                <File Id="filC12731E847AAB3995D665C542E137D72" KeyPath="yes" Source="SourceDir\locales\sv.pak" />
+            </Component>
+            <Component Id="cmpAB02C90FFA9EF3A63458D184866C6FA8" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{E6BBE570-7A04-4B80-9AAE-4FDA8442146D}">
+                <File Id="filCF9AE9A0EC90CB488CE5DC982EADF202" KeyPath="yes" Source="SourceDir\locales\sw.pak" />
+            </Component>
+            <Component Id="cmp4897A9C78D1AAEEBE99031E1A07C4DB6" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{981108FF-E43B-4A69-813C-1C0B16E5A51A}">
+                <File Id="fil77C33AD94CA1EFB31D961FD700517FF7" KeyPath="yes" Source="SourceDir\locales\ta.pak" />
+            </Component>
+            <Component Id="cmpB3F2ABEA2526CADAED0B60E34D1C5172" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{A3E05EF0-9C43-43B3-9CF7-0FDD3845090A}">
+                <File Id="fil2D07EF127B2E7F6B44ED21330FE8755F" KeyPath="yes" Source="SourceDir\locales\te.pak" />
+            </Component>
+            <Component Id="cmpAECED46D44393FD84CDE6545F7D4B8C2" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{4E21E0C3-9BDE-41ED-BAF0-9B5EA9C02B8E}">
+                <File Id="fil7440D4C9490321D8A725EE6AA4888AD7" KeyPath="yes" Source="SourceDir\locales\th.pak" />
+            </Component>
+            <Component Id="cmp0D7E592660BB689FB921D37561BA8BCD" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{442AA186-44FE-4505-A93C-4E0EA0ED400F}">
+                <File Id="filCD9561DDFFFE913DF5074DE1D69DF4F8" KeyPath="yes" Source="SourceDir\locales\tr.pak" />
+            </Component>
+            <Component Id="cmp1A2A9BE1349538362365E2E85579A963" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{0F74B9A1-F9D1-4822-9E11-ECFF85E9CF99}">
+                <File Id="filB51829C01D58592B817E0D5969063759" KeyPath="yes" Source="SourceDir\locales\uk.pak" />
+            </Component>
+            <Component Id="cmp7E869426FD8E36285AB061BEE7C1DC33" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{08D73364-8C3C-49CA-B153-C929030B8324}">
+                <File Id="fil17D572B3AB38E1D1A6FE625518BDD562" KeyPath="yes" Source="SourceDir\locales\vi.pak" />
+            </Component>
+            <Component Id="cmpE5018C3C5CF8AC372BA430DFFC10D242" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{FC115635-1F7C-4089-A451-8154F8850E78}">
+                <File Id="fil791BB56DD9FF5E0F3209A6814B002AFA" KeyPath="yes" Source="SourceDir\locales\zh-CN.pak" />
+            </Component>
+            <Component Id="cmpF4E6BF62A20BF5A1FB7CFA718DA26227" Directory="dirC3999006D4FDE2A5A95A50819088195D" Guid="{2D252DED-7751-455F-B6D9-7DC0EF386C35}">
+                <File Id="filBBA815B942291D759F97248A7B0AD4B7" KeyPath="yes" Source="SourceDir\locales\zh-TW.pak" />
+            </Component>
+            <Component Id="cmp24EDF8962958F7CD234B13741F7ABD25" Directory="dirA418A4E0CF1BB1F6E32813DAAF58BD97" Guid="{F5713351-4F81-4FFB-9683-F832162BA71A}">
+                <File Id="fil6FF652229FB1F3A271D87D7AA26E70CC" KeyPath="yes" Source="SourceDir\resources\app.asar" />
+            </Component>
+            <Component Id="cmpDEA0230E902C9397BFDD9FE7897B9E40" Directory="dir87AF27ACD13CC30E2251FBA7060143AA" Guid="{B53BA18B-58CB-4255-92D9-D1DB1BEAC4E4}">
+                <File Id="filB6225C9DDBCDED5D85E88E7103FDDFC4" KeyPath="yes" Source="SourceDir\swiftshader\libEGL.dll" />
+            </Component>
+            <Component Id="cmp0577B52CBC971A19079AE2FD7C5EC264" Directory="dir87AF27ACD13CC30E2251FBA7060143AA" Guid="{6D1FA789-3AB7-43B2-8E0D-8A019B5BB027}">
+                <File Id="fil07AF4FDC5B77AACFA14B814D88724275" KeyPath="yes" Source="SourceDir\swiftshader\libGLESv2.dll" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+</Wix>

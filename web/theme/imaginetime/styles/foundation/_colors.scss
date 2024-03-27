@@ -1,0 +1,94 @@
+// @import 'sass/globals/colorPalettes';
+
+// Brand Palette
+// ••••••••••••••••••••••••••••••••••••••••••••••••••
+
+
+$it-black:                #262626;
+$it-blue:                 #4EBAC5;
+$it-danger:               #FF2900;
+$it-gray:                 #4b4b4b;
+$it-green:                #8CC63F;
+$it-light-blue:           #E2FCFF;
+$it-light-gray:           #ededed;
+$it-light-green:          #EDFFD6;
+$it-light-pink:           #FFDBD4;
+$it-light-red:            #f39a88;
+$it-orange:               #F1910E;
+$it-pink:                 #D26D87;
+$it-purple:               #C096CA;
+$it-red:                  #F5684D;
+$it-teal:                 #0DA79D;
+// $it-blue-gray:            #CFD8DC;
+$it-blue-gray:            #BFC6C9;
+$it-yellow:               #F9B915;
+
+$brand-primary:               $it-blue;
+$brand-secondary:             $it-black;
+$brand-accent:                $it-teal;
+
+
+
+
+// UI Palette
+// ••••••••••••••••••••••••••••••••••••••••••••••••••
+$bg-color:                    $white-0;
+$dark-bg-color:               $it-black;
+$gray:                        $it-gray;
+$white:                       $white-1;
+
+$highlight-color:             rgba(0,0,0,0.06); // rgba(0,0,0,0.05)
+
+$text-color:                  rgba(0,0,0,0.87);
+$lighter-text-color:          rgba(0,0,0,0.48);
+$muted-text:                  rgba(0,0,0,0.24);
+$text-light:                  rgba(255,255,255,.9);
+$accent-color:                $brand-accent;
+
+$link-color:                  $it-teal;
+$link-visited-color:          $link-color;
+$link-hover-color:            lighten($link-color, 20);
+
+$button-color:                $it-red;
+$button-hover-color:          lighten($button-color, 20);
+$button-visited-color:        $button-color;
+
+$divider-color:               rgba(0,0,0,0.15);
+$light-divider-color:         rgba(255,255,255,0.15);
+
+$shadow-color:                rgba(0,0,0,0.25);
+$black:                       $black-2;
+
+// Component colors
+// ••••••••••••••••••••••••••••••••••••••••••••••••••
+$sidebar-bg-color:               $it-black;
+$header-bg-color:                $white-0;
+$drawer-bg-color:                $it-black;
+// $topbar-text-color:
+
+$hero-bg-color:                 $it-gray;
+$footer-bg-color:               $it-black;
+
+// Semantic Colors
+// ••••••••••••••••••••••••••••••••••••••••••••••••••
+
+$success: $it-teal;
+$success-hover: darken($success, 10);
+
+$warning: $it-orange;
+$warning-hover: darken($warning, 10);
+
+$danger: $it-danger;
+$danger-hover: darken($danger, 10);
+
+$primary: $it-black;
+$primary-hover: darken($primary, 10);
+
+$info: $it-blue;
+$info-hover: darken($info, 10);
+
+$formContainerColor: #fff;
+$formAccentColor: $link-color;
+$inputBorderColor: rgba(34,36,38,.15);
+$formTextColor: $text-color;
+$richFormContainerColor: rgba(255,255,255,0.7);

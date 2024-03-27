@@ -1,0 +1,147 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the ClientWorkflow Template module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/clientWorkflowTemplateAdminStyles";
+
+$template-sidebar-width: 300px;
+
+.template-preview-container {
+  height: 100vh;
+  position: relative;
+  padding-left: 0;
+  @include transition(padding 250ms ease-in-out);
+  @include MQ(S) {
+    &.-with-sidebar {
+      padding-left: $template-sidebar-width;
+    }
+  }
+  .-header {
+    padding-left: $template-sidebar-width;
+    width: auto;
+  }
+  .-header-content {
+    height: 100%;
+    @include display-flex;
+    @include align-items(center);
+  }
+  .-template-actions {
+    .yt-btn {
+      margin-left: $gutter;
+    }
+  }
+  .-sidebar-menu {
+    z-index: 1000;
+    color: rgba(0,0,0,0.6);
+    left: $template-sidebar-width;
+    .-icon{
+      height: $header-height;
+      @include display-flex;
+      @include align-items(center);
+      @include justify-content(center);
+    }
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+  }
+  .-preview-title {
+    h3 {
+      margin: auto;
+    }
+    height: 100%;
+    padding: 0 $gutter;
+    white-space: nowrap;
+    @include mobile-scroll-x;
+    @include MQ(S) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @include align-self(center);
+    @include display-flex;
+    @include align-items(center);
+    @include medium-font;
+    @include flex(1);
+    .-icon {
+      max-width: 30px;
+      margin-left: 10px;
+    }
+  }
+  .-preview-template {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100vh;
+    @include display-flex;
+    @include justify-content(center);
+    @include mobile-scroll;
+    padding: $gutter-width * 3 $gutter $gutter-width $gutter;
+  }
+  .-actions {
+    padding-right: $gutter;
+  }
+  .-exit-preview {
+    @include align-self(stretch);
+    @include display-flex;
+    @include align-items(center);
+    @include justify-content(flex-end);
+    padding-right: 15px;
+    color: $text-color;
+    @include transition(all 250ms ease-in-out);
+    p,i {
+      @include transition(all 250ms ease-in-out);
+      margin-right: 10px;
+    }
+    &:hover {
+      color: $black-0;
+      p { margin-right: 15px;}
+    }
+    @media screen and (max-width: 450px) {
+      width: 60px;
+      padding-right: 5px;
+    }
+  }
+}
+
+.template-preview-sidebar {
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: $gutter;
+  padding-top: 0px;
+  border-right: 1px solid $divider-color;
+  z-index: 1000;
+  background-color: #fff;
+  @include mobile-scroll;
+  margin-left: -100vw;
+  @include MQ(S) {
+    width: $template-sidebar-width;
+    margin-left: 0;
+  }
+  .tab-bar-nav {
+    margin-top: 0px;
+  }
+  ul {
+    list-style: none;
+    li {
+      white-space: nowrap;
+      a {
+        color: $text-color;
+        @include medium-font;
+        border-left: none;
+        &:hover {
+          color: lighten($text-color, 2);
+        }
+        &.active {
+          border-left: none;
+          color: $it-teal;
+        }
+      }
+    }
+  }
+}

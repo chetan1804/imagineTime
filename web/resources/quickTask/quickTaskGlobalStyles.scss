@@ -1,0 +1,278 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Quick Task module that you ALSO want globally
+ * available should live here.
+ */
+ a.portal-quicktask-list-item {
+  @include display-flex;
+  min-height: 3em;
+  padding: $gutter * 0.25;
+  margin-top: $gutter * 0.50;
+  @include transition(box-shadow 250ms ease-in-out);
+  color: $text-color;
+  .-task-type {
+    margin-right: $gutter;
+  }
+  .-file-icon {
+    width: $gutter-width * 2;
+
+  }
+  .-info {
+    @include flex(1);
+  }
+  .-icon {
+    margin-right: $gutter;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .-title {
+    @include medium-font;
+    font-weight: 600;
+    // color: $link-color;
+    text-decoration: underline;
+    @include transition(color 250ms ease-in-out);
+  }
+  .-uploaded {
+    color: $lighter-text-color;
+    @include small-font;
+  }
+  .-items {
+    font-style: italic;
+    color: $lighter-text-color;
+  }
+  .-due-date {
+    @include small-font;
+    @include align-items(center);
+    margin: $gutter * 0.5 0;
+    .-icon {
+      border: 1px solid $text-color;
+      height: $gutter-width;
+      width: $gutter-width;
+      margin-right: $gutter * 0.5; 
+    }
+  }
+  .-arrow {
+    width: 40px;
+    color: $text-color;
+    @include display-flex;
+    @include align-items(center);
+    .-i {
+
+      margin-left: 0;
+      opacity: 0;
+      @include transition(all 250ms ease-in-out);
+    }
+  }
+  &:hover {
+    @include box-shadow(0px 4px 12px $shadow-color);
+    .-arrow .-i {
+      opacity: 1;
+      margin-left: $gutter;
+    }
+  }
+}
+
+.quick-task-list-wrapper {
+  // height: 70vh;
+  // overflow-y: scroll;
+  /**
+   * ^ commenting this out for now because it chops the list off weird
+   * there's a way to do this with flexbox but i don't feel like messing with 
+   * it right now -- @eguffrey 
+   */ 
+  .yt-toolbar {
+    background-color: $toolbar-bg-color;
+    position: sticky;
+    top: 0;
+    z-index: 500;
+  }
+}
+
+.practice-quicktask-list-item {
+  @include display-flex;
+  @include align-items(center);
+  min-height: 3em;
+  padding: $gutter * 0.25;
+  margin-top: $gutter * 0.50;
+  color: $text-color;
+  border-bottom: 1px solid $divider-color;
+  .-task-type {
+    margin-right: $gutter;
+  }
+  .-file-icon {
+    width: $gutter-width * 2;
+
+  }
+  .-info {
+    @include flex(1);
+  }
+  .-icon {
+    margin-right: $gutter;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .-title {
+    @include medium-font;
+    font-weight: 600;
+    // color: $link-color;
+    text-decoration: underline;
+    @include transition(color 250ms ease-in-out);
+  }
+  .-uploaded {
+    color: $lighter-text-color;
+    @include small-font;
+  }
+  .-items {
+    font-style: italic;
+    color: $lighter-text-color;
+  }
+  .-due-date {
+    @include small-font;
+    @include align-items(center);
+    margin: $gutter * 0.5 0;
+    .-icon {
+      border: 1px solid $text-color;
+      height: $gutter-width;
+      width: $gutter-width;
+      margin-right: $gutter * 0.5; 
+    }
+  }
+  .-arrow {
+    width: 40px;
+    color: $text-color;
+    @include display-flex;
+    @include align-items(center);
+    .-i {
+
+      margin-left: 0;
+      opacity: 0;
+      @include transition(all 250ms ease-in-out);
+    }
+  }
+}
+
+.task {
+  .-header {
+    @include medium-font;
+    font-weight: 600;
+    // color: $link-color;
+    text-decoration: underline;
+    @include transition(color 250ms ease-in-out);
+  }
+}
+
+.practice-quick-task {
+  padding: $gutter * 0.25;
+  margin-top: $gutter * 0.50;
+  .-items {
+    font-style: italic;
+    color: $lighter-text-color;
+  }
+}
+
+.header-text {
+  @include medium-font;
+  font-style: bold;
+}
+
+.-info {
+  @include small-font; 
+  font-style: italic;
+  color: $lighter-text-color;
+}
+
+.sub-header-text { 
+  @include medium-font;
+  font-style: bold; 
+  text-decoration: underline; 
+}
+
+.signed-text {
+  @include medium-font;
+  color: $lighter-text-color;
+  font-style: italic; 
+}
+
+.padding {
+  padding: 5px; 
+}
+
+footer, .footer {
+  @include flex(none);
+  background-color: #fff;
+  color: rgba(255,255,255, 0.9);
+  padding: 40px 0px;
+
+  // @include zIndex-6;
+  hr { margin: 0 }
+  a {
+    // color: $text-light;
+    color: rgba(255,255,255, 0.9);
+    &:hover {
+      // color: lighten($text-light, 2);
+      color: rgba(255,255,255, 0.97);
+    }
+  }
+
+  .footer-nav {
+    padding-top: $gutter-width;
+    border-top: 1px solid $light-divider-color;
+
+    // @extend %calibre-semibold;
+    @include medium-font;
+    display: none;
+    @include MQ(XS) {
+      @include display-flex;
+    }
+    @include MQ(S) {
+      border: none;
+    }
+
+    .nav-link {
+      padding-bottom: 10px;
+    }
+
+  }
+
+  .middle {
+    border-top: 1px solid $light-divider-color;
+    border-bottom: 1px solid $light-divider-color;
+    @include MQ(XS) {
+      padding: $gutter-width 0;
+    }
+  }
+  .sub-links {
+    small {
+      margin-right: $gutter;
+    }
+  }
+}
+
+.input-group .input-add-on.-signer {
+  margin-bottom: 0;
+}
+
+.-error-message.-wrap-word {
+  overflow-wrap: break-word;
+}
+
+.-rmb-custom-template > .input-group > .input-add-on {
+  margin-bottom: 0;
+}
+
+.-body.-max-width {
+  padding: 0px 0px 16px 0px;
+  > .progress-container {
+    max-width: 100%;
+  }
+}
+
+.-share-link-configuration .-body .input-group.date-picker-wrapper.-single.dobinput {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 16px;
+
+  > .SingleDatePicker {
+    margin: 0;
+  }
+}

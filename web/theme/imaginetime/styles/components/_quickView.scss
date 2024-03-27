@@ -1,0 +1,57 @@
+.quick-view {
+  position: fixed;
+  top: $header-height + 1;
+  bottom: 0;
+  right: 0;
+  width: 40%;
+  min-width: 400px;
+
+  background-color: #fff;
+  @include box-shadow(0px 4px 12px $shadow-color);
+  z-index: 600; // the fixed header is set to 700, so this needs to be less than that or the dropdown menus hide behind the quick-view panel.
+  .-header {
+    padding: $gutter;
+    border-bottom: 1px solid $divider-color;
+    height: $gutter-width * 2;
+    @include display-flex;
+    @include justify-content(space-between);
+    @include align-items(center);
+  }
+  .-body {
+    padding: $gutter;
+    position: absolute;
+    top: $gutter-width * 2;
+    bottom: $gutter-width * 2;
+    width: 100%;
+    // height: 100vh;
+    @include mobile-scroll;
+  }
+  .-footer {
+    border-top: 1px solid $divider-color;
+    height: $gutter-width * 2;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    // background-color: $it-black;
+    color: #fff;
+    padding: $gutter;
+    @include display-flex;
+    @include justify-content(space-between);
+    @include align-items(center);
+  }
+  .-block {
+    margin: $gutter-width 0;
+    label {
+      .-edit-button {
+        @include transition(all 250ms ease-in-out);
+        padding-left: 1em;
+        opacity: 0;
+      }
+      &:hover {
+        .-edit-button {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

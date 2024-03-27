@@ -1,0 +1,239 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the ClientWorkflow module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/clientWorkflowAdminStyles";
+
+.quick-view {
+  .-client-workflow-info {
+    margin-bottom: $gutter-width;
+  }
+}
+
+.-due-date {
+  @include display-flex;
+  margin: $gutter 0;
+  .-icon {
+    width: $gutter * 3; 
+    height: $gutter * 3;
+    border-radius: 50%;
+    border: 2px solid $text-color; 
+    @include display-flex;
+    @include justify-content(center);
+    @include align-items(center);
+    margin-right: $gutter;
+  }
+}
+
+.-client-workflow-editor {
+  position: relative;
+  padding: $gutter;
+  .-description {
+    font-family: $font-serif;
+    font-weight: normal;
+    input {
+      @include base-font;
+      padding: 0;
+      border: none;
+      background-color:transparent;
+    }
+  }
+  .-title {
+    font-family: $font-serif;
+    font-weight: 500;
+    input {
+      @include large-font;
+      padding: 0;
+      border: none;
+      background-color:transparent;
+      // &:focus {
+      //   background-color: darken(#fff, 3);
+      // }
+    }
+  }
+  .-task-list {
+    margin: $gutter 0;
+    // background-color: rgba(0,0,0,0.03);
+    div:last-child > .-task-editor .add-new-task {
+      display: none;
+    }
+  }
+  .-toolbar-bottom {
+    background-color: $toolbar-bg-color;
+    border-top: 1px solid $divider-color;
+    bottom: 0;
+    height: auto;
+    position: sticky;
+    .yt-btn {
+      margin: 1em 0em;
+    }
+  }
+  &.-sub-tasks {
+    padding: $gutter $gutter * 0.5;
+    // border: 1px solid $divider-color;
+    @include transition(all 150ms ease-in-out);
+    &:hover {
+      background-color: lighten($highlight-color, 3);
+      input { 
+        // background-color: lighten($highlight-color,3);
+      }
+    }
+  }
+}
+
+.add-new-task {
+  @include display-flex;
+  @include align-items(center);
+  // padding: 0 $gutter-width;
+  padding: 0 $gutter * 0.5;
+  .-icon {
+    font-size: 1.5rem;
+    @include transition(all 150ms ease-in-out);
+    margin-right: $gutter * 0.5;
+    color: #fff;
+    background-color: $info;
+    border: 2px solid transparent;
+    height: $gutter-width;
+    width: $gutter-width;
+    border-radius: 50%;
+    @include display-flex;
+    @include align-items(center);
+    @include justify-content(center);
+    &:hover {
+      background-color: lighten($info, 3);
+    }
+  }
+  
+  &:hover {
+    cursor: pointer;
+    .-icon {
+      // font-size: 1.5rem;
+      border-color: $info;
+      @include box-shadow(0px 4px 8px $shadow-color);
+    }
+  }
+}
+
+.-sub-task-title {
+  // padding: $gutter;
+  @include display-flex;
+  .-task-input {
+    @include flex(1);
+  }
+  .input-group {
+    margin: 0;
+  }
+  input {
+    border: none; 
+    background-color: transparent;
+    // @include medium-font;
+  }
+}
+
+.status-indicator {
+  background-color: darken($formContainerColor, 5);
+  border-radius: 1em;
+  float: right;
+  text-align: right;
+  font-family: $font-brand !important;
+  .-status {
+    display: inline-block;
+    margin-left: .5em;
+    p {
+      text-align: right;
+      margin: 0;
+      white-space: nowrap
+    }
+  }
+  .-status-dot-wrapper {
+    display: inline-block;
+    line-height: 1em;
+    text-align: center;
+    width: 2em;
+    .-status-dot {
+      height: 1.1em;
+      width: 1.1em;
+      border-radius: 50%;
+      display: inline-block;
+      vertical-align: middle;
+      &.-draft {
+        box-shadow: 0 0 0.1em 0em $it-yellow; // add a tiny glow to the edges of the status dot.
+        background-color: $it-yellow;
+      }
+      &.-published {
+        box-shadow: 0 0 0.1em 0em $it-green;
+        background-color: $it-green;
+      }
+      &.-archived {
+        background-color: $it-gray;
+      }
+    }
+  }
+}
+
+a.portal-workflow-list-item {
+  @include display-flex;
+  // @include align-items(center);
+  padding: $gutter * 0.25;
+  margin-top: $gutter * 0.50;
+  @include transition(box-shadow 250ms ease-in-out);
+  color: $text-color;
+  .-task-type {
+    // width: $gutter-width * 2;
+    margin-right: $gutter;
+  }
+  .-file-icon {
+    width: $gutter-width * 2;
+
+  }
+  .-info {
+    @include flex(1);
+  }
+  .-title {
+    @include medium-font;
+    font-weight: 600;
+    // color: $link-color;
+    text-decoration: underline;
+    @include transition(color 250ms ease-in-out);
+  }
+  .-uploaded {
+    color: $lighter-text-color;
+    @include small-font;
+  }
+  .-items {
+    font-style: italic;
+    color: $lighter-text-color;
+  }
+  .-due-date {
+    @include small-font;
+    @include align-items(center);
+    margin: $gutter * 0.5 0;
+    .-icon {
+      border: 1px solid $text-color;
+      height: $gutter-width;
+      width: $gutter-width;
+      margin-right: $gutter * 0.5; 
+    }
+  }
+  .-arrow {
+    width: 40px;
+    color: $text-color;
+    @include display-flex;
+    @include align-items(center);
+    .-i {
+
+      margin-left: 0;
+      opacity: 0;
+      @include transition(all 250ms ease-in-out);
+    }
+  }
+  &:hover {
+    @include box-shadow(0px 4px 12px $shadow-color);
+    .-arrow .-i {
+      opacity: 1;
+      margin-left: $gutter;
+    }
+  }
+}

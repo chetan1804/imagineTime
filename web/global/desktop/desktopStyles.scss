@@ -1,0 +1,73 @@
+
+
+.desktop-layout {
+  @include display-flex;
+  @include flex(1);
+}
+
+.desktop-hero-header {
+  max-width: 66%;
+  margin: auto;
+  padding: $gutter;
+}
+
+.-desktop-footer {
+  background: #fff;
+  padding: $gutter;
+  img {
+    max-width: 66%;
+    float: right;
+  }
+}
+
+.-desktop-account-list {
+  border-top: none;
+  .-account-select-link {
+    border-bottom: none;
+  }
+}
+
+.-desktop-action-btns {
+  .-btn {
+    @include display-flex;
+    @include align-items(center);
+    padding: $gutter; 
+    color: $text-color;
+    @include transition(all 250ms ease-in-out);
+    @include medium-font;
+    .-icon {
+      margin-right: $gutter;
+      @include largest-font;
+      width: 40px;
+    }
+    .-text {
+      @include flex(1);
+    }
+    &:hover {
+      background-color: $it-pink;
+      color: #fff;
+      cursor: pointer;
+    }
+    &.-disabled {
+      opacity: 0.5;
+      &:hover {
+        background-color: #fff;
+        color: $text-color;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.error-container {
+  background-color: white;
+  padding: 1em;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  .-error-message {
+    color: $danger;
+    font-weight: 500;
+    width: 80%;
+  }
+}

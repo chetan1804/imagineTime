@@ -1,0 +1,26 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Tag module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/tagAdminStyles";
+
+.tag-pill {
+  background-color: $it-purple;
+  color: #fff;
+  @include smaller-font;
+  font-weight: 500;
+  padding: 2px 6px;
+  margin-right: 4px;
+  border-radius: 2px;
+  &.add {
+    background-color: $it-blue-gray;
+  }
+}
+
+.tag-list-wrapper {
+  .yt-toolbar {
+    padding-top: $gutter-width * .75;
+  }
+}

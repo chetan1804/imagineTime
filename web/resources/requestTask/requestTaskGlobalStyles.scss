@@ -1,0 +1,157 @@
+.-options.-left {
+    .-link-border-none, .tab-bar-nav {
+        border: 0 !important;
+    }
+}
+
+.-status-count {
+    background: #cdcbce;
+    padding: 0px 15px;
+    color: #fff;
+    align-items: center;
+    height: 20px;
+    border-radius: 15px;
+    margin-right: 5px;
+    position: relative;
+    bottom: 2px;
+    font-weight: 500;
+    width: fit-content;
+    
+    span {
+        position: relative;
+        top: -1px;
+    }
+}
+
+.active > .-status-count {
+    background: #0DA79D;
+}
+
+strong > sup.-required {
+    top: -3px;
+    left: 3px;
+    color: red;
+}
+
+.tab-bar-nav.-request-task-overview {
+    margin-top: 10px;
+
+    ul.navigation {
+        width: 100%;
+
+        > li {
+            width: 33%;
+            margin: 0px;
+        }
+
+        > li > a {
+            width: 100%;
+            display: table;
+            margin: 0 auto;
+        }
+
+        &.-remove-detail {
+            > li {
+                width: 50%;
+            }
+        }
+    }
+    
+    
+}
+
+.-overview-content {
+    margin: 1.5em 0;
+    font-size: 0.9em;
+
+    .center-vert {
+        margin-bottom: 1em;
+    }
+
+    label.-ov-title {
+        margin-right: 0.5em;
+        font-weight: 500;
+
+        &.-hide {
+            visibility: hidden;
+        }
+    }
+
+    .fas {
+        color: green;
+    }
+
+    .fa-2x {
+        font-size: 1.3em;
+        margin: -4px 3px 0px 0px;
+    }
+
+    .left-title-list {
+        display: inline-grid;
+        .-ov-title {
+            position: relative;
+            left: -100%;
+            height: 0px;
+            margin-left: 15em;
+        }
+    }
+
+    .-user-initials {
+        padding-top: 6px;
+    }
+
+    .content-upload > .yt-row.center-vert > div {
+        width: 100%;
+        margin-bottom: 0.5em;
+
+        .-title {
+            height: auto;
+        }
+    }
+}
+
+.-task-activity-file-list {
+    display: grid;
+
+    > a {
+        font-size: 0.9em;
+    }
+}
+
+.quick-view .-sidebar-overview {
+    > .-body {
+        bottom: 130px;
+    }
+
+    > .-footer {
+        padding: 16px 16px 32px;
+        height: 130px;
+
+        > .note-editor {
+            width: 100%;
+        }
+
+        form {
+            padding: 0;
+            margin: 0;
+        }
+
+        textarea {
+            color: black;
+        }
+
+        .yt-row.right > button.yt-btn {
+            margin-left: 10px;
+        }
+
+        .yt-row.left > button.yt-btn {
+            margin-right: 10px;
+        }
+    }
+}
+
+.-textarea-field {
+    > div.input-group {
+        margin-bottom: 0;
+    }
+}

@@ -1,0 +1,26 @@
+.-clientfolderpermission-configuration {
+  
+  .permission-checkbox {
+    margin-bottom: 0;
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+    }
+    
+  } 
+
+  .-columnHeader {
+    color: #4EBAC5;
+    font-weight: bold;
+  }
+
+  .-header {
+    color: #fa6930;
+  }
+  
+  .icon-tooltip {
+    cursor: pointer;
+    margin-left: 5px;
+  }
+}

@@ -1,0 +1,52 @@
+.-admin-body {
+  background-color: #f5f9f9;
+  .content-container {
+    border: 1px solid $divider-color;
+    border-radius: 3px;
+    margin-bottom: $gutter-width;
+    a {
+      i { margin-left: 4px; }
+    }
+  }
+}
+.admin-table-wrapper {
+
+}
+
+.-widget {
+  @include display-flex;
+  .card {
+    border: 1px solid $divider-color;
+  }
+}
+
+.-quick-list {
+  .-item {
+    color: $text-color;
+    @include transition(all 150ms ease-in-out);
+    @include display-flex;
+    @include justify-content(space-between);
+    @include align-items(center);
+    padding: 8px 8px;
+    margin: 0 -8px;
+    // border-bottom: 1px solid $divider-color;
+    &:hover {
+      color: $link-color;
+      @include box-shadow(0 2px 8px $shadow-color);
+    }
+    .-icon {
+      margin-left: $gutter;
+    }
+  }
+}
+
+.-settings-card-info {
+  @include display-flex;
+  @include align-items(center);
+  border-top: 1px solid $divider-color;
+  padding: 8px 0;
+  margin-bottom: 8px;
+  .-info {
+    @include flex(1);
+  }
+}

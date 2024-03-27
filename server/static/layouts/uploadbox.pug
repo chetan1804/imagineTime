@@ -1,0 +1,67 @@
+doctype
+<!--[if lt IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" > <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8" > <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie10 lt-ie9" > <![endif]-->
+<!--[if IE 9]><html class="no-js lt-ie10" > <![endif]-->
+<!--[if IE 10]><html class="no-js lt-ie11" > <![endif]-->
+<!--[if gt IE 8]> <html class="no-js" lang="en" > <![endif]-->
+html(lang="en")
+  head
+    
+    //- title should match project name by default
+    title ImagineTime Secure Print
+    meta(name="description" content="ImagineTime Secure Print")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(charset="utf-8")
+    meta(HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8")
+    link(href="/favicon.ico?v=4", rel="shortcut icon", type="image/x-icon")
+    link(href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,300,700,200,600,500,900' rel='stylesheet' type='text/css')
+    link(rel="stylesheet", href="/css/animate.min.css")
+
+    //- shims for (hopefully) better cross browser support
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-shim.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.34.2/es6-shim.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.34.2/es6-sham.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.6.0/polyfill.min.js')
+
+    //- include matchMedia polyfills for ie8-9 support
+    script(src='/lib/matchMedia.js')
+    script(src='/lib/matchMedia.addListener.js')
+
+    //- socket.io client library
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js')
+
+    //- icons NOTE: using fontawesome pro
+    //- link(rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-Bx4pytHkyTDy3aJKjGkGoHPt3tvv6zlwwjc3iqN7ktaiEMLDPqLSZYts2OjKcBx1" crossorigin="anonymous")
+    script(src="https://kit.fontawesome.com/752d0a57d8.js", crossorigin="anonymous")
+
+    //- compiled SASS styles
+    link(rel="stylesheet", href="/css/yote.css")
+
+    //- regular non-SASS styles
+    //- uncomment line below to use
+    //- link(rel="stylesheet", href="/css/style.css")
+
+    //- leaving these in in case you need them, but feel free to remove
+    if !!currentUser
+      script.
+        window.currentUser = !{JSON.stringify(currentUser)}
+    else
+      script.
+        window.currentUser = {}
+    script.
+      window.development = !{JSON.stringify(development)}
+    script.
+      window.appUrl = !{JSON.stringify(appUrl)}
+    //- experimental socket idea.
+    script.
+      window.socket = io()
+
+  body
+    //- load the react container and run the react script
+    #uploadbox-main-yote
+
+    script(src='/js/uploadbox.js')

@@ -1,0 +1,63 @@
+.navigation.-client-workspace {
+    li.-option {
+        display: none;
+        margin-right: 0;
+
+        a {
+            color: rgba(0, 0, 0, 0.48) !important;
+        }
+
+        a.active {
+            color: #0DA79D !important;
+        }
+    }
+    > li:first-child {
+        display: none;
+        cursor: pointer;
+    }
+    @media screen and (max-width: 880px) and (min-width: 480px) {
+        li:nth-child(1) {
+            display: flex !important;
+            margin-right: 16px;
+            cursor: pointer;
+        }
+        li:nth-child(2) {
+            display: none !important;
+        }
+        li.-option:nth-child(1) {
+            display: flex !important;
+        }
+    }
+    @media screen and (max-width: 860px) and (min-width: 480px) {
+        li:nth-child(3) {
+            display: none !important;
+        }
+        li.-option:nth-child(2) {
+            display: flex !important;
+        }
+    }
+    @media screen and (max-width: 725px) and (min-width: 480px) {
+        li:nth-child(4) {
+            display: none !important;
+        }
+        li.-option:nth-child(3) {
+            display: flex !important;
+        }
+    }
+    @media screen and (max-width: 630px) and (min-width: 480px) {
+        li:nth-child(5) {
+            display: none !important;
+        }
+        li.-option:nth-child(4) {
+            display: flex !important;
+        }
+    }
+    @media screen and (max-width: 505px) and (min-width: 480px) {
+        li:nth-child(6) {
+            display: none !important;
+        }
+        li.-option:nth-child(5) {
+            display: flex !important;
+        }
+    }
+}

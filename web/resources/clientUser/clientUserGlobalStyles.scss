@@ -1,0 +1,29 @@
+/**
+ * Uses SASS compiled to global stylesheet, yote.css
+ * Any styles specific to the Client User module that you ALSO want globally
+ * available should live here.
+ */
+
+@import "./admin/clientUserAdminStyles";
+
+.invitation-form {
+    .input-add-on {
+        margin: 0;
+    }
+
+    .yt-btn.xx-small.link.info {
+        margin-bottom: 0.5em;
+        font-size: 13px;
+    }
+}
+
+.-invite-primary-contact {
+
+    input {
+        width: 14px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+}

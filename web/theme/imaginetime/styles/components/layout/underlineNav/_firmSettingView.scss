@@ -1,0 +1,65 @@
+
+// firm settings
+
+@media screen and (max-width: 930px) and (min-width: 480px) {
+    body {
+        overflow-x: hidden;
+    }
+}
+
+.navigation.-firm-settings {
+    li.-option {
+        display: none;
+        margin-right: 0;
+        
+        a {
+            color: rgba(0, 0, 0, 0.48) !important;
+        }
+
+        a.active {
+            color: #0DA79D !important;
+        }
+    }
+
+    > li:first-child {
+        display: none;
+        cursor: pointer;
+    }
+    @media screen and (max-width: 830px) and (min-width: 480px) {
+        li:nth-child(1) {
+            display: flex !important;
+            margin-right: 16px;
+            cursor: pointer;
+        }
+        li:nth-child(2) {
+            display: none !important;
+        }
+        li.-option:nth-child(1) {
+            display: flex !important;
+        }
+    }
+    @media screen and (max-width: 770px) and (min-width: 480px) {
+        li:nth-child(3) {
+            display: none !important;
+        }
+        li.-option:nth-child(2) {
+            display: flex !important;
+        }
+    }
+    @media screen and (max-width: 660px) and (min-width: 480px) {
+        li:nth-child(4) {
+            display: none !important;
+        }
+        li.-option:nth-child(3) {
+            display: flex !important;
+        }
+    }
+    @media screen and (max-width: 530px) and (min-width: 480px) {
+        li:nth-child(5) {
+            display: none !important;
+        }
+        li.-option:nth-child(4) {
+            display: flex !important;
+        }
+    }
+}

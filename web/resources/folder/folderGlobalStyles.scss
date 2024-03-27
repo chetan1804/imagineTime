@@ -1,0 +1,21 @@
+.-select-folder {
+    .fas.fa-plus {
+        margin-left: 10px;
+        font-size: 13px;
+        cursor: pointer;
+        color: green;
+    }
+    
+    .help-text {
+        color: red;
+    }
+
+    .-addnew-folder div {
+        margin-bottom: 0px;
+    
+        .input-group {
+            position: relative;
+            top: 5px;
+        }
+    }
+}

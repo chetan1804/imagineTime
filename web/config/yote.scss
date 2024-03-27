@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+@import "theme/imaginetime/styles/themeStyles.scss";
+
+/**
+ * Global components
+ */
+
+@import "global/admin/adminGlobalStyles";
+@import "global/portal/portalGlobalStyles";
+@import "global/practice/practiceGlobalStyles";
+@import "global/components/modals/modalStyles.scss";
+@import "global/components/pagination/paginationStyles";
+@import "global/components/forms/formStyles";
+@import "global/components/forms/ISReactDraftEditor";
+
+/**
+ * Resources
+ */
+@import "resources/user/userGlobalStyles";
+
+@import "resources/firm/firmGlobalStyles";
+@import "resources/staff/staffGlobalStyles";
+@import "resources/staffClient/staffClientGlobalStyles";
+@import "resources/notification/notificationGlobalStyles";
+@import "resources/activity/activityGlobalStyles";
+
+@import "resources/clientTask/clientTaskGlobalStyles";
+@import "resources/clientTaskResponse/clientTaskResponseGlobalStyles";
+@import "resources/file/fileGlobalStyles";
+@import "resources/folder/folderGlobalStyles";
+@import "resources/client/clientGlobalStyles";
+@import "resources/clientUser/clientUserGlobalStyles";
+@import "resources/note/noteGlobalStyles";
+
+@import "resources/clientWorkflow/clientWorkflowGlobalStyles";
+@import "resources/clientWorkflowTemplate/clientWorkflowTemplateGlobalStyles";
+@import "resources/address/addressGlobalStyles";
+@import "resources/phoneNumber/phoneNumberGlobalStyles";
+@import "resources/tag/tagGlobalStyles";
+
+/**
+ * Third party library styles
+ */
+ @import "../node_modules/react-dates/lib/css/_datepicker.css";
+
+@import "resources/subscription/subscriptionGlobalStyles";
+@import "resources/clientActivity/clientActivityGlobalStyles";
+@import "resources/clientNote/clientNoteGlobalStyles";
+@import "resources/clientPost/clientPostGlobalStyles";
+@import "resources/clientPostReply/clientPostReplyGlobalStyles";
+@import "resources/shareLink/shareLinkGlobalStyles";
+@import "resources/signatures/signatureGlobalStyles";
+@import "resources/clientTaskTemplate/clientTaskTemplateGlobalStyles";
+
+
+/**
+ * Outlook Add-in styles
+ */
+@import "global/outlook/outlookStyles";
+
+/**
+ * Desktop Add-in styles
+ */
+@import "global/desktop/desktopStyles";
+
+/**
+ * Uploadbox styles
+ */
+@import "global/uploadbox/uploadboxGlobalStyles";
+@import "resources/quickTask/quickTaskGlobalStyles";
+
+
+@import "resources/request/requestGlobalStyles";
+@import "resources/requestTask/requestTaskGlobalStyles";
+@import "resources/taskActivity/taskActivityGlobalStyles";
+@import "resources/folderTemplate/folderTemplateGlobalStyles";
+
+// INVOICE
+@import "resources/clientInvoice/invoiceStyles";
+
+// PAYMENTS
+@import "resources/payments/enrollment/enrollmentStyles";
+@import "resources/payments/paymentStyles";
+
+
+@import "resources/mergeField/mergeFieldGlobalStyles";
+@import "resources/documentTemplate/DocumentTemplateGlobalStyles";
+
+// FOLDER PERMISSIONS
+@import "resources/folderPermission/folderPermissionGlobalSytles";

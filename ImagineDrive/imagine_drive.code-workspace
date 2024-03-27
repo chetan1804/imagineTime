@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"name": "imagine_drive",
+			"path": "imagine_drive"
+		},
+		{
+			"name": "imagine_drive_server",
+			"path": "imagine_drive_server"
+		},
+		{
+			"name": "flutter_dokan",
+			"path": "flutter_dokan"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"chrono": "cpp",
+			"type_traits": "cpp",
+			"thread": "cpp",
+			"iterator": "cpp",
+			"memory": "cpp",
+			"xutility": "cpp",
+			"xiosbase": "cpp",
+			"xstring": "cpp"
+		}
+	}
+}
